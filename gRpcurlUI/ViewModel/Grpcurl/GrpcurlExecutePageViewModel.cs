@@ -33,10 +33,10 @@ namespace gRpcurlUI.ViewModel.Grpcurl
             {
                 if (SetProperty(ref _IsSending, value))
                 {
+                    base.IsSending = value;
                     Command.ChangeCanExecute(!value, SendCommand);
                     Command.ChangeCanExecute(value, SendCancelCommand);
                     OnPropertyChanged();
-                    OnPropertyChanged(nameof(SenddingProgressVisible));
                 }
             }
         }

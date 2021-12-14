@@ -93,7 +93,7 @@ namespace gRpcurlUI.ViewModel
             SettingPageViewModel = new SettingPageViewModel(setting);
             ExecutePageViewModel = new GrpcurlExecutePageViewModel(new ProcessExecuter(), setting);
 #if DEBUG
-            setting.AppPath = @"C:\Users\sanak\Desktop\grpcurl.exe";
+            setting.AppPath = "grpcurl.exe";
 #endif
             SetCommand();
         }

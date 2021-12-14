@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 
 namespace gRpcurlUI.View.Dialog
 {
@@ -73,6 +74,16 @@ namespace gRpcurlUI.View.Dialog
             dialog.SetButton(button);
             dialog.ShowDialog();
             return dialog.result;
+        }
+
+        private void Root_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.C &&
+               (Keyboard.GetKeyStates(Key.LeftCtrl) & KeyStates.Down) == KeyStates.Down
+               || (Keyboard.GetKeyStates(Key.RightCtrl) & KeyStates.Down) == KeyStates.Down)
+            {
+                Clipboard.SetText(Message);
+            }
         }
     }
 }

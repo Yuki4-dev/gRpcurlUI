@@ -8,6 +8,7 @@
         ResizeMode="NoResize"
         Title="MessageDialog" 
         x:Name="Root"
+        KeyDown="Root_KeyDown"
         Height="250" Width="550">
     
     <Grid Background="{StaticResource DefaultWindowBackground}">
@@ -18,7 +19,7 @@
 
         <TextBlock Text="{Binding Message, ElementName=Root}" 
                    Style="{StaticResource DefaultTextBlockStyle}"
-                   Margin="24,32,24,24"
+                   Margin="24,12,24,12"
                    TextWrapping="Wrap"
                    FontSize="24"/>
 
