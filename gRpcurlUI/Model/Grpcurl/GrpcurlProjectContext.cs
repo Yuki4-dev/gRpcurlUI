@@ -6,9 +6,19 @@ namespace gRpcurlUI.Model.Grpcurl
 
     public class GrpcurlProjectContext : Observable, IProjectContext<GrpcurlProject>
     {
-        public string Verion { get; set; }
+        private string _Verion;
+        public string Verion
+        {
+            get => _Verion;
+            set => OnPropertyChanged(ref _Verion, value);
+        }
 
-        public string ProjectType { get; set; }
+        private string _ProjectType;
+        public string ProjectType
+        {
+            get => _ProjectType;
+            set => OnPropertyChanged(ref _ProjectType, value);
+        }
 
         private readonly ICollection<GrpcurlProject> projectsInternal = new ObservableCollection<GrpcurlProject>();
         public IEnumerable<GrpcurlProject> Projects => projectsInternal;
