@@ -5,6 +5,7 @@ namespace gRpcurlUI.Model.Grpcurl
     public class GrpcurlCommand : IProccesCommand
     {
         public string AppPath { get; }
+
         public string Arguments { get; }
 
         public GrpcurlCommand(string appPath, string option, string endPoint, string content, string service)

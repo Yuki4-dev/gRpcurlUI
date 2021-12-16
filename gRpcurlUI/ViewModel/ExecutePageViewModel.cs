@@ -1,5 +1,8 @@
-﻿using gRpcurlUI.Model;
+﻿using gRpcurlUI.Core;
+using gRpcurlUI.Model;
 using System;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 
@@ -73,8 +76,12 @@ namespace gRpcurlUI.ViewModel
             get => _IsSending;
             set
             {
-                OnPropertyChanged(ref _IsSending, value);
-                OnPropertyChanged(nameof(SenddingProgressVisible));
+                if (SetProperty(ref _IsSending, value))
+                {
+                    Command.ChangeCanExecute(!value, SendCommand);
+                    Command.ChangeCanExecute(value, SendCancelCommand);
+                    OnPropertyChanged();
+                }
             }
         }
         public Visibility SenddingProgressVisible => IsSending ? Visibility.Visible : Visibility.Collapsed;
@@ -107,8 +114,19 @@ namespace gRpcurlUI.ViewModel
             set => OnPropertyChanged(ref _TextBoxClearCommand, value);
         }
 
-        public ExecutePageViewModel()
+        protected readonly IProcessExecuter processExecuter;
+
+        protected readonly IReadOnlyAppSetting appSetting;
+
+        protected CancellationTokenSource tokenSource;
+
+        public ExecutePageViewModel(IProcessExecuter executer, IReadOnlyAppSetting Setting)
         {
+            processExecuter = executer;
+            processExecuter.StanderdOutputRecieve += (data) => StandardOutput = data;
+            processExecuter.StanderdErrorRecieve += (data) => StandardError = data;
+            appSetting = Setting;
+
             SendCommand = new Command(SendExecute);
             SendCancelCommand = new Command(SendCancelExecute) { CanExecuteValue = false };
             SendContentFormatCommand = new Command(SendContentFormatExecute);
@@ -134,11 +152,62 @@ namespace gRpcurlUI.ViewModel
             }
         }
 
-        protected abstract void SendCancelExecute();
+        protected async void SendExecute()
+        {
+            if (!PreSending(out var message))
+            {
+                _ = OnShowMessageDialog(message);
+                return;
+            }
+
+            IsSending = true;
+
+            if (ClearRepsponse)
+            {
+                TextBoxClearCommandExecute(ClearArea.Standard.ToString());
+            }
+
+            await SendExecuteCore();
+
+            IsSending = false;
+        }
+
+        private async Task SendExecuteCore()
+        {
+            tokenSource = new CancellationTokenSource();
+            try
+            {
+                var cmd = await CreateCommandAsync();
+                if (cmd != null)
+                {
+                    await processExecuter.ExecuteAysnc(cmd, tokenSource.Token);
+                }
+            }
+            catch (Exception ex)
+            {
+                _ = OnShowMessageDialog(ex.Message);
+            }
+            finally
+            {
+                tokenSource.Dispose();
+                tokenSource = null;
+            }
+        }
+
+        protected async void SendCancelExecute()
+        {
+            var result = await OnShowMessageDialog("Cancel Sendding?", MessageBoxButton.YesNo);
+            if (result == MessageBoxResult.Yes)
+            {
+                tokenSource?.Cancel();
+            }
+        }
+
+        protected abstract bool PreSending(out string message);
+
+        protected abstract Task<IProccesCommand> CreateCommandAsync();
 
         protected abstract void SendContentFormatExecute();
-
-        protected abstract void SendExecute();
 
         public abstract IProject Create(string projectName = null);
 

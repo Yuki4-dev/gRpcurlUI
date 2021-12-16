@@ -1,5 +1,4 @@
-﻿using System;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 
@@ -28,12 +27,12 @@ namespace gRpcurlUI.View.Dialog
 
         private void SetButton(MessageBoxButton button)
         {
-            Action<Button, string, MessageBoxResult> setB = (button, content, result) =>
-             {
-                 button.Visibility = Visibility.Visible;
-                 button.Content = content;
-                 button.Tag = result;
-             };
+            static void setB(Button button, string content, MessageBoxResult result)
+            {
+                button.Visibility = Visibility.Visible;
+                button.Content = content;
+                button.Tag = result;
+            }
 
             if (button == MessageBoxButton.OK)
             {

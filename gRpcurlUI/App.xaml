@@ -1,8 +1,11 @@
 ﻿<Application x:Class="gRpcurlUI.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="clr-namespace:gRpcurlUI" xmlns:system="clr-namespace:System;assembly=netstandard"
+             xmlns:local="clr-namespace:gRpcurlUI" 
+             xmlns:system="clr-namespace:System;assembly=netstandard"
              StartupUri="View/MainWindow.xaml"
+             xmlns:grpcurlmodel="clr-namespace:gRpcurlUI.Model.Grpcurl"
+             xmlns:curlmodel="clr-namespace:gRpcurlUI.Model.Curl"
              xmlns:model="clr-namespace:gRpcurlUI.Model" 
              xmlns:controls="clr-namespace:gRpcurlUI.Controls">
 
@@ -283,6 +286,75 @@
             <Setter Property="HorizontalAlignment" Value="Stretch"/>
             <Setter Property="Background" Value="{StaticResource DefaulBorderBrush}"/>
         </Style>
+
+        <DataTemplate DataType="{x:Type grpcurlmodel:GrpcurlProject}">
+
+            <StackPanel>
+
+                <StackPanel.Resources>
+
+                    <Style TargetType="TextBlock" BasedOn="{StaticResource DefaultTextBlockStyle}">
+                        <Setter Property="FontSize" Value="16"/>
+                        <Setter Property="Margin" Value="4"/>
+                    </Style>
+
+                    <Style TargetType="TextBox" BasedOn="{StaticResource DefaultTextBoxStyle}">
+                        <Setter Property="HorizontalAlignment" Value="Stretch"/>
+                        <Setter Property="FontSize" Value="{StaticResource EditTextBoxFontSize}"/>
+                    </Style>
+
+                </StackPanel.Resources>
+
+                <TextBlock Text="EndPoint"/>
+                <TextBox Text="{Binding EndPoint, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"/>
+
+                <TextBlock Text="Option"/>
+                <TextBox Text="{Binding Option, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"/>
+
+                <TextBlock Text="Service"/>
+                <TextBox Text="{Binding Service, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"/>
+
+            </StackPanel>
+
+        </DataTemplate>
+
+        <DataTemplate DataType="{x:Type curlmodel:CurlProject}">
+
+            <StackPanel>
+
+                <StackPanel.Resources>
+
+                    <Style TargetType="TextBlock" BasedOn="{StaticResource DefaultTextBlockStyle}">
+                        <Setter Property="FontSize" Value="16"/>
+                        <Setter Property="Margin" Value="4"/>
+                    </Style>
+
+                    <Style TargetType="TextBox" BasedOn="{StaticResource DefaultTextBoxStyle}">
+                        <Setter Property="HorizontalAlignment" Value="Stretch"/>
+                        <Setter Property="FontSize" Value="{StaticResource EditTextBoxFontSize}"/>
+                    </Style>
+
+                </StackPanel.Resources>
+
+                <TextBlock Text="EndPoint"/>
+                <TextBox Text="{Binding EndPoint, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"/>
+
+                <TextBlock Text="Option"/>
+                <TextBox Text="{Binding Option, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"/>
+
+                <Border BorderBrush="{StaticResource DefaulBorderBrush}"
+                        BorderThickness="1"
+                        Margin="0,12,0,0">
+                    
+                    <ToggleButton Content="Json"
+                                  Height="30"
+                                  IsChecked="{Binding IsJsonContent}"
+                                  Style="{StaticResource CheckedToggleButtonStyle}"/>
+                </Border>
+
+            </StackPanel>
+
+        </DataTemplate>
 
     </Application.Resources>
     

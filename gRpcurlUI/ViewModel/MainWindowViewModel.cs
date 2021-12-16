@@ -1,6 +1,6 @@
 ﻿using gRpcurlUI.Core;
 using gRpcurlUI.Model;
-using gRpcurlUI.ViewModel.Grpcurl;
+using gRpcurlUI.ViewModel.Curl;
 using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
@@ -91,7 +91,7 @@ namespace gRpcurlUI.ViewModel
         {
             var setting = new AppSetting(App.Current.Resources);
             SettingPageViewModel = new SettingPageViewModel(setting);
-            ExecutePageViewModel = new GrpcurlExecutePageViewModel(new ProcessExecuter(), setting);
+            ExecutePageViewModel = new CurlExecutePageViewModel(new ProcessExecuter(), setting);
 #if DEBUG
             setting.AppPath = "grpcurl.exe";
 #endif

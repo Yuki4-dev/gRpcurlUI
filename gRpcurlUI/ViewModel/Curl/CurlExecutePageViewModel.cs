@@ -1,40 +1,38 @@
 ﻿using gRpcurlUI.Core;
 using gRpcurlUI.Model;
-using gRpcurlUI.Model.Grpcurl;
+using gRpcurlUI.Model.Curl;
 using Newtonsoft.Json;
 using System;
 using System.Threading.Tasks;
 using System.Windows;
 
-namespace gRpcurlUI.ViewModel.Grpcurl
+namespace gRpcurlUI.ViewModel.Curl
 {
-    public class GrpcurlExecutePageViewModel : ExecutePageViewModel<GrpcurlProject>
+    public class CurlExecutePageViewModel : ExecutePageViewModel<CurlProject>
     {
-        private readonly GrpcurlProjectContext contextInternal = new GrpcurlProjectContext();
-        public override IProjectContext<GrpcurlProject> Context => contextInternal;
+        private readonly CurlProjectContext contextInternal = new CurlProjectContext();
+        public override IProjectContext<CurlProject> Context => contextInternal;
 
-        private GrpcurlProject _SelectedProject;
+        private CurlProject _SelectedProject;
         public override IProject SelectedProject
         {
             get => _SelectedProject;
             set
             {
-                OnPropertyChanged(ref _SelectedProject, (GrpcurlProject)value);
+                OnPropertyChanged(ref _SelectedProject, (CurlProject)value);
                 OnPropertyChanged(nameof(IsEnabled));
             }
         }
 
-
-        public GrpcurlExecutePageViewModel(IProcessExecuter executer, IReadOnlyAppSetting Setting) : base(executer, Setting)
+        public CurlExecutePageViewModel(IProcessExecuter executer, IReadOnlyAppSetting Setting) : base(executer, Setting)
         {
 #if DEBUG
-            var context = new GrpcurlProject()
+            var context = new CurlProject()
             {
                 ProjectName = "Sample 1",
                 SendContent = "{ \"name\":\"key\"}",
                 EndPoint = "localhost:6565",
-                Option = "-plaintext",
-                Service = "list"
+                Option = "-X GET",
             };
             Add(context);
 #endif
@@ -42,7 +40,7 @@ namespace gRpcurlUI.ViewModel.Grpcurl
 
         public override IProject Create(string projectName = null)
         {
-            return new GrpcurlProject()
+            return new CurlProject()
             {
                 ProjectName = string.IsNullOrWhiteSpace(projectName) ? $"Project {DateTime.Now}" : projectName
             };
@@ -50,34 +48,12 @@ namespace gRpcurlUI.ViewModel.Grpcurl
 
         public override void Add(IProject project)
         {
-            contextInternal.AddPrject((GrpcurlProject)project);
+            contextInternal.AddPrject((CurlProject)project);
         }
 
         public override bool Remove(IProject project)
         {
-            return contextInternal.RemovePrject((GrpcurlProject)project);
-        }
-
-        protected override async Task<IProccesCommand> CreateCommandAsync()
-        {
-            string jsonContent = "";
-            if (!string.IsNullOrWhiteSpace(SelectedProject.SendContent))
-            {
-                try
-                {
-                    jsonContent = FormatJson(SelectedProject.SendContent);
-                }
-                catch (Exception ex)
-                {
-                    var result = await OnShowMessageDialog($"Continue?\r\n\r\nContent is Not Json.\r\n{ex.Message}", MessageBoxButton.YesNo);
-                    if (result == MessageBoxResult.No)
-                    {
-                        return null;
-                    }
-                }
-            }
-
-            return new GrpcurlCommand(appSetting.AppPath, _SelectedProject.Option, _SelectedProject.EndPoint, jsonContent, _SelectedProject.Service);
+            return contextInternal.RemovePrject((CurlProject)project);
         }
 
         protected override bool PreSending(out string message)
@@ -107,11 +83,34 @@ namespace gRpcurlUI.ViewModel.Grpcurl
             }
         }
 
+        protected override async Task<IProccesCommand> CreateCommandAsync()
+        {
+            string content = _SelectedProject.SendContent;
+            if (!string.IsNullOrWhiteSpace(SelectedProject.SendContent) && _SelectedProject.IsJsonContent)
+            {
+                try
+                {
+                    content = FormatJson(SelectedProject.SendContent);
+                }
+                catch (Exception ex)
+                {
+                    var result = await OnShowMessageDialog($"Continue?\r\n\r\nContent is Not Json.\r\n{ex.Message}", MessageBoxButton.YesNo);
+                    if (result == MessageBoxResult.No)
+                    {
+                        return null;
+                    }
+                }
+            }
+
+            return new CurlCommand(_SelectedProject.Option, _SelectedProject.EndPoint, content);
+        }
+
         private string FormatJson(string json, FormatType formatType = FormatType.None)
         {
             var fomat = formatType == FormatType.None ? Formatting.None : Formatting.Indented;
             var parsedJson = JsonConvert.DeserializeObject(json);
             return JsonConvert.SerializeObject(parsedJson, fomat);
         }
+
     }
 }
