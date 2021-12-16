@@ -14,7 +14,7 @@ namespace gRpcurlUI.ViewModel
             get => appSetting.AppPath;
             set
             {
-                if (!string.IsNullOrWhiteSpace(value) && File.Exists(value))
+                if (string.IsNullOrEmpty(value) || File.Exists(value))
                 {
                     AppPathMessage = "";
                     appSetting.AppPath = value;

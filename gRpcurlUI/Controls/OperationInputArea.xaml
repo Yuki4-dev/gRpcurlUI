@@ -12,12 +12,6 @@
 
     <UserControl.Resources>
 
-        <Style x:Key="EditHeaderTextBlockStyle" TargetType="TextBlock" BasedOn="{StaticResource DefaultTextBlockStyle}">
-            <Setter Property="FontSize" Value="12"/>
-            <Setter Property="Margin" Value="4"/>
-            <Setter Property="VerticalAlignment" Value="Center"/>
-        </Style>
-
         <DataTemplate DataType="{x:Type grpcurlmodel:GrpcurlProject}">
 
             <StackPanel>
@@ -52,15 +46,6 @@
         <ControlTemplate x:Key="OpretionInputAreaTemlate" TargetType="local:OperationInputArea">
 
             <StackPanel>
-
-                <StackPanel.Resources>
-
-                    <Style TargetType="TextBlock" BasedOn="{StaticResource DefaultTextBlockStyle}">
-                        <Setter Property="FontSize" Value="16"/>
-                        <Setter Property="Margin" Value="4"/>
-                    </Style>
-
-                </StackPanel.Resources>
 
                 <Border BorderBrush="{StaticResource DefaulBorderBrush}"
                         Background="{StaticResource DefaultSelectedBackground}"
@@ -102,6 +87,7 @@
                                     BorderThickness="1">
 
                                 <TextBox  x:Name="ProjectNameTextBlock"
+                                          FontSize="{StaticResource EditTextBoxFontSize}"
                                           Text="{Binding Title,ElementName=Root,Mode=TwoWay, UpdateSourceTrigger=LostFocus}"
                                           Style="{StaticResource DefaultTextBoxStyle}"
                                           Margin="4"/>

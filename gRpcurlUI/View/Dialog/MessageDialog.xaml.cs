@@ -82,7 +82,11 @@ namespace gRpcurlUI.View.Dialog
                (Keyboard.GetKeyStates(Key.LeftCtrl) & KeyStates.Down) == KeyStates.Down
                || (Keyboard.GetKeyStates(Key.RightCtrl) & KeyStates.Down) == KeyStates.Down)
             {
-                Clipboard.SetText(Message);
+                try
+                {
+                    Clipboard.SetText(Message);
+                }
+                catch { }
             }
         }
     }
