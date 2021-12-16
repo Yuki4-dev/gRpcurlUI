@@ -8,9 +8,7 @@ namespace gRpcurlUI.ViewModel
 
         IProjectContext<T> Context { get; }
 
-        IProject Create(string projectName = null);
-
-        void Add(IProject project);
+        void Add(IProject project = null);
 
         bool Remove(IProject project);
     }

@@ -24,9 +24,11 @@ namespace gRpcurlUI.ViewModel.Grpcurl
             }
         }
 
+        protected readonly IReadOnlyAppSetting appSetting;
 
-        public GrpcurlExecutePageViewModel(IProcessExecuter executer, IReadOnlyAppSetting Setting) : base(executer, Setting)
+        public GrpcurlExecutePageViewModel(IProcessExecuter executer, IReadOnlyAppSetting Setting) : base(executer)
         {
+            appSetting = Setting;
 #if DEBUG
             var context = new GrpcurlProject()
             {
@@ -40,16 +42,16 @@ namespace gRpcurlUI.ViewModel.Grpcurl
 #endif
         }
 
-        public override IProject Create(string projectName = null)
+        public override void Add(IProject project = null)
         {
-            return new GrpcurlProject()
+            if (project == null)
             {
-                ProjectName = string.IsNullOrWhiteSpace(projectName) ? $"Project {DateTime.Now}" : projectName
-            };
-        }
+                project = new GrpcurlProject()
+                {
+                    ProjectName = $"Project {DateTime.Now}"
+                };
+            }
 
-        public override void Add(IProject project)
-        {
             contextInternal.AddPrject((GrpcurlProject)project);
         }
 

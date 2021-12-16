@@ -6,8 +6,9 @@
              StartupUri="View/MainWindow.xaml"
              xmlns:grpcurlmodel="clr-namespace:gRpcurlUI.Model.Grpcurl"
              xmlns:curlmodel="clr-namespace:gRpcurlUI.Model.Curl"
+             xmlns:viewmodel="clr-namespace:gRpcurlUI.ViewModel" 
              xmlns:model="clr-namespace:gRpcurlUI.Model" 
-             xmlns:controls="clr-namespace:gRpcurlUI.Controls">
+             xmlns:controls="clr-namespace:gRpcurlUI.Controls" xmlns:view="clr-namespace:gRpcurlUI.View">
 
     <Application.Resources>
 
@@ -345,7 +346,7 @@
                 <Border BorderBrush="{StaticResource DefaulBorderBrush}"
                         BorderThickness="1"
                         Margin="0,12,0,0">
-                    
+
                     <ToggleButton Content="Json"
                                   Height="30"
                                   IsChecked="{Binding IsJsonContent}"

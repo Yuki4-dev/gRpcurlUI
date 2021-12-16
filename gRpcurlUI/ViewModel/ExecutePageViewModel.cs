@@ -1,6 +1,7 @@
 ﻿using gRpcurlUI.Core;
 using gRpcurlUI.Model;
 using System;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
@@ -31,34 +32,30 @@ namespace gRpcurlUI.ViewModel
 
     public abstract class ExecutePageViewModel<T> : ViewModelBase, IExecutePageViewModel<T> where T : IProject
     {
-        public abstract IProject SelectedProject { get; set; }
-
-        public bool IsEnabled => SelectedProject != null;
-
-        public abstract IProjectContext<T> Context { get; }
-
-        private string _StandardOutput = "";
+        private readonly StringBuilder standerdOutputStringBuilder = new StringBuilder();
         public string StandardOutput
         {
-            get => _StandardOutput;
+            get => standerdOutputStringBuilder.ToString();
             set
             {
                 if (!string.IsNullOrEmpty(value))
                 {
-                    OnPropertyChanged(ref _StandardOutput, StandardOutput + value + "\r\n");
+                    standerdOutputStringBuilder.AppendLine(value);
+                    OnPropertyChanged();
                 }
             }
         }
 
-        private string _StandardError = "";
+        private readonly StringBuilder standardErrorStringBuilder = new StringBuilder();
         public string StandardError
         {
-            get => _StandardError;
+            get => standardErrorStringBuilder.ToString();
             set
             {
                 if (!string.IsNullOrEmpty(value))
                 {
-                    OnPropertyChanged(ref _StandardError, StandardError + value + "\r\n");
+                    standardErrorStringBuilder.AppendLine(value);
+                    OnPropertyChanged();
                 }
             }
         }
@@ -81,6 +78,7 @@ namespace gRpcurlUI.ViewModel
                     Command.ChangeCanExecute(!value, SendCommand);
                     Command.ChangeCanExecute(value, SendCancelCommand);
                     OnPropertyChanged();
+                    OnPropertyChanged(nameof(SenddingProgressVisible));
                 }
             }
         }
@@ -114,20 +112,28 @@ namespace gRpcurlUI.ViewModel
             set => OnPropertyChanged(ref _TextBoxClearCommand, value);
         }
 
+        public bool IsEnabled => SelectedProject != null;
+
+        public abstract IProject SelectedProject { get; set; }
+
+        public abstract IProjectContext<T> Context { get; }
+
         protected readonly IProcessExecuter processExecuter;
 
-        protected readonly IReadOnlyAppSetting appSetting;
+        private CancellationTokenSource tokenSource;
 
-        protected CancellationTokenSource tokenSource;
-
-        public ExecutePageViewModel(IProcessExecuter executer, IReadOnlyAppSetting Setting)
+        public ExecutePageViewModel(IProcessExecuter executer)
         {
             processExecuter = executer;
             processExecuter.StanderdOutputRecieve += (data) => StandardOutput = data;
             processExecuter.StanderdErrorRecieve += (data) => StandardError = data;
-            appSetting = Setting;
 
-            SendCommand = new Command(SendExecute);
+            SetCommand();
+        }
+
+        private void SetCommand()
+        {
+            SendCommand = new Command(SendExecuteAsync);
             SendCancelCommand = new Command(SendCancelExecute) { CanExecuteValue = false };
             SendContentFormatCommand = new Command(SendContentFormatExecute);
             TextBoxClearCommand = Command.Create<string>(TextBoxClearCommandExecute);
@@ -142,17 +148,17 @@ namespace gRpcurlUI.ViewModel
                     SelectedProject.SendContent = "";
                     break;
                 case ClearArea.Standard:
-                    _StandardOutput = "";
+                    standerdOutputStringBuilder.Clear();
                     OnPropertyChanged(nameof(StandardOutput));
                     break;
                 case ClearArea.Error:
-                    _StandardError = "";
+                    standardErrorStringBuilder.Clear();
                     OnPropertyChanged(nameof(StandardError));
                     break;
             }
         }
 
-        protected async void SendExecute()
+        protected virtual async void SendExecuteAsync()
         {
             if (!PreSending(out var message))
             {
@@ -167,12 +173,12 @@ namespace gRpcurlUI.ViewModel
                 TextBoxClearCommandExecute(ClearArea.Standard.ToString());
             }
 
-            await SendExecuteCore();
+            await SendExecuteCoreAsync();
 
             IsSending = false;
         }
 
-        private async Task SendExecuteCore()
+        private async Task SendExecuteCoreAsync()
         {
             tokenSource = new CancellationTokenSource();
             try
@@ -194,7 +200,7 @@ namespace gRpcurlUI.ViewModel
             }
         }
 
-        protected async void SendCancelExecute()
+        protected virtual async void SendCancelExecute()
         {
             var result = await OnShowMessageDialog("Cancel Sendding?", MessageBoxButton.YesNo);
             if (result == MessageBoxResult.Yes)
@@ -209,9 +215,7 @@ namespace gRpcurlUI.ViewModel
 
         protected abstract void SendContentFormatExecute();
 
-        public abstract IProject Create(string projectName = null);
-
-        public abstract void Add(IProject project);
+        public abstract void Add(IProject project = null);
 
         public abstract bool Remove(IProject project);
     }

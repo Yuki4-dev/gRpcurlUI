@@ -1,26 +1,20 @@
-﻿<Window x:Class="gRpcurlUI.MainWindow"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:viewmodel="clr-namespace:gRpcurlUI.ViewModel" 
-        xmlns:controls="clr-namespace:gRpcurlUI.Controls"
-        mc:Ignorable="d"
-        Background="{StaticResource DefaultWindowBackground}"
-        SizeChanged="Window_SizeChanged"
-        Loaded="Window_Loaded"
-        Title="gRpcurUI"
-        Height="600" 
-        Width="1100"
-        MinHeight="350"
-        MinWidth="350"
-        FontFamily="{DynamicResource DefaultFontFamily}">
+﻿<Page x:Class="gRpcurlUI.View.TabContentPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:gRpcurlUI.View"
+      xmlns:viewmodel="clr-namespace:gRpcurlUI.ViewModel" 
+      xmlns:controls="clr-namespace:gRpcurlUI.Controls"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="TabContentPage">
 
-    <Window.DataContext>
+    <Page.DataContext>
         <viewmodel:TabContentPageViewModel x:Name="ViewModel"/>
-    </Window.DataContext>
+    </Page.DataContext>
 
-    <Window.Resources>
+    <Page.Resources>
 
         <Style x:Key="SettingButtonStyle" TargetType="Button" BasedOn="{StaticResource DefaultButtonStyle}">
             <Setter Property="Margin" Value="0,8,0,8"/>
@@ -28,15 +22,15 @@
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="Button">
-                        
+
                         <StackPanel Grid.Row="1"
                                     Background="{TemplateBinding Background}"
                                     Orientation="Horizontal">
-                            
+
                             <Canvas Width="30"
                                     Height="48"
                                     Margin="4">
-                                
+
                                 <Path Width="24"
                                       Height="24"
                                       Data="{StaticResource Setting}"
@@ -105,8 +99,8 @@
 
         </ControlTemplate>
 
-    </Window.Resources>
-    
+    </Page.Resources>
+
     <Grid x:Name="MainHost">
 
         <Grid.ColumnDefinitions>
@@ -130,7 +124,7 @@
                 <controls:ProjectListBox IsMultiSelect="{Binding IsRemoveMode}"
                                          SelectedCommand="{Binding SelectedCommand}"
                                          ItemsSource="{Binding ExecutePageViewModel.Context.Projects}"/>
-                
+
             </controls:HeaderContent>
 
             <Button Grid.Row="1"
@@ -147,5 +141,4 @@
                Grid.Column="2"/>
 
     </Grid>
-    
-</Window>
+</Page>

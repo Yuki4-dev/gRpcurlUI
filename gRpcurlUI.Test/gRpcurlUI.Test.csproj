@@ -19,4 +19,8 @@
     <ProjectReference Include="..\gRpcurlUI\gRpcurlUI.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Mock\" />
+  </ItemGroup>
+
 </Project>

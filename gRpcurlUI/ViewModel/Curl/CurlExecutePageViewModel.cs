@@ -24,7 +24,7 @@ namespace gRpcurlUI.ViewModel.Curl
             }
         }
 
-        public CurlExecutePageViewModel(IProcessExecuter executer, IReadOnlyAppSetting Setting) : base(executer, Setting)
+        public CurlExecutePageViewModel(IProcessExecuter executer) : base(executer)
         {
 #if DEBUG
             var context = new CurlProject()
@@ -38,16 +38,16 @@ namespace gRpcurlUI.ViewModel.Curl
 #endif
         }
 
-        public override IProject Create(string projectName = null)
-        {
-            return new CurlProject()
-            {
-                ProjectName = string.IsNullOrWhiteSpace(projectName) ? $"Project {DateTime.Now}" : projectName
-            };
-        }
-
         public override void Add(IProject project)
         {
+            if (project == null)
+            {
+                project = new CurlProject()
+                {
+                    ProjectName = $"Project {DateTime.Now}"
+                };
+            }
+
             contextInternal.AddPrject((CurlProject)project);
         }
 

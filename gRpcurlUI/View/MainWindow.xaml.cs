@@ -27,7 +27,7 @@ namespace gRpcurlUI
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            if (DataContext is MainWindowViewModel vm)
+            if (DataContext is TabContentPageViewModel vm)
             {
                 var bindExecute = new Binding(nameof(vm.ExecutePageViewModel))
                 {

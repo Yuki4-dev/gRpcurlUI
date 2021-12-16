@@ -10,7 +10,7 @@ using System.Windows.Input;
 
 namespace gRpcurlUI.ViewModel
 {
-    public class MainWindowViewModel : ViewModelBase
+    public class TabContentPageViewModel : ViewModelBase
     {
         private IExecutePageViewModel<IProject> _ExcutePageViewModel;
         public IExecutePageViewModel<IProject> ExecutePageViewModel
@@ -87,18 +87,18 @@ namespace gRpcurlUI.ViewModel
 
         private readonly List<IProject> removeProject = new List<IProject>();
 
-        public MainWindowViewModel()
+        public TabContentPageViewModel()
         {
             var setting = new AppSetting(App.Current.Resources);
             SettingPageViewModel = new SettingPageViewModel(setting);
-            ExecutePageViewModel = new CurlExecutePageViewModel(new ProcessExecuter(), setting);
+            ExecutePageViewModel = new CurlExecutePageViewModel(new ProcessExecuter());
 #if DEBUG
             setting.AppPath = "grpcurl.exe";
 #endif
             SetCommand();
         }
 
-        public MainWindowViewModel(ILoadModel load, IExecutePageViewModel<IProject> holder, AppSetting setting)
+        public TabContentPageViewModel(ILoadModel load, IExecutePageViewModel<IProject> holder, AppSetting setting)
         {
             loadModel = load;
             ExecutePageViewModel = holder;
@@ -156,11 +156,7 @@ namespace gRpcurlUI.ViewModel
         private void AddExecute()
         {
             var project = (IProject)ExecutePageViewModel.SelectedProject?.Clone();
-            if (project != null)
-            {
-                project.ProjectName = $"Project {DateTime.Now}";
-            }
-            ExecutePageViewModel.Add(project ?? ExecutePageViewModel.Create());
+            ExecutePageViewModel.Add(project);
         }
 
         private async void ExportExecuteAsync()

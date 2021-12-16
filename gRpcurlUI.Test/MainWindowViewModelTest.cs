@@ -19,7 +19,7 @@ namespace gRpcurlUI.Test
             var mock = new Mock<IExecutePageViewModel<IProject>>();
             IExecutePageViewModel<IProject> executePageViewModel = mock.Object;
 
-            var target = new MainWindowViewModel(null, executePageViewModel, null);
+            var target = new TabContentPageViewModel(null, executePageViewModel, null);
             var project = new Mock<IProject>().Object;
 
             target.SelectedCommand.Execute(project);
@@ -33,7 +33,7 @@ namespace gRpcurlUI.Test
             var mock = new Mock<IExecutePageViewModel<IProject>>();
             IExecutePageViewModel<IProject> executePageViewModel = mock.Object;
 
-            var target = new MainWindowViewModel(null, executePageViewModel, null);
+            var target = new TabContentPageViewModel(null, executePageViewModel, null);
             target.AddCommand.Execute(null);
 
             mock.Verify(m => m.Add(It.IsAny<IProject>()), Times.Once);
@@ -45,7 +45,7 @@ namespace gRpcurlUI.Test
             var mock = new Mock<IExecutePageViewModel<IProject>>();
             IExecutePageViewModel<IProject> executePageViewModel = mock.Object;
 
-            var target = new MainWindowViewModel(null, executePageViewModel, null);
+            var target = new TabContentPageViewModel(null, executePageViewModel, null);
             target.ShowMessageDialog += (m, b) =>
             {
                 return Task.FromResult(MessageBoxResult.Yes);
@@ -73,7 +73,7 @@ namespace gRpcurlUI.Test
             var mock = new Mock<IExecutePageViewModel<IProject>>();
             IExecutePageViewModel<IProject> executePageViewModel = mock.Object;
 
-            var target = new MainWindowViewModel(null, executePageViewModel, null);
+            var target = new TabContentPageViewModel(null, executePageViewModel, null);
             target.ShowMessageDialog += (m, b) =>
             {
                 return Task.FromResult(MessageBoxResult.No);
@@ -110,7 +110,7 @@ namespace gRpcurlUI.Test
             var p1 = new Mock<IProject>().Object;
             var p2 = new Mock<IProject>().Object;
 
-            var target = new MainWindowViewModel(loadModel, executePageViewModel, null);
+            var target = new TabContentPageViewModel(loadModel, executePageViewModel, null);
             target.ShowCommonDialog += (t, act1, act2) =>
             {
                 Assert.AreEqual(t, typeof(OpenFileDialog));
@@ -146,7 +146,7 @@ namespace gRpcurlUI.Test
             var p1 = new Mock<IProject>().Object;
             var p2 = new Mock<IProject>().Object;
 
-            var target = new MainWindowViewModel(loadModel, executePageViewModel, null);
+            var target = new TabContentPageViewModel(loadModel, executePageViewModel, null);
             target.ShowCommonDialog += (t, act1, act2) =>
             {
                 Assert.AreEqual(t, typeof(OpenFileDialog));
