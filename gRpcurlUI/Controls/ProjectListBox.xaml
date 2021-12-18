@@ -123,7 +123,8 @@
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="ListBox">
-                        <local:CustomScrollViewer VerticalScrollBarVisibility="Auto">
+                        <local:CustomScrollViewer VerticalScrollBarVisibility="Auto"
+                                                  TabBrush="{StaticResource DefaulIconBrush}">
                             <ItemsPresenter/>
                         </local:CustomScrollViewer>
                     </ControlTemplate>

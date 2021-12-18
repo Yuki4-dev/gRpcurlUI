@@ -40,7 +40,8 @@
                         BorderBrush="{StaticResource DefaulBorderBrush}"
                         BorderThickness="{TemplateBinding BorderThickness}">
 
-                    <local:CustomScrollViewer HorizontalScrollBarVisibility="Visible"
+                    <local:CustomScrollViewer TabBrush="{StaticResource DefaulIconBrush}"
+                                              HorizontalScrollBarVisibility="Visible"
                                               VerticalScrollBarVisibility="Visible">
 
                         <ContentPresenter/>
