@@ -24,13 +24,24 @@ namespace gRpcurlUI.View
 
         public event Action<double, double> WindowSizeChenged;
 
-        public Dispatcher Dispatcher => _Window.Dispatcher;
+        public Dispatcher Dispatcher => window?.Dispatcher;
 
-        private readonly Window _Window;
+        private readonly Window window;
 
         public WindowOwner(Window window)
         {
-            _Window = window;
+            this.window = window;
+            this.window.SizeChanged += Window_SizeChanged;
+        }
+
+        private void Window_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            if (window.WindowState != WindowState.Maximized 
+                && window.Height != double.NaN 
+                && window.Width != double.NaN)
+            {
+                WindowSizeChenged?.Invoke(window.Height, window.Width);
+            }
         }
 
         public void SetViewModel(ViewModelBase vm)
@@ -66,7 +77,7 @@ namespace gRpcurlUI.View
         {
             return await Dispatcher.InvokeAsync(() =>
             {
-                return MessageDialog.Show(_Window.Title, message, button);
+                return MessageDialog.Show(window.Title, message, button);
             });
         }
 
@@ -80,11 +91,6 @@ namespace gRpcurlUI.View
                 post.Invoke(dialog);
                 return result ?? false;
             });
-        }
-
-        public void OnWindowSizeChenged(double height, double width)
-        {
-            WindowSizeChenged?.Invoke(height, width);
         }
     }
 }

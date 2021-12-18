@@ -7,7 +7,6 @@
         xmlns:controls="clr-namespace:gRpcurlUI.Controls"
         mc:Ignorable="d"
         Background="{StaticResource DefaultWindowBackground}"
-        SizeChanged="Window_SizeChanged"
         Loaded="Window_Loaded"
         Title="gRpcurUI"
         Height="600" 
@@ -16,136 +15,90 @@
         MinWidth="350"
         FontFamily="{DynamicResource DefaultFontFamily}">
 
-    <Window.DataContext>
-        <viewmodel:TabContentPageViewModel x:Name="ViewModel"/>
-    </Window.DataContext>
-
     <Window.Resources>
+        
+        <ControlTemplate x:Key="TabHeaderButtonTemplate" TargetType="ToggleButton">
+            <Border x:Name="RootBorder"
+                    Background="{TemplateBinding Background}"
+                    BorderBrush="{TemplateBinding BorderBrush}"
+                    BorderThickness="{TemplateBinding BorderThickness}">
+                <Grid>
+                    <TextBlock Margin="4"
+                               VerticalAlignment="Center"
+                               HorizontalAlignment="Left"
+                               Text="{TemplateBinding Content}"
+                               FontSize="{TemplateBinding FontSize}"
+                               FontWeight="{TemplateBinding FontWeight}"
+                               Foreground="{TemplateBinding Foreground}"/>
 
-        <Style x:Key="SettingButtonStyle" TargetType="Button" BasedOn="{StaticResource DefaultButtonStyle}">
-            <Setter Property="Margin" Value="0,8,0,8"/>
-            <Setter Property="Height" Value="30"/>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="Button">
-                        
-                        <StackPanel Grid.Row="1"
-                                    Background="{TemplateBinding Background}"
-                                    Orientation="Horizontal">
-                            
-                            <Canvas Width="30"
-                                    Height="48"
-                                    Margin="4">
-                                
-                                <Path Width="24"
-                                      Height="24"
-                                      Data="{StaticResource Setting}"
-                                      Fill="{StaticResource DefaulIconBrush}"
-                                      Stretch="Uniform" />
-
-                            </Canvas>
-
-                            <TextBlock FontSize="16"
-                                       Style="{StaticResource DefaultTextBlockStyle}"
-                                       VerticalAlignment="Center"
-                                       Text="Setting"/>
-
-                        </StackPanel>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-
-        <ControlTemplate x:Key="ProjectListHeaderTemplate" TargetType="ContentControl">
-
-            <StackPanel Style="{StaticResource OparetionAreaStackPanelStyle}">
-
-                <Button  x:Name="ExportButton"
-                         Style="{StaticResource EditAreaButtonStyle}"
-                         Command="{Binding ExportCommand}"
-                         Tag="{StaticResource Export}"
-                         Content="Export"/>
-
-                <Button  x:Name="ImportButton"
-                         Style="{StaticResource EditAreaButtonStyle}"
-                         Command="{Binding ImportCommand}"
-                         Tag="{StaticResource Import}"
-                         Content="Import"/>
-
-                <Button  x:Name="AddButton"
-                         Style="{StaticResource EditAreaButtonStyle}"
-                         Command="{Binding AddCommand}"
-                         Tag="{StaticResource Add}"
-                         Content="Add"/>
-
-                <Button x:Name="RemoveButton"
-                        Style="{StaticResource EditAreaButtonStyle}"
-                        Command="{Binding RemoveCommand}"
-                        CommandParameter="1"
-                        Tag="{StaticResource Remove}"
-                        Content="Remove"/>
-
-                <Button x:Name="CancelButton"
-                        Visibility="Collapsed"
-                        Style="{StaticResource EditAreaButtonStyle}"
-                        Command="{Binding CancelCommand}"
-                        Tag="{StaticResource Cancel}"
-                        Content="Cancel"/>
-
-            </StackPanel>
+                    <Border x:Name="SelectedBorder" 
+                            Height="2"
+                            Margin="2,0,2,0"
+                            Background="{StaticResource DefaulIconBrush}"
+                            Visibility="Collapsed"
+                            VerticalAlignment="Bottom"/>
+                </Grid>
+            </Border>
 
             <ControlTemplate.Triggers>
-                <DataTrigger Binding="{Binding IsRemoveMode}" Value="True">
-                    <Setter TargetName="ExportButton" Property="Visibility" Value="Collapsed"/>
-                    <Setter TargetName="ImportButton" Property="Visibility" Value="Collapsed"/>
-                    <Setter TargetName="AddButton" Property="Visibility" Value="Collapsed"/>
-                    <Setter TargetName="CancelButton" Property="Visibility" Value="Visible"/>
-                </DataTrigger>
+                <Trigger Property="IsChecked" Value="True">
+                    <Setter Property="Visibility" TargetName="SelectedBorder" Value="Visible"/>
+                    <Setter Property="Background" TargetName="RootBorder" Value="{StaticResource DefaultSelectedBackground}"/>
+                </Trigger>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" TargetName="RootBorder" Value="{StaticResource DefaultButtonMouseOverBackground}"/>
+                </Trigger>
             </ControlTemplate.Triggers>
-
         </ControlTemplate>
 
+        <Style  x:Key="TabHeaderButtonStyle" TargetType="ToggleButton">
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="BorderBrush" Value="{StaticResource DefaulBorderBrush}"/>
+            <Setter Property="Foreground" Value="{StaticResource DefaultPageForeground}"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Width" Value="90"/>
+            <Setter Property="Template" Value="{StaticResource TabHeaderButtonTemplate}"/>
+        </Style>
+
     </Window.Resources>
-    
-    <Grid x:Name="MainHost">
 
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition x:Name="LeftColumn" MinWidth="100" MaxWidth="450" Width="200"/>
-            <ColumnDefinition Width="3"/>
-            <ColumnDefinition Width="*"/>
-        </Grid.ColumnDefinitions>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
 
-        <Grid >
-            <Grid.RowDefinitions>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="auto"/>
-            </Grid.RowDefinitions>
+        <StackPanel Orientation="Horizontal"
+                    Margin="4,4,4,0">
 
-            <controls:HeaderContent Title="{Binding ExecutePageViewModel.Context.ProjectType}">
+            <RadioButton Content="Curl"
+                         IsChecked="True"
+                         Style="{StaticResource TabHeaderButtonStyle}"
+                         Click="CurlButton_Click"/>
+            
+            <RadioButton Content="Grpcurl" 
+                         Style="{StaticResource TabHeaderButtonStyle}"
+                         Click="GrpcurlButton_Click_1"/>
+        </StackPanel>
 
-                <controls:HeaderContent.Header>
-                    <ContentControl Template="{StaticResource ProjectListHeaderTemplate}"/>
-                </controls:HeaderContent.Header>
+        <StackPanel Orientation="Horizontal"
+                    HorizontalAlignment="Right"
+                    Margin="4">
 
-                <controls:ProjectListBox IsMultiSelect="{Binding IsRemoveMode}"
-                                         SelectedCommand="{Binding SelectedCommand}"
-                                         ItemsSource="{Binding ExecutePageViewModel.Context.Projects}"/>
-                
-            </controls:HeaderContent>
-
-            <Button Grid.Row="1"
-                    Style="{StaticResource SettingButtonStyle}"
+            <Button Style="{StaticResource IconButtonStyle}"
+                    Tag="{StaticResource Setting}"
+                    Content="Setting"
                     Click="SettingButton_Click"/>
+            
+        </StackPanel>
 
-        </Grid>
+        <Border Height="1" Background="{StaticResource DefaulBorderBrush}"
+                VerticalAlignment="Bottom"/>
 
-        <GridSplitter Grid.Column="1"
-                      Style="{StaticResource DefaultGridSplitterStyle}"/>
-
-        <Frame x:Name="MainFrame"
-               NavigationUIVisibility="Hidden"
-               Grid.Column="2"/>
-
+        <Frame NavigationUIVisibility="Hidden"
+               x:Name="ContentFrame"
+               Grid.Row="1"/>
     </Grid>
     
 </Window>

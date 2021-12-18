@@ -38,7 +38,7 @@ namespace gRpcurlUI.ViewModel.Curl
 #endif
         }
 
-        public override void Add(IProject project)
+        public override void Add(IProject project = null)
         {
             if (project == null)
             {
@@ -72,7 +72,7 @@ namespace gRpcurlUI.ViewModel.Curl
         {
             try
             {
-                if (!string.IsNullOrWhiteSpace(SelectedProject.SendContent))
+                if (IsSendContentJson())
                 {
                     SelectedProject.SendContent = FormatJson(SelectedProject.SendContent, FormatType.View);
                 }
@@ -86,7 +86,7 @@ namespace gRpcurlUI.ViewModel.Curl
         protected override async Task<IProccesCommand> CreateCommandAsync()
         {
             string content = _SelectedProject.SendContent;
-            if (!string.IsNullOrWhiteSpace(SelectedProject.SendContent) && _SelectedProject.IsJsonContent)
+            if (IsSendContentJson())
             {
                 try
                 {
@@ -94,7 +94,7 @@ namespace gRpcurlUI.ViewModel.Curl
                 }
                 catch (Exception ex)
                 {
-                    var result = await OnShowMessageDialog($"Continue?\r\n\r\nContent is Not Json.\r\n{ex.Message}", MessageBoxButton.YesNo);
+                    var result = await OnShowMessageDialog($"Continue?\r\nContent is Not Json.\r\n{ex.Message}", MessageBoxButton.YesNo);
                     if (result == MessageBoxResult.No)
                     {
                         return null;
@@ -103,6 +103,11 @@ namespace gRpcurlUI.ViewModel.Curl
             }
 
             return new CurlCommand(_SelectedProject.Option, _SelectedProject.EndPoint, content);
+        }
+
+        private bool IsSendContentJson()
+        {
+            return !string.IsNullOrWhiteSpace(SelectedProject.SendContent) && _SelectedProject.IsJsonContent;
         }
 
         private string FormatJson(string json, FormatType formatType = FormatType.None)

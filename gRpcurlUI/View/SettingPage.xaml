@@ -7,39 +7,8 @@
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="SettingPage"
+      Margin="4"
       DataContextChanged="Page_DataContextChanged">
-
-    <Page.Resources>
-        
-        <Style x:Key="IconButtonStyle" TargetType="ButtonBase" BasedOn="{StaticResource DefaultButtonStyle}">
-            <Setter Property="Height" Value="60"/>
-            <Setter Property="Width" Value="60"/>
-            <Setter Property="Template" >
-                <Setter.Value>
-                    <ControlTemplate TargetType="ButtonBase">
-
-                        <Border Background="{TemplateBinding Background}">
-
-                            <Canvas VerticalAlignment="Center"
-                                    Width="48"
-                                    Height="48">
-
-                                <Path Width="24"
-                                      Height="24"
-                                      Data="{TemplateBinding Tag}"
-                                      Fill="{StaticResource DefaulIconBrush}"
-                                      Stretch="Uniform" />
-                            </Canvas>
-
-                        </Border>
-
-                    </ControlTemplate>
-
-                </Setter.Value>
-            </Setter>
-        </Style>
-        
-    </Page.Resources>
 
     <Grid>
         
@@ -49,23 +18,11 @@
             <RowDefinition Height="90"/>
         </Grid.RowDefinitions>
 
-        <Grid>
 
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="40"/>
-                <ColumnDefinition/>
-            </Grid.ColumnDefinitions>
-
-            <Button Tag="{StaticResource Back}"
-                    Style="{StaticResource IconButtonStyle}"
-                    Click="BackButton_Click"/>
-
-            <TextBlock Grid.Column="2"
-                       Text="Setting" 
-                       Style="{StaticResource DefaultTextBlockStyle}"
-                       Margin="2"
-                       FontSize="32"/>
-        </Grid>
+        <TextBlock Text="Setting" 
+                   Style="{StaticResource DefaultTextBlockStyle}"
+                   Margin="2"
+                   FontSize="32"/>
         
         <Border Background="{StaticResource DefaulBorderBrush}"
                 Height="1"

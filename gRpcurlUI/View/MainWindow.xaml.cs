@@ -1,8 +1,10 @@
-﻿using gRpcurlUI.View;
+﻿using gRpcurlUI.Core;
+using gRpcurlUI.Model;
+using gRpcurlUI.View;
 using gRpcurlUI.ViewModel;
+using gRpcurlUI.ViewModel.Curl;
+using gRpcurlUI.ViewModel.Grpcurl;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
 
 namespace gRpcurlUI
 {
@@ -11,59 +13,56 @@ namespace gRpcurlUI
     /// </summary>
     public partial class MainWindow : Window
     {
+        private readonly WindowOwner windowOwner;
+
         private readonly SettingPage settingPage;
 
-        private readonly ExecutePage excutePage;
+        private readonly TabContentPage curlPage;
 
-        private readonly WindowOwner _Owner;
+        private readonly TabContentPage gRpcCurlPage;
+
+        private readonly AppSetting appSetting =  new AppSetting();
+
+        private readonly ILoadModel loadModel = new LoadModel();
 
         public MainWindow()
         {
+            windowOwner = new WindowOwner(this);
+            settingPage = new SettingPage(windowOwner);
+            settingPage.DataContext = new SettingPageViewModel(appSetting);
+            curlPage = new TabContentPage(windowOwner);
+            gRpcCurlPage = new TabContentPage(windowOwner);
+            curlPage.DataContext = new TabContentPageViewModel(loadModel, new CurlExecutePageViewModel(new ProcessExecuter()));
+            gRpcCurlPage.DataContext = new TabContentPageViewModel(loadModel, new GrpcurlExecutePageViewModel(new ProcessExecuter(), appSetting));
+
             InitializeComponent();
-            _Owner = new WindowOwner(this);
-            excutePage = new ExecutePage(_Owner);
-            settingPage = new SettingPage(_Owner);
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            if (DataContext is TabContentPageViewModel vm)
-            {
-                var bindExecute = new Binding(nameof(vm.ExecutePageViewModel))
-                {
-                    Source = vm,
-                    Mode = BindingMode.OneWay
-                };
-                excutePage.SetBinding(Page.DataContextProperty, bindExecute);
+            ContentFrame.Content = curlPage;
+        }
 
-                var bindSetting = new Binding(nameof(vm.SettingPageViewModel))
-                {
-                    Source = vm,
-                    Mode = BindingMode.OneWay
-                };
-                settingPage.SetBinding(Page.DataContextProperty, bindSetting);
+        private void CurlButton_Click(object sender, RoutedEventArgs e)
+        {
+            ContentFrame.Content = curlPage;
+        }
 
-                _Owner.SetViewModel(vm);
-            }
-
-            MainFrame.Navigate(excutePage);
+        private void GrpcurlButton_Click_1(object sender, RoutedEventArgs e)
+        {
+            ContentFrame.Content = gRpcCurlPage;
         }
 
         private void SettingButton_Click(object sender, RoutedEventArgs e)
         {
-            MainFrame.Navigate(settingPage);
-        }
-
-        private void Window_SizeChanged(object sender, SizeChangedEventArgs e)
-        {
-            if (WindowState == WindowState.Maximized)
+            if (ContentFrame.Content == settingPage && ContentFrame.CanGoBack)
             {
-                return;
+                ContentFrame.GoBack();
             }
-
-            LeftColumn.Width = new GridLength(Width * 0.2);
-            _Owner.OnWindowSizeChenged(Height, Width);
+            else
+            {
+                ContentFrame.Content = settingPage;
+            }
         }
-
     }
 }

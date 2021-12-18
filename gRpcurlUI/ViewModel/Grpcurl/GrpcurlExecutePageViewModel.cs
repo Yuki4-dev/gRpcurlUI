@@ -71,7 +71,7 @@ namespace gRpcurlUI.ViewModel.Grpcurl
                 }
                 catch (Exception ex)
                 {
-                    var result = await OnShowMessageDialog($"Continue?\r\n\r\nContent is Not Json.\r\n{ex.Message}", MessageBoxButton.YesNo);
+                    var result = await OnShowMessageDialog($"Continue?\r\nContent is Not Json.\r\n{ex.Message}", MessageBoxButton.YesNo);
                     if (result == MessageBoxResult.No)
                     {
                         return null;

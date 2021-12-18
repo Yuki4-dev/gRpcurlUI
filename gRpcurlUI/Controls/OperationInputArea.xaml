@@ -10,75 +10,83 @@
              d:DesignHeight="450" d:DesignWidth="800">
 
     <UserControl.Resources>
+        
+        <ResourceDictionary>
+            
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="OperationInputAreaTemplate.xaml" />
+            </ResourceDictionary.MergedDictionaries>
 
-        <ControlTemplate x:Key="OpretionInputAreaTemlate" TargetType="local:OperationInputArea">
+            <ControlTemplate x:Key="OpretionInputAreaTemlate" TargetType="local:OperationInputArea">
 
-            <StackPanel>
+                <StackPanel>
 
-                <Border BorderBrush="{StaticResource DefaulBorderBrush}"
-                        Background="{StaticResource DefaultSelectedBackground}"
-                        HorizontalAlignment="Left"
-                        Margin="4,1,4,4"
-                        BorderThickness="1">
+                    <Border BorderBrush="{StaticResource DefaulBorderBrush}"
+                            Background="{StaticResource DefaultSelectedBackground}"
+                            HorizontalAlignment="Left"
+                            Margin="4,1,4,4"
+                            BorderThickness="1">
 
-                    <Grid>
+                        <Grid>
 
-                        <StackPanel Orientation="Horizontal"
-                                    Height="30">
+                            <StackPanel Orientation="Horizontal"
+                                        Height="30">
 
-                            <TextBlock Text="{Binding Text, ElementName=ProjectNameTextBlock}"
-                                       FontSize="12"
-                                       Margin="4"
-                                       MaxWidth="200"
-                                       VerticalAlignment="Center"
-                                       Style="{StaticResource DefaultTextBlockStyle}">
+                                <TextBlock Text="{Binding Text, ElementName=ProjectNameTextBlock}"
+                                           FontSize="12"
+                                           Margin="4"
+                                           MaxWidth="200"
+                                           VerticalAlignment="Center"
+                                           Style="{StaticResource DefaultTextBlockStyle}">
 
-                                <TextBlock.ToolTip>
-                                    <ToolTip Content="{Binding Path=SelectedProject.ProjectName}"
-                                             Style="{StaticResource DefaultToolTipStyle}"/>
-                                </TextBlock.ToolTip>
+                                    <TextBlock.ToolTip>
+                                        <ToolTip Content="{Binding Path=SelectedProject.ProjectName}"
+                                                 Style="{StaticResource DefaultToolTipStyle}"/>
+                                    </TextBlock.ToolTip>
 
-                            </TextBlock>
+                                </TextBlock>
 
-                            <ToggleButton  Style="{StaticResource EditAreaButtonStyle}"
-                                           IsChecked="{Binding IsOpen, Mode=TwoWay, ElementName=ProjectNameEditPopup}"
-                                           Tag="{StaticResource Edit}"
-                                           Content="Edit."/>
+                                <ToggleButton  Style="{StaticResource IconButtonStyle}"
+                                               IsChecked="{Binding IsOpen, Mode=TwoWay, ElementName=ProjectNameEditPopup}"
+                                               Tag="{StaticResource Edit}"
+                                               Content="Edit."/>
 
-                        </StackPanel>
+                            </StackPanel>
 
-                        <Popup x:Name="ProjectNameEditPopup"
-                               StaysOpen="False">
+                            <Popup x:Name="ProjectNameEditPopup"
+                                   StaysOpen="False">
 
-                            <Border Background="{StaticResource DefaultWindowBackground}"
-                                    BorderBrush="{StaticResource DefaulBorderBrush}"
-                                    BorderThickness="1">
+                                <Border Background="{StaticResource DefaultWindowBackground}"
+                                        BorderBrush="{StaticResource DefaulBorderBrush}"
+                                        BorderThickness="1">
 
-                                <TextBox  x:Name="ProjectNameTextBlock"
-                                          FontSize="{StaticResource EditTextBoxFontSize}"
-                                          Text="{Binding Title,ElementName=Root,Mode=TwoWay, UpdateSourceTrigger=LostFocus}"
-                                          Style="{StaticResource DefaultTextBoxStyle}"
-                                          Margin="4"/>
+                                    <TextBox  x:Name="ProjectNameTextBlock"
+                                              FontSize="{StaticResource EditTextBoxFontSize}"
+                                              Text="{Binding Title,ElementName=Root,Mode=TwoWay, UpdateSourceTrigger=LostFocus}"
+                                              Style="{StaticResource DefaultTextBoxStyle}"
+                                              Margin="4"/>
 
-                            </Border>
+                                </Border>
 
-                        </Popup>
+                            </Popup>
 
-                    </Grid>
+                        </Grid>
 
-                </Border>
+                    </Border>
 
-                <ContentPresenter Margin="4"/>
+                    <ContentPresenter Margin="4"/>
 
-            </StackPanel>
+                </StackPanel>
 
 
-        </ControlTemplate>
+            </ControlTemplate>
 
-        <Style x:Key="OpretionInputAreaStyle" TargetType="UserControl">
-            <Setter Property="Template" Value="{StaticResource OpretionInputAreaTemlate}"/>
-        </Style>
-
+            <Style x:Key="OpretionInputAreaStyle" TargetType="UserControl">
+                <Setter Property="Template" Value="{StaticResource OpretionInputAreaTemlate}"/>
+            </Style>
+            
+        </ResourceDictionary>
+        
     </UserControl.Resources>
    
 </UserControl>

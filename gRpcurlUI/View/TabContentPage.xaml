@@ -8,72 +8,36 @@
       xmlns:controls="clr-namespace:gRpcurlUI.Controls"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
+      Loaded="Page_Loaded"
+      DataContextChanged="Page_DataContextChanged"
       Title="TabContentPage">
 
-    <Page.DataContext>
-        <viewmodel:TabContentPageViewModel x:Name="ViewModel"/>
-    </Page.DataContext>
-
     <Page.Resources>
-
-        <Style x:Key="SettingButtonStyle" TargetType="Button" BasedOn="{StaticResource DefaultButtonStyle}">
-            <Setter Property="Margin" Value="0,8,0,8"/>
-            <Setter Property="Height" Value="30"/>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="Button">
-
-                        <StackPanel Grid.Row="1"
-                                    Background="{TemplateBinding Background}"
-                                    Orientation="Horizontal">
-
-                            <Canvas Width="30"
-                                    Height="48"
-                                    Margin="4">
-
-                                <Path Width="24"
-                                      Height="24"
-                                      Data="{StaticResource Setting}"
-                                      Fill="{StaticResource DefaulIconBrush}"
-                                      Stretch="Uniform" />
-
-                            </Canvas>
-
-                            <TextBlock FontSize="16"
-                                       Style="{StaticResource DefaultTextBlockStyle}"
-                                       VerticalAlignment="Center"
-                                       Text="Setting"/>
-
-                        </StackPanel>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
 
         <ControlTemplate x:Key="ProjectListHeaderTemplate" TargetType="ContentControl">
 
             <StackPanel Style="{StaticResource OparetionAreaStackPanelStyle}">
 
                 <Button  x:Name="ExportButton"
-                         Style="{StaticResource EditAreaButtonStyle}"
+                         Style="{StaticResource IconButtonStyle}"
                          Command="{Binding ExportCommand}"
                          Tag="{StaticResource Export}"
                          Content="Export"/>
 
                 <Button  x:Name="ImportButton"
-                         Style="{StaticResource EditAreaButtonStyle}"
+                         Style="{StaticResource IconButtonStyle}"
                          Command="{Binding ImportCommand}"
                          Tag="{StaticResource Import}"
                          Content="Import"/>
 
                 <Button  x:Name="AddButton"
-                         Style="{StaticResource EditAreaButtonStyle}"
+                         Style="{StaticResource IconButtonStyle}"
                          Command="{Binding AddCommand}"
                          Tag="{StaticResource Add}"
                          Content="Add"/>
 
                 <Button x:Name="RemoveButton"
-                        Style="{StaticResource EditAreaButtonStyle}"
+                        Style="{StaticResource IconButtonStyle}"
                         Command="{Binding RemoveCommand}"
                         CommandParameter="1"
                         Tag="{StaticResource Remove}"
@@ -81,7 +45,7 @@
 
                 <Button x:Name="CancelButton"
                         Visibility="Collapsed"
-                        Style="{StaticResource EditAreaButtonStyle}"
+                        Style="{StaticResource IconButtonStyle}"
                         Command="{Binding CancelCommand}"
                         Tag="{StaticResource Cancel}"
                         Content="Cancel"/>
@@ -109,29 +73,17 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
-        <Grid >
-            <Grid.RowDefinitions>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="auto"/>
-            </Grid.RowDefinitions>
+        <controls:HeaderContent Title="{Binding ExecutePageViewModel.Context.ProjectType}">
 
-            <controls:HeaderContent Title="{Binding ExecutePageViewModel.Context.ProjectType}">
+            <controls:HeaderContent.Header>
+                <ContentControl Template="{StaticResource ProjectListHeaderTemplate}"/>
+            </controls:HeaderContent.Header>
 
-                <controls:HeaderContent.Header>
-                    <ContentControl Template="{StaticResource ProjectListHeaderTemplate}"/>
-                </controls:HeaderContent.Header>
-
-                <controls:ProjectListBox IsMultiSelect="{Binding IsRemoveMode}"
+            <controls:ProjectListBox IsMultiSelect="{Binding IsRemoveMode}"
                                          SelectedCommand="{Binding SelectedCommand}"
                                          ItemsSource="{Binding ExecutePageViewModel.Context.Projects}"/>
 
-            </controls:HeaderContent>
-
-            <Button Grid.Row="1"
-                    Style="{StaticResource SettingButtonStyle}"
-                    Click="SettingButton_Click"/>
-
-        </Grid>
+        </controls:HeaderContent>
 
         <GridSplitter Grid.Column="1"
                       Style="{StaticResource DefaultGridSplitterStyle}"/>

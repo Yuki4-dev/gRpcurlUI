@@ -22,7 +22,7 @@ namespace gRpcurlUI.Model.Curl
 
         private string Replace(string text)
         {
-            return text.Replace("\"", "\\\"").Replace("\r\n"," ").Trim();
+            return text.Replace("\"", "\\\"").Replace("\r\n", " ").Trim();
         }
     }
 }

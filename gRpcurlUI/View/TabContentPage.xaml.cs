@@ -1,15 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using gRpcurlUI.ViewModel;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace gRpcurlUI.View
 {
@@ -18,14 +9,46 @@ namespace gRpcurlUI.View
     /// </summary>
     public partial class TabContentPage : Page
     {
+        private readonly ExecutePage excutePage;
+
+        private readonly IWindowOwner windowOwner;
+
         public TabContentPage()
         {
             InitializeComponent();
+            excutePage = new ExecutePage();
         }
 
-        private void SettingButton_Click(object sender, RoutedEventArgs e)
+        public TabContentPage(IWindowOwner owner)
         {
-            //MainFrame.Navigate(settingPage);
+            windowOwner = owner;
+            windowOwner.WindowSizeChenged += Owner_WindowSizeChenged;
+            excutePage = new ExecutePage(windowOwner);
+            InitializeComponent();
+        }
+
+        private void Owner_WindowSizeChenged(double height, double width)
+        {
+            LeftColumn.Width = new GridLength(width * 0.2);
+        }
+
+        private void Page_Loaded(object sender, RoutedEventArgs e)
+        {
+            MainFrame.Navigate(excutePage);
+        }
+
+        private void Page_DataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            ReloadDataContext();
+        }
+
+        private void ReloadDataContext()
+        {
+            if (DataContext is TabContentPageViewModel vm)
+            {
+                excutePage.DataContext = vm.ExecutePageViewModel;
+                windowOwner?.SetViewModel(vm);
+            }
         }
     }
 }

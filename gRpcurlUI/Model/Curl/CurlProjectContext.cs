@@ -3,7 +3,6 @@ using System.Collections.ObjectModel;
 
 namespace gRpcurlUI.Model.Curl
 {
-
     public class CurlProjectContext : Observable, IProjectContext<CurlProject>
     {
         private string _Verion;

@@ -19,13 +19,6 @@ namespace gRpcurlUI.ViewModel
             set => OnPropertyChanged(ref _ExcutePageViewModel, value);
         }
 
-        private SettingPageViewModel _SettingPageViewModel;
-        public SettingPageViewModel SettingPageViewModel
-        {
-            get => _SettingPageViewModel;
-            set => OnPropertyChanged(ref _SettingPageViewModel, value);
-        }
-
         private bool _IsRemoveMode;
         public bool IsRemoveMode
         {
@@ -83,26 +76,14 @@ namespace gRpcurlUI.ViewModel
             set => OnPropertyChanged(ref _CancelCommand, value);
         }
 
-        private readonly ILoadModel loadModel = new LoadModel();
+        private readonly ILoadModel loadModel;
 
         private readonly List<IProject> removeProject = new List<IProject>();
 
-        public TabContentPageViewModel()
-        {
-            var setting = new AppSetting(App.Current.Resources);
-            SettingPageViewModel = new SettingPageViewModel(setting);
-            ExecutePageViewModel = new CurlExecutePageViewModel(new ProcessExecuter());
-#if DEBUG
-            setting.AppPath = "grpcurl.exe";
-#endif
-            SetCommand();
-        }
-
-        public TabContentPageViewModel(ILoadModel load, IExecutePageViewModel<IProject> holder, AppSetting setting)
+        public TabContentPageViewModel(ILoadModel load, IExecutePageViewModel<IProject> holder)
         {
             loadModel = load;
             ExecutePageViewModel = holder;
-            SettingPageViewModel = new SettingPageViewModel(setting);
 
             SetCommand();
         }

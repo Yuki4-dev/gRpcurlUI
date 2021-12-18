@@ -9,7 +9,7 @@ namespace gRpcurlUI.View
     /// </summary>
     public partial class ExecutePage : Page
     {
-        private readonly IWindowOwner _Owner;
+        private readonly IWindowOwner windowOwner;
 
         public ExecutePage()
         {
@@ -18,8 +18,8 @@ namespace gRpcurlUI.View
 
         public ExecutePage(IWindowOwner owner) : this()
         {
-            _Owner = owner;
-            _Owner.WindowSizeChenged += Owner_WindowSizeChenged;
+            windowOwner = owner;
+            windowOwner.WindowSizeChenged += Owner_WindowSizeChenged;
         }
 
         private void Owner_WindowSizeChenged(double height, double width)
@@ -32,7 +32,7 @@ namespace gRpcurlUI.View
         {
             if (DataContext is ViewModelBase vm)
             {
-                _Owner?.SetViewModel(vm);
+                windowOwner?.SetViewModel(vm);
             }
         }
     }
