@@ -28,8 +28,8 @@
             <FontFamily x:Key="DefaultFontFamily">Yu Gothic UI</FontFamily>
 
             <Style TargetType="ProgressBar" x:Key="DefaultProgressBarStyle">
-                <Setter Property="Foreground" Value="{StaticResource DefaultButtonMouseOverBackground}"/>
-                <Setter Property="Background" Value="{StaticResource DefaultSelectedBackground}"/>
+                <Setter Property="Foreground" Value="#55000000"/>
+                <Setter Property="Background" Value="{StaticResource DefaulIconBrush}"/>
                 <Setter Property="BorderThickness" Value="0"/>
             </Style>
 
@@ -68,7 +68,7 @@
 
                 <Border BorderThickness="1"
                         BorderBrush="{StaticResource DefaulBorderBrush}"
-                        Background="{StaticResource DefaultToopTipBackground}">
+                        Background="{StaticResource DefaultWindowBackground}">
                 
                     <TextBlock FontSize="22" 
                                Text="{TemplateBinding Content}"
@@ -111,7 +111,7 @@
 
                 <Style.Triggers>
                     <Trigger Property="IsMouseOver" Value="True">
-                        <Setter Property="Background" Value="{StaticResource DefaultButtonMouseOverBackground}" />
+                        <Setter Property="Background" Value="{StaticResource DefaultMouseOverBackground}" />
                     </Trigger>
                 </Style.Triggers>
             
@@ -271,7 +271,7 @@
                 <Setter Property="Template" Value="{StaticResource IconButtonTemplate}"/>
                 <Style.Triggers>
                     <Trigger Property="IsMouseOver" Value="True">
-                        <Setter Property="Foreground" Value="{StaticResource DefaultButtonMouseOverBackground}" />
+                        <Setter Property="Foreground" Value="{StaticResource DefaultMouseOverBackground}" />
                     </Trigger>
                 </Style.Triggers>
             </Style>

@@ -9,8 +9,7 @@
     <SolidColorBrush x:Key="DefaulEditAreaBoxBrush">#202020</SolidColorBrush>
     <SolidColorBrush x:Key="DefaultTextBoxSelectBrush">DimGray</SolidColorBrush>
 
-    <SolidColorBrush x:Key="DefaultButtonMouseOverBackground">DimGray</SolidColorBrush>
+    <SolidColorBrush x:Key="DefaultMouseOverBackground">DimGray</SolidColorBrush>
     <SolidColorBrush x:Key="DefaultSelectedBackground">#404040</SolidColorBrush>
-    <SolidColorBrush x:Key="DefaultToopTipBackground">#404040</SolidColorBrush>
-    
+
 </ResourceDictionary>

@@ -46,7 +46,7 @@
                     <Setter Property="Background" TargetName="RootBorder" Value="{StaticResource DefaultSelectedBackground}"/>
                 </Trigger>
                 <Trigger Property="IsMouseOver" Value="True">
-                    <Setter Property="Background" TargetName="RootBorder" Value="{StaticResource DefaultButtonMouseOverBackground}"/>
+                    <Setter Property="Background" TargetName="RootBorder" Value="{StaticResource DefaultMouseOverBackground}"/>
                 </Trigger>
             </ControlTemplate.Triggers>
         </ControlTemplate>

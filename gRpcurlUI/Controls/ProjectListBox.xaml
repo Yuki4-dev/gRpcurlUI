@@ -82,7 +82,7 @@
                                 <Setter TargetName="SelectBorder" Property="Background" Value="{StaticResource DefaultSelectedBackground}"/>
                             </Trigger>
                             <Trigger Property="IsMouseOver" Value="true">
-                                <Setter TargetName="SelectBorder" Property="Background" Value="{StaticResource DefaultButtonMouseOverBackground}"/>
+                                <Setter TargetName="SelectBorder" Property="Background" Value="{StaticResource DefaultMouseOverBackground}"/>
                             </Trigger>
                         </DataTemplate.Triggers>
                     </DataTemplate>
@@ -93,14 +93,10 @@
         </Style>
 
         <ControlTemplate x:Key="ProjectListBoxTemaplate" TargetType="local:ProjectListBox">
-
-            <Grid Background="{StaticResource DefaulEditAreaBoxBrush}">
-
+            <Grid Background="{TemplateBinding Background}">
                 <ListBox Style="{StaticResource ListBoxStyle}"
                          ItemsSource="{TemplateBinding ItemsSource}"/>
-
             </Grid>
-
         </ControlTemplate>
 
         <Style x:Key="MultiSelectListBoxStyle" TargetType="ListBox">
@@ -165,7 +161,7 @@
                                 <Setter TargetName="SelectBorder" Property="Background" Value="{StaticResource DefaultSelectedBackground}"/>
                             </Trigger>
                             <Trigger Property="IsMouseOver" Value="true">
-                                <Setter TargetName="SelectBorder" Property="Background" Value="{StaticResource DefaultButtonMouseOverBackground}"/>
+                                <Setter TargetName="SelectBorder" Property="Background" Value="{StaticResource DefaultMouseOverBackground}"/>
                             </Trigger>
                         </DataTemplate.Triggers>
                     </DataTemplate>
