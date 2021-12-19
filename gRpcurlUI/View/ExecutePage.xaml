@@ -60,22 +60,22 @@
 
                     <StackPanel Style="{StaticResource OparetionAreaStackPanelStyle}">
 
-                        <Button  Style="{StaticResource IconButtonStyle}"
+                        <Button  Style="{StaticResource IconButtonStyleTooltip}"
                                  Command="{Binding SendCommand}"
                                  Tag="{StaticResource Send}"
                                  Content="Send"/>
 
-                        <Button  Style="{StaticResource IconButtonStyle}"
+                        <Button  Style="{StaticResource IconButtonStyleTooltip}"
                                  Command="{Binding SendCancelCommand}"
                                  Tag="{StaticResource Cancel}"
                                  Content="Cancel"/>
 
-                        <Button  Style="{StaticResource IconButtonStyle}"
+                        <Button  Style="{StaticResource IconButtonStyleTooltip}"
                                  Command="{Binding SendContentFormatCommand}"
                                  Tag="{StaticResource Format}"
                                  Content="Format"/>
 
-                        <Button Style="{StaticResource IconButtonStyle}"
+                        <Button Style="{StaticResource IconButtonStyleTooltip}"
                                 Command="{Binding TextBoxClearCommand}"
                                 CommandParameter="SendContent"
                                 Tag="{StaticResource Clear}"
@@ -128,7 +128,7 @@
                         <Button HorizontalAlignment="Right"
                                 CommandParameter="Standard"
                                 Command="{Binding TextBoxClearCommand}"
-                                Style="{StaticResource IconButtonStyle}"
+                                Style="{StaticResource IconButtonStyleTooltip}"
                                 Tag="{StaticResource Clear}"
                                 Content="All Clear"/>
  
@@ -158,7 +158,7 @@
 
                         <Button CommandParameter="Error"
                                 Command="{Binding TextBoxClearCommand}"
-                                Style="{StaticResource IconButtonStyle}"
+                                Style="{StaticResource IconButtonStyleTooltip}"
                                 Tag="{StaticResource Clear}"
                                 Content="All Clear"/>
                         

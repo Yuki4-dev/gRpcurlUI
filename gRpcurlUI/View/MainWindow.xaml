@@ -86,7 +86,7 @@
                     HorizontalAlignment="Right"
                     Margin="4">
 
-            <Button Style="{StaticResource IconButtonStyle}"
+            <Button Style="{StaticResource IconButtonStyleTooltip}"
                     Tag="{StaticResource Setting}"
                     Content="Setting"
                     Click="SettingButton_Click"/>

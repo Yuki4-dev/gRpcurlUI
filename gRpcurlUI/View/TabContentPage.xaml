@@ -20,25 +20,25 @@
             <StackPanel Style="{StaticResource OparetionAreaStackPanelStyle}">
 
                 <Button  x:Name="ExportButton"
-                         Style="{StaticResource IconButtonStyle}"
+                         Style="{StaticResource IconButtonStyleTooltip}"
                          Command="{Binding ExportCommand}"
                          Tag="{StaticResource Export}"
                          Content="Export"/>
 
                 <Button  x:Name="ImportButton"
-                         Style="{StaticResource IconButtonStyle}"
+                         Style="{StaticResource IconButtonStyleTooltip}"
                          Command="{Binding ImportCommand}"
                          Tag="{StaticResource Import}"
                          Content="Import"/>
 
                 <Button  x:Name="AddButton"
-                         Style="{StaticResource IconButtonStyle}"
+                         Style="{StaticResource IconButtonStyleTooltip}"
                          Command="{Binding AddCommand}"
                          Tag="{StaticResource Add}"
                          Content="Add"/>
 
                 <Button x:Name="RemoveButton"
-                        Style="{StaticResource IconButtonStyle}"
+                        Style="{StaticResource IconButtonStyleTooltip}"
                         Command="{Binding RemoveCommand}"
                         CommandParameter="1"
                         Tag="{StaticResource Remove}"
@@ -46,7 +46,7 @@
 
                 <Button x:Name="CancelButton"
                         Visibility="Collapsed"
-                        Style="{StaticResource IconButtonStyle}"
+                        Style="{StaticResource IconButtonStyleTooltip}"
                         Command="{Binding CancelCommand}"
                         Tag="{StaticResource Cancel}"
                         Content="Cancel"/>

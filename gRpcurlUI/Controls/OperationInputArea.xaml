@@ -46,7 +46,7 @@
 
                                 </TextBlock>
 
-                                <ToggleButton  Style="{StaticResource IconButtonStyle}"
+                                <ToggleButton  Style="{StaticResource IconButtonStyleTooltip}"
                                                IsChecked="{Binding IsOpen, Mode=TwoWay, ElementName=ProjectNameEditPopup}"
                                                Tag="{StaticResource Edit}"
                                                Content="Edit."/>

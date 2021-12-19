@@ -16,10 +16,9 @@
 
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Style/GeometryStyle.xaml" />
+                <ResourceDictionary Source="Style/ButtonStyle.xaml" />
                 <ResourceDictionary Source="Style/SolidColorBrushStyle.xaml" />
             </ResourceDictionary.MergedDictionaries>
-
-            <local:IconSizeConverter x:Key="IconConverter" />
 
             <system:Double x:Key="DefaultTextBoxFontSize">16</system:Double>
             <system:Double x:Key="EditTextBoxFontSize">14</system:Double>
@@ -69,227 +68,32 @@
                 <Border BorderThickness="1"
                         BorderBrush="{StaticResource DefaulBorderBrush}"
                         Background="{StaticResource DefaultWindowBackground}">
-                
+
                     <TextBlock FontSize="22" 
                                Text="{TemplateBinding Content}"
                                Margin="8"
                                Style="{StaticResource DefaultTextBlockStyle}"/>
-                
+
                 </Border>
 
             </ControlTemplate>
 
             <Style x:Key="DefaultToolTipStyle" TargetType="ToolTip">
                 <Setter Property="Padding" Value="-1"/>
+                <Setter Property="Content" Value="{Binding Content, RelativeSource={RelativeSource FindAncestor, AncestorType=Button}}"/>
                 <Setter Property="Template" Value="{StaticResource DefaultToolTipTemplate}"/>
             </Style>
 
-            <Style x:Key="DefaultButtonStyle" TargetType="ButtonBase">
-                <Setter Property="BorderThickness" Value="0"/>
-                <Setter Property="Background" Value="Transparent"/>
-                <Setter Property="Template" >
+            <Style x:Key="IconButtonStyleTooltip" BasedOn="{StaticResource IconButtonStyle}" TargetType="ButtonBase">
+                <Setter Property="ToolTip">
                     <Setter.Value>
-                        <ControlTemplate TargetType="ButtonBase">
-                        
-                            <Border Background="{TemplateBinding Background}"
-                                    BorderBrush="{TemplateBinding BorderBrush}"
-                                    BorderThickness="{TemplateBinding BorderThickness}"
-                                    Padding="{TemplateBinding Padding}">
-                            
-                                <TextBlock Text="{TemplateBinding Content}"
-                                           Style="{StaticResource DefaultTextBlockStyle}"
-                                           FontWeight="{TemplateBinding FontWeight}"
-                                           FontSize="{TemplateBinding FontSize}"
-                                           HorizontalAlignment="Center"
-                                           VerticalAlignment="Center"/>
-                            
-                            </Border>
-                        
-                        </ControlTemplate>
+                        <ToolTip Style="{StaticResource DefaultToolTipStyle}"/>
                     </Setter.Value>
                 </Setter>
-
-                <Style.Triggers>
-                    <Trigger Property="IsMouseOver" Value="True">
-                        <Setter Property="Background" Value="{StaticResource DefaultMouseOverBackground}" />
-                    </Trigger>
-                </Style.Triggers>
-            
-            </Style>
-
-            <Style x:Key="DefaultTextButtonStyle" TargetType="ButtonBase" BasedOn="{StaticResource DefaultButtonStyle}">
-                <Setter Property="BorderThickness" Value="1"/>
-                <Setter Property="Template" >
-                    <Setter.Value>
-                        <ControlTemplate TargetType="ButtonBase">
-
-                            <Grid Margin="{TemplateBinding Padding}">
-
-                                <TextBlock Text="{TemplateBinding Content}"
-                                           Style="{StaticResource DefaultTextBlockStyle}"
-                                           FontWeight="{TemplateBinding FontWeight}"
-                                           FontSize="{TemplateBinding FontSize}"/>
-
-                                <Border x:Name="UnderLine"
-                                        BorderBrush="{StaticResource DefaultPageForeground}"
-                                        BorderThickness="{TemplateBinding BorderThickness}"
-                                        Height="1"
-                                        VerticalAlignment="Bottom"
-                                        Visibility="Collapsed"/>
-                            </Grid>
-
-                            <ControlTemplate.Triggers>
-                                <Trigger Property="IsMouseOver" Value="True">
-                                    <Setter Property="Visibility" Value="Visible" TargetName="UnderLine"/>
-                                </Trigger>
-                            </ControlTemplate.Triggers>
-
-                        </ControlTemplate>
-                    </Setter.Value>
-                </Setter>
-            </Style>
-
-            <ControlTemplate x:Key="CheckedToggleButtonTemplate" TargetType="ToggleButton" >
-                <Border Background="{TemplateBinding Background}"
-                        BorderBrush="{TemplateBinding BorderBrush}"
-                        BorderThickness="{TemplateBinding BorderThickness}">
-
-                    <StackPanel Orientation="Horizontal"
-                                Margin="0,4,0,4">
-
-                        <Canvas Width="30"
-                                Height="20">
-
-                            <Path Width="30"
-                                  Height="20"
-                                  Data="{StaticResource Checked}"
-                                  Fill="{StaticResource DefaulIconBrush}"
-                                  Stretch="Uniform" />
-                        </Canvas>
-
-                        <TextBlock Text="{TemplateBinding Content}"
-                                   VerticalAlignment="Center"
-                                   Foreground="{StaticResource DefaultPageForeground}"
-                                   FontSize="{TemplateBinding FontSize}"
-                                   FontWeight="{TemplateBinding FontWeight}"/>
-
-                    </StackPanel>
-                </Border>
-            </ControlTemplate>
-
-            <Style x:Key="CheckedToggleButtonStyle" TargetType="ToggleButton">
-                <Setter Property="BorderThickness" Value="0"/>
-                <Setter Property="Background" Value="Transparent"/>
-                <Setter Property="FontSize" Value="14"/>
-                <Setter Property="FontWeight" Value="DemiBold"/>
-                <Setter Property="Height" Value="50"/>
-                <Setter Property="Template">
-                    <Setter.Value>
-                        <ControlTemplate TargetType="ToggleButton">
-                            <Border Background="{TemplateBinding Background}"
-                                    BorderBrush="{TemplateBinding BorderBrush}"
-                                    BorderThickness="{TemplateBinding BorderThickness}">
-
-                                <StackPanel Orientation="Horizontal"
-                                            Margin="0,4,0,4">
-
-                                    <Canvas Width="30"
-                                            Height="20">
-
-                                        <Path Width="30"
-                                              Height="20"
-                                              Data="{StaticResource Check}"
-                                              Fill="{StaticResource DefaulIconBrush}"
-                                              Stretch="Uniform" />
-                                    </Canvas>
-
-                                    <TextBlock Text="{TemplateBinding Content}"
-                                               VerticalAlignment="Center"
-                                               Foreground="{StaticResource DefaultPageForeground}"
-                                               FontSize="{TemplateBinding FontSize}"
-                                               FontWeight="{TemplateBinding FontWeight}"/>
-
-                                </StackPanel>
-                            </Border>
-                        </ControlTemplate>
-                    </Setter.Value>
-                </Setter>
-
-                <Style.Triggers>
-                    <Trigger Property="IsChecked" Value="True">
-                        <Setter Property="Template" Value="{StaticResource CheckedToggleButtonTemplate}" />
-                    </Trigger>
-                </Style.Triggers>
-
-            </Style>
-
-            <ControlTemplate  x:Key="IconButtonTemplate"
-                              TargetType="{x:Type ContentControl}">
-
-                <Border Background="{TemplateBinding Background}">
-
-                    <Viewbox Width="{TemplateBinding Width}" Height="{TemplateBinding Height}">
-
-                        <Canvas Width="{TemplateBinding Width,
-                                Converter={StaticResource IconConverter}}"
-                                Height="{TemplateBinding Height,
-                                Converter={StaticResource IconConverter}}"
-                                Margin="4"
-                                HorizontalAlignment="Center"
-                                Background="{TemplateBinding Background}">
-
-                            <Path
-                                Width="{TemplateBinding Width,
-                                Converter={StaticResource IconConverter}}"
-                                Height="{TemplateBinding Height,
-                                Converter={StaticResource IconConverter}}"
-                                Data="{TemplateBinding Tag}"
-                                Fill="{TemplateBinding Foreground}"
-                                Stretch="Uniform" />
-
-                        </Canvas>
-
-                    </Viewbox>
-
-                    <Border.ToolTip>
-                        <ToolTip Style="{StaticResource DefaultToolTipStyle}"
-                                 Content="{TemplateBinding Content}"/>
-                    </Border.ToolTip>
-
-                </Border>
-
-            </ControlTemplate>
-
-            <Style x:Key="IconButtonStyle" 
-                   TargetType="ContentControl">
-
-                <Setter Property="Height" Value="24"/>
-                <Setter Property="Width" Value="24"/>
-                <Setter Property="Background" Value="Transparent" />
-                <Setter Property="Foreground" Value="{StaticResource DefaulIconBrush}" />
-                <Setter Property="BorderThickness" Value="0"/>
-                <Setter Property="Template" Value="{StaticResource IconButtonTemplate}"/>
-                <Style.Triggers>
-                    <Trigger Property="IsMouseOver" Value="True">
-                        <Setter Property="Foreground" Value="{StaticResource DefaultMouseOverBackground}" />
-                    </Trigger>
-                </Style.Triggers>
-            </Style>
-
-            <Style x:Key="OparetionAreaStackPanelStyle" TargetType="StackPanel">
-                <Setter Property="Height" Value="32"/>
-                <Setter Property="HorizontalAlignment" Value="Right"/>
-                <Setter Property="Orientation" Value="Horizontal"/>
-            </Style>
-
-            <Style x:Key="DefaultGridSplitterStyle" TargetType="GridSplitter">
-                <Setter Property="BorderThickness" Value="1"/>
-                <Setter Property="HorizontalAlignment" Value="Stretch"/>
-                <Setter Property="Background" Value="{StaticResource DefaulBorderBrush}"/>
             </Style>
 
         </ResourceDictionary>
-        
+
     </Application.Resources>
     
 </Application>
