@@ -52,12 +52,12 @@
                     <Grid Margin="{TemplateBinding Padding}">
 
                         <TextBlock Text="{TemplateBinding Content}"
-                                   Foreground="{StaticResource DefaultPageForeground}"
+                                   Foreground="{DynamicResource DefaultPageForeground}"
                                    FontWeight="{TemplateBinding FontWeight}"
                                    FontSize="{TemplateBinding FontSize}"/>
 
                         <Border x:Name="UnderLine"
-                                BorderBrush="{StaticResource DefaultPageForeground}"
+                                BorderBrush="{DynamicResource DefaultPageForeground}"
                                 BorderThickness="{TemplateBinding BorderThickness}"
                                 Height="1"
                                 VerticalAlignment="Bottom"
@@ -89,7 +89,7 @@
                     <Path Width="30"
                           Height="20"
                           Data="{StaticResource Checked}"
-                          Fill="{StaticResource DefaulIconBrush}"
+                          Fill="{DynamicResource DefaulIconBrush}"
                           Stretch="Uniform" />
                 </Canvas>
 
@@ -125,7 +125,7 @@
                                 <Path Width="30"
                                       Height="20"
                                       Data="{StaticResource Check}"
-                                      Fill="{StaticResource DefaulIconBrush}"
+                                      Fill="{DynamicResource DefaulIconBrush}"
                                       Stretch="Uniform" />
                             </Canvas>
 
@@ -187,7 +187,7 @@
         <Setter Property="Height" Value="24"/>
         <Setter Property="Width" Value="24"/>
         <Setter Property="Background" Value="Transparent" />
-        <Setter Property="Foreground" Value="{StaticResource DefaulIconBrush}" />
+        <Setter Property="Foreground" Value="{DynamicResource DefaulIconBrush}" />
         <Setter Property="BorderThickness" Value="0"/>
         <Setter Property="Template" Value="{StaticResource IconButtonTemplate}"/>
         <Style.Triggers>

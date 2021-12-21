@@ -37,10 +37,10 @@
                 </Grid>
 
                 <Border Grid.Row="1"
-                        BorderBrush="{StaticResource DefaulBorderBrush}"
+                        BorderBrush="{DynamicResource DefaulBorderBrush}"
                         BorderThickness="{TemplateBinding BorderThickness}">
 
-                    <local:CustomScrollViewer TabBrush="{StaticResource DefaulIconBrush}"
+                    <local:CustomScrollViewer TabBrush="{DynamicResource DefaulScrolBarTabBrush}"
                                               HorizontalScrollBarVisibility="Visible"
                                               VerticalScrollBarVisibility="Visible">
 

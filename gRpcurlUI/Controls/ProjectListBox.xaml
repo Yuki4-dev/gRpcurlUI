@@ -79,10 +79,10 @@
 
                         <DataTemplate.Triggers>
                             <Trigger Property="IsChecked" Value="true" SourceName="SelectRudioButton">
-                                <Setter TargetName="SelectBorder" Property="Background" Value="{StaticResource DefaultSelectedBackground}"/>
+                                <Setter TargetName="SelectBorder" Property="Background" Value="{DynamicResource DefaultSelectedBackground}"/>
                             </Trigger>
                             <Trigger Property="IsMouseOver" Value="true">
-                                <Setter TargetName="SelectBorder" Property="Background" Value="{StaticResource DefaultMouseOverBackground}"/>
+                                <Setter TargetName="SelectBorder" Property="Background" Value="{DynamicResource DefaultMouseOverBackground}"/>
                             </Trigger>
                         </DataTemplate.Triggers>
                     </DataTemplate>
@@ -120,7 +120,7 @@
                 <Setter.Value>
                     <ControlTemplate TargetType="ListBox">
                         <local:CustomScrollViewer VerticalScrollBarVisibility="Auto"
-                                                  TabBrush="{StaticResource DefaulIconBrush}">
+                                                  TabBrush="{DynamicResource DefaulScrolBarTabBrush}">
                             <ItemsPresenter/>
                         </local:CustomScrollViewer>
                     </ControlTemplate>
@@ -158,10 +158,10 @@
 
                         <DataTemplate.Triggers>
                             <Trigger Property="IsChecked" Value="true" SourceName="CheckToggleButton">
-                                <Setter TargetName="SelectBorder" Property="Background" Value="{StaticResource DefaultSelectedBackground}"/>
+                                <Setter TargetName="SelectBorder" Property="Background" Value="{DynamicResource DefaultSelectedBackground}"/>
                             </Trigger>
                             <Trigger Property="IsMouseOver" Value="true">
-                                <Setter TargetName="SelectBorder" Property="Background" Value="{StaticResource DefaultMouseOverBackground}"/>
+                                <Setter TargetName="SelectBorder" Property="Background" Value="{DynamicResource DefaultMouseOverBackground}"/>
                             </Trigger>
                         </DataTemplate.Triggers>
                     </DataTemplate>

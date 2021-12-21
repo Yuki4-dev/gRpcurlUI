@@ -21,12 +21,13 @@ namespace gRpcurlUI
 
         private readonly TabContentPage gRpcCurlPage;
 
-        private readonly AppSetting appSetting =  new AppSetting();
+        private readonly AppSetting appSetting;
 
         private readonly ILoadModel loadModel = new LoadModel();
 
         public MainWindow()
         {
+            appSetting = new AppSetting(App.Current.Resources);
             windowOwner = new WindowOwner(this);
             settingPage = new SettingPage(windowOwner);
             settingPage.DataContext = new SettingPageViewModel(appSetting);

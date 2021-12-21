@@ -9,7 +9,7 @@
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Loaded="Page_Loaded"
-      Background="{StaticResource DefaultPageBackground}"
+      Background="{DynamicResource DefaultPageBackground}"
       DataContextChanged="Page_DataContextChanged"
       Title="TabContentPage">
 
@@ -81,7 +81,7 @@
             </controls:HeaderContent.Header>
 
             <controls:ProjectListBox IsMultiSelect="{Binding IsRemoveMode}"
-                                     Background="{StaticResource DefaulEditAreaBoxBrush}"
+                                     Background="{DynamicResource DefaulEditAreaBoxBrush}"
                                      SelectedCommand="{Binding SelectedCommand}"
                                      ItemsSource="{Binding ExecutePageViewModel.Context.Projects}"/>
 

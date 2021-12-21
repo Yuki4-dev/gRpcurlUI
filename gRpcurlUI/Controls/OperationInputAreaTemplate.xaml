@@ -16,7 +16,6 @@
 
                 <Style TargetType="TextBox" BasedOn="{StaticResource DefaultTextBoxStyle}">
                     <Setter Property="HorizontalAlignment" Value="Stretch"/>
-                    <Setter Property="FontSize" Value="{StaticResource EditTextBoxFontSize}"/>
                 </Style>
 
             </StackPanel.Resources>
@@ -47,7 +46,6 @@
 
                 <Style TargetType="TextBox" BasedOn="{StaticResource DefaultTextBoxStyle}">
                     <Setter Property="HorizontalAlignment" Value="Stretch"/>
-                    <Setter Property="FontSize" Value="{StaticResource EditTextBoxFontSize}"/>
                 </Style>
 
             </StackPanel.Resources>

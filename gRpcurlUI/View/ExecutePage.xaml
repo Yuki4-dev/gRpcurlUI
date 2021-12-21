@@ -6,7 +6,7 @@
       xmlns:controls="clr-namespace:gRpcurlUI.Controls" 
       xmlns:system="clr-namespace:System;assembly=netstandard"
       mc:Ignorable="d" 
-      Background="{StaticResource DefaultPageBackground}"
+      Background="{DynamicResource DefaultPageBackground}"
       d:DesignHeight="600" d:DesignWidth="800"
       DataContextChanged="ExecutePage_DataContextChanged"
       IsEnabled="{Binding IsEnabled, Mode=OneWay}"
@@ -14,18 +14,13 @@
 
     <Page.Resources>
 
-        <Style x:Key="EditAreaTextBoxStyle" TargetType="TextBox">
+        <Style x:Key="EditAreaTextBoxStyle" TargetType="TextBox" BasedOn="{StaticResource DefaultTextBoxStyle}">
             <Setter Property="FontSize" Value="{DynamicResource EditTextBoxFontSize}"/>
-            <Setter Property="Padding" Value="1"/>
+            <Setter Property="BorderThickness" Value="0"/>
             <Setter Property="Height" Value="auto"/>
             <Setter Property="Width" Value="auto"/>
-            <Setter Property="BorderThickness" Value="0"/>
             <Setter Property="AcceptsReturn" Value="True"/>
             <Setter Property="AcceptsTab" Value="True"/>
-            <Setter Property="SelectionBrush" Value="{StaticResource DefaultTextBoxSelectBrush}"/>
-            <Setter Property="BorderBrush" Value="{StaticResource DefaultPageForeground}"/>
-            <Setter Property="Foreground" Value="{StaticResource DefaultPageForeground}"/>
-            <Setter Property="Background" Value="{StaticResource DefaulEditAreaBoxBrush}"/>
         </Style>
 
         <system:Double x:Key="TopRowHeight">210</system:Double>
@@ -51,7 +46,7 @@
             <controls:OperationInputArea Title="{Binding SelectedProject.ProjectName, Mode=TwoWay}"
                                          Content="{Binding SelectedProject}"/>
 
-            <Border Grid.Row="1" Background="{StaticResource DefaulBorderBrush}"/>
+            <Border Grid.Row="1" Background="{DynamicResource DefaulBorderBrush}"/>
 
             <controls:HeaderContent Grid.Row="2"
                                     Title="Request">

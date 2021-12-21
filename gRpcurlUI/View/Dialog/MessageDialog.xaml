@@ -10,8 +10,8 @@
         x:Name="Root"
         KeyDown="Root_KeyDown"
         Height="250" Width="550">
-    
-    <Grid Background="{StaticResource DefaultWindowBackground}">
+
+    <Grid Background="{DynamicResource DefaultWindowBackground}">
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
             <RowDefinition Height="70"/>
@@ -25,7 +25,7 @@
 
         <Grid Grid.Row="1">
 
-            <Border Background="{StaticResource DefaulBorderBrush}"
+            <Border Background="{DynamicResource DefaulBorderBrush}"
                     Height="1"
                     VerticalAlignment="Top"/>
 

@@ -8,7 +8,7 @@
       d:DesignHeight="450" d:DesignWidth="800"
       Title="SettingPage"
       Margin="4"
-      Background="{StaticResource DefaultPageBackground}"
+      Background="{DynamicResource DefaultPageBackground}"
       DataContextChanged="Page_DataContextChanged">
 
     <Grid>
@@ -24,12 +24,13 @@
                    Style="{StaticResource DefaultTextBlockStyle}"
                    Margin="2"
                    FontSize="32"/>
-        
-        <Border Background="{StaticResource DefaulBorderBrush}"
+
+        <Border Background="{DynamicResource DefaulBorderBrush}"
                 Height="1"
                 VerticalAlignment="Bottom"/>
 
-        <controls:CustomScrollViewer Grid.Row="1">
+        <controls:CustomScrollViewer Grid.Row="1"
+                                     TabBrush="{DynamicResource DefaulScrolBarTabBrush}">
 
             <StackPanel HorizontalAlignment="Left"
                         Margin="4">
@@ -72,6 +73,66 @@
                          Width="100"
                          Text="{Binding EditFontSize, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"/>
 
+                <TextBlock Text="WindowBackground"/>
+                <TextBox MinWidth="100"
+                         TextAlignment="Right"
+                         Width="100"
+                         Text="{Binding WindowBackground, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"/>
+
+                <TextBlock Text="PageBackground"/>
+                <TextBox MinWidth="100"
+                         TextAlignment="Right"
+                         Width="100"
+                         Text="{Binding PageBackground, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"/>
+
+                <TextBlock Text="PageForeground"/>
+                <TextBox MinWidth="100"
+                         TextAlignment="Right"
+                         Width="100"
+                         Text="{Binding PageForeground, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"/>
+
+                <TextBlock Text="BorderBrush"/>
+                <TextBox MinWidth="100"
+                         TextAlignment="Right"
+                         Width="100"
+                         Text="{Binding BorderBrush, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"/>
+
+                <TextBlock Text="IconBrush"/>
+                <TextBox MinWidth="100"
+                         TextAlignment="Right"
+                         Width="100"
+                         Text="{Binding IconBrush, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"/>
+
+                <TextBlock Text="EditAreaBoxBrush"/>
+                <TextBox MinWidth="100"
+                         TextAlignment="Right"
+                         Width="100"
+                         Text="{Binding EditAreaBoxBrush, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"/>
+
+                <TextBlock Text="TextBoxSelectBrush"/>
+                <TextBox MinWidth="100"
+                         TextAlignment="Right"
+                         Width="100"
+                         Text="{Binding TextBoxSelectBrush, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"/>
+
+                <TextBlock Text="MouseOverBackground"/>
+                <TextBox MinWidth="100"
+                         TextAlignment="Right"
+                         Width="100"
+                         Text="{Binding MouseOverBackground, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"/>
+
+                <TextBlock Text="SelectedBackground"/>
+                <TextBox MinWidth="100"
+                         TextAlignment="Right"
+                         Width="100"
+                         Text="{Binding SelectedBackground, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"/>
+
+                <TextBlock Text="ScrolBarTabBrush"/>
+                <TextBox MinWidth="100"
+                         TextAlignment="Right"
+                         Width="100"
+                         Text="{Binding ScrolBarTabBrush, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"/>
+
             </StackPanel>
 
         </controls:CustomScrollViewer>
@@ -80,7 +141,7 @@
             
             <Border VerticalAlignment="Top"
                     Height="1"
-                    Background="{StaticResource DefaulBorderBrush}"/>
+                    Background="{DynamicResource DefaulBorderBrush}"/>
 
             <StackPanel HorizontalAlignment="Right"
                         Margin="12">

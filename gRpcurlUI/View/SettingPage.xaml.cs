@@ -23,9 +23,14 @@ namespace gRpcurlUI.View
 
         private void Page_DataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
+            if (e.OldValue is ViewModelBase oldVm)
+            {
+                windowOwner?.RemoveViewModel(oldVm);
+            }
+
             if (DataContext is ViewModelBase vm)
             {
-                windowOwner?.SetViewModel(vm);
+                windowOwner?.AddViewModel(vm);
             }
         }
 

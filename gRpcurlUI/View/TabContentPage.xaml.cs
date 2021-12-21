@@ -15,8 +15,8 @@ namespace gRpcurlUI.View
 
         public TabContentPage()
         {
-            InitializeComponent();
             excutePage = new ExecutePage();
+            InitializeComponent();
         }
 
         public TabContentPage(IWindowOwner owner)
@@ -39,15 +39,19 @@ namespace gRpcurlUI.View
 
         private void Page_DataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
-            ReloadDataContext();
-        }
-
-        private void ReloadDataContext()
-        {
-            if (DataContext is TabContentPageViewModel vm)
+            if (e.OldValue is ViewModelBase oldVm)
             {
-                excutePage.DataContext = vm.ExecutePageViewModel;
-                windowOwner?.SetViewModel(vm);
+                windowOwner?.RemoveViewModel(oldVm);
+            }
+
+            if (DataContext is ViewModelBase vm)
+            {
+                windowOwner?.AddViewModel(vm);
+            }
+
+            if (DataContext is TabContentPageViewModel tabPageVm)
+            {
+                excutePage.DataContext = tabPageVm.ExecutePageViewModel;
             }
         }
     }

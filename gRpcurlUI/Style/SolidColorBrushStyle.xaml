@@ -8,6 +8,7 @@
     <SolidColorBrush x:Key="DefaulIconBrush">LightGray</SolidColorBrush>
     <SolidColorBrush x:Key="DefaulEditAreaBoxBrush">#202020</SolidColorBrush>
     <SolidColorBrush x:Key="DefaultTextBoxSelectBrush">DimGray</SolidColorBrush>
+    <SolidColorBrush x:Key="DefaulScrolBarTabBrush">DimGray</SolidColorBrush>
 
     <SolidColorBrush x:Key="DefaultMouseOverBackground">DimGray</SolidColorBrush>
     <SolidColorBrush x:Key="DefaultSelectedBackground">#404040</SolidColorBrush>

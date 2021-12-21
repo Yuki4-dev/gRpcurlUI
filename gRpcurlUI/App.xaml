@@ -28,23 +28,23 @@
 
             <Style TargetType="ProgressBar" x:Key="DefaultProgressBarStyle">
                 <Setter Property="Foreground" Value="#55000000"/>
-                <Setter Property="Background" Value="{StaticResource DefaulIconBrush}"/>
+                <Setter Property="Background" Value="{DynamicResource DefaulIconBrush}"/>
                 <Setter Property="BorderThickness" Value="0"/>
             </Style>
 
             <Style TargetType="TextBlock" x:Key="DefaultTextBlockStyle">
                 <Setter Property="FontWeight" Value="DemiBold"/>
-                <Setter Property="Foreground" Value="{StaticResource DefaultPageForeground}"/>
+                <Setter Property="Foreground" Value="{DynamicResource DefaultPageForeground}"/>
             </Style>
 
             <Style TargetType="TextBox" x:Key="DefaultTextBoxStyle">
                 <Setter Property="FontSize" Value="{StaticResource DefaultTextBoxFontSize}"/>
                 <Setter Property="Padding" Value="1"/>
                 <Setter Property="BorderThickness" Value="1"/>
-                <Setter Property="SelectionBrush" Value="{StaticResource DefaultTextBoxSelectBrush}"/>
-                <Setter Property="BorderBrush" Value="{StaticResource DefaulBorderBrush}"/>
-                <Setter Property="Foreground" Value="{StaticResource DefaultPageForeground}"/>
-                <Setter Property="Background" Value="{StaticResource DefaulEditAreaBoxBrush}"/>
+                <Setter Property="SelectionBrush" Value="{DynamicResource DefaultTextBoxSelectBrush}"/>
+                <Setter Property="BorderBrush" Value="{DynamicResource DefaulBorderBrush}"/>
+                <Setter Property="Foreground" Value="{DynamicResource DefaultPageForeground}"/>
+                <Setter Property="Background" Value="{DynamicResource DefaulEditAreaBoxBrush}"/>
                 <Setter Property="Template">
                     <Setter.Value>
                         <ControlTemplate TargetType="TextBox">
@@ -66,8 +66,8 @@
             <ControlTemplate x:Key="DefaultToolTipTemplate" TargetType="ToolTip">
 
                 <Border BorderThickness="1"
-                        BorderBrush="{StaticResource DefaulBorderBrush}"
-                        Background="{StaticResource DefaultWindowBackground}">
+                        BorderBrush="{DynamicResource DefaulBorderBrush}"
+                        Background="{DynamicResource DefaultWindowBackground}">
 
                     <TextBlock FontSize="22" 
                                Text="{TemplateBinding Content}"

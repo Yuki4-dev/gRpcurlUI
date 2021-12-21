@@ -15,12 +15,14 @@ namespace gRpcurlUI.View
 
         event Action<double, double> WindowSizeChenged;
 
-        void SetViewModel(ViewModelBase viewModel);
+        void AddViewModel(ViewModelBase viewModel);
+
+        void RemoveViewModel(ViewModelBase viewModel);
     }
 
     public class WindowOwner : IWindowOwner
     {
-        private readonly Dictionary<Type, ViewModelBase> viewModels = new Dictionary<Type, ViewModelBase>();
+        private readonly List<ViewModelBase> viewModels = new List<ViewModelBase>();
 
         public event Action<double, double> WindowSizeChenged;
 
@@ -36,31 +38,30 @@ namespace gRpcurlUI.View
 
         private void Window_SizeChanged(object sender, SizeChangedEventArgs e)
         {
-            if (window.WindowState != WindowState.Maximized 
-                && window.Height != double.NaN 
+            if (window.WindowState != WindowState.Maximized
+                && window.Height != double.NaN
                 && window.Width != double.NaN)
             {
                 WindowSizeChenged?.Invoke(window.Height, window.Width);
             }
         }
 
-        public void SetViewModel(ViewModelBase vm)
+        public void AddViewModel(ViewModelBase viewModel)
         {
-            var key = vm.GetType();
-            if (viewModels.ContainsKey(key))
+            viewModels.Add(viewModel);
+            viewModel.ShowMessageDialog += ShowMessageDialogAsync;
+            viewModel.ShowCommonDialog += ShowCommonDialogAsync;
+            viewModel.ShowDialog += ShowDialogAsync;
+        }
+
+        public void RemoveViewModel(ViewModelBase viewModel)
+        {
+            if (viewModels.Remove(viewModel))
             {
-                var oldVm = viewModels[key];
-                oldVm.ShowMessageDialog -= ShowMessageDialogAsync;
-                oldVm.ShowCommonDialog -= ShowCommonDialogAsync;
-                vm.ShowDialog -= ShowDialogAsync;
-
-                viewModels.Remove(key);
+                viewModel.ShowMessageDialog -= ShowMessageDialogAsync;
+                viewModel.ShowCommonDialog -= ShowCommonDialogAsync;
+                viewModel.ShowDialog -= ShowDialogAsync;
             }
-
-            viewModels.Add(key, vm);
-            vm.ShowMessageDialog += ShowMessageDialogAsync;
-            vm.ShowCommonDialog += ShowCommonDialogAsync;
-            vm.ShowDialog += ShowDialogAsync;
         }
 
         private async Task ShowDialogAsync(Type dialogType, object dataContext)

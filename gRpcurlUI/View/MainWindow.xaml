@@ -6,7 +6,7 @@
         xmlns:viewmodel="clr-namespace:gRpcurlUI.ViewModel" 
         xmlns:controls="clr-namespace:gRpcurlUI.Controls"
         mc:Ignorable="d"
-        Background="{StaticResource DefaultWindowBackground}"
+        Background="{DynamicResource DefaultWindowBackground}"
         Loaded="Window_Loaded"
         Title="gRpcurUI"
         Height="600" 
@@ -34,7 +34,7 @@
                     <Border x:Name="SelectedBorder" 
                             Height="2"
                             Margin="2,0,2,0"
-                            Background="{StaticResource DefaulIconBrush}"
+                            Background="{DynamicResource DefaulIconBrush}"
                             Visibility="Collapsed"
                             VerticalAlignment="Bottom"/>
                 </Grid>
@@ -43,10 +43,10 @@
             <ControlTemplate.Triggers>
                 <Trigger Property="IsChecked" Value="True">
                     <Setter Property="Visibility" TargetName="SelectedBorder" Value="Visible"/>
-                    <Setter Property="Background" TargetName="RootBorder" Value="{StaticResource DefaultSelectedBackground}"/>
+                    <Setter Property="Background" TargetName="RootBorder" Value="{DynamicResource DefaultSelectedBackground}"/>
                 </Trigger>
                 <Trigger Property="IsMouseOver" Value="True">
-                    <Setter Property="Background" TargetName="RootBorder" Value="{StaticResource DefaultMouseOverBackground}"/>
+                    <Setter Property="Background" TargetName="RootBorder" Value="{DynamicResource DefaultMouseOverBackground}"/>
                 </Trigger>
             </ControlTemplate.Triggers>
         </ControlTemplate>
@@ -54,8 +54,8 @@
         <Style  x:Key="TabHeaderButtonStyle" TargetType="ToggleButton">
             <Setter Property="FontSize" Value="16"/>
             <Setter Property="BorderThickness" Value="1"/>
-            <Setter Property="BorderBrush" Value="{StaticResource DefaulBorderBrush}"/>
-            <Setter Property="Foreground" Value="{StaticResource DefaultPageForeground}"/>
+            <Setter Property="BorderBrush" Value="{DynamicResource DefaulBorderBrush}"/>
+            <Setter Property="Foreground" Value="{DynamicResource DefaultPageForeground}"/>
             <Setter Property="Background" Value="Transparent"/>
             <Setter Property="Width" Value="90"/>
             <Setter Property="Template" Value="{StaticResource TabHeaderButtonTemplate}"/>
@@ -93,7 +93,7 @@
             
         </StackPanel>
 
-        <Border Height="1" Background="{StaticResource DefaulBorderBrush}"
+        <Border Height="1" Background="{DynamicResource DefaulBorderBrush}"
                 VerticalAlignment="Bottom"/>
 
         <Frame NavigationUIVisibility="Hidden"

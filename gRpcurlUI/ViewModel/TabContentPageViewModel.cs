@@ -1,6 +1,4 @@
-﻿using gRpcurlUI.Core;
-using gRpcurlUI.Model;
-using gRpcurlUI.ViewModel.Curl;
+﻿using gRpcurlUI.Model;
 using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
