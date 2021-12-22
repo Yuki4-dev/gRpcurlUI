@@ -23,7 +23,7 @@
             <Setter Property="AcceptsTab" Value="True"/>
         </Style>
 
-        <system:Double x:Key="TopRowHeight">210</system:Double>
+        <system:Double x:Key="TopRowHeight">220</system:Double>
 
     </Page.Resources>
 

@@ -51,12 +51,12 @@ namespace gRpcurlUI.ViewModel
 
         public string WindowBackground
         {
-            get => appSetting.WindowBackground.ToString();
+            get => appSetting.BrushSetting.WindowBackground.ToString();
             set
             {
-                if (TryColorParse(value,out var color))
+                if (TryColorParse(value, out var color))
                 {
-                    appSetting.WindowBackground = new SolidColorBrush(color);
+                    appSetting.BrushSetting.WindowBackground = new SolidColorBrush(color);
                     OnPropertyChanged();
                 }
             }
@@ -64,12 +64,12 @@ namespace gRpcurlUI.ViewModel
 
         public string PageBackground
         {
-            get => appSetting.PageBackground.ToString();
+            get => appSetting.BrushSetting.PageBackground.ToString();
             set
             {
                 if (TryColorParse(value, out var color))
                 {
-                    appSetting.PageBackground = new SolidColorBrush(color);
+                    appSetting.BrushSetting.PageBackground = new SolidColorBrush(color);
                     OnPropertyChanged();
                 }
             }
@@ -77,12 +77,12 @@ namespace gRpcurlUI.ViewModel
 
         public string PageForeground
         {
-            get => appSetting.PageForeground.ToString();
+            get => appSetting.BrushSetting.PageForeground.ToString();
             set
             {
                 if (TryColorParse(value, out var color))
                 {
-                    appSetting.PageForeground = new SolidColorBrush(color);
+                    appSetting.BrushSetting.PageForeground = new SolidColorBrush(color);
                     OnPropertyChanged();
                 }
             }
@@ -90,12 +90,12 @@ namespace gRpcurlUI.ViewModel
 
         public string BorderBrush
         {
-            get => appSetting.BorderBrush.ToString();
+            get => appSetting.BrushSetting.BorderBrush.ToString();
             set
             {
                 if (TryColorParse(value, out var color))
                 {
-                    appSetting.BorderBrush = new SolidColorBrush(color);
+                    appSetting.BrushSetting.BorderBrush = new SolidColorBrush(color);
                     OnPropertyChanged();
                 }
             }
@@ -103,12 +103,12 @@ namespace gRpcurlUI.ViewModel
 
         public string IconBrush
         {
-            get => appSetting.IconBrush.ToString();
+            get => appSetting.BrushSetting.IconBrush.ToString();
             set
             {
                 if (TryColorParse(value, out var color))
                 {
-                    appSetting.IconBrush = new SolidColorBrush(color);
+                    appSetting.BrushSetting.IconBrush = new SolidColorBrush(color);
                     OnPropertyChanged();
                 }
             }
@@ -116,12 +116,12 @@ namespace gRpcurlUI.ViewModel
 
         public string EditAreaBoxBrush
         {
-            get => appSetting.EditAreaBoxBrush.ToString();
+            get => appSetting.BrushSetting.EditAreaBoxBrush.ToString();
             set
             {
                 if (TryColorParse(value, out var color))
                 {
-                    appSetting.EditAreaBoxBrush = new SolidColorBrush(color);
+                    appSetting.BrushSetting.EditAreaBoxBrush = new SolidColorBrush(color);
                     OnPropertyChanged();
                 }
             }
@@ -129,12 +129,12 @@ namespace gRpcurlUI.ViewModel
 
         public string TextBoxSelectBrush
         {
-            get => appSetting.TextBoxSelectBrush.ToString();
+            get => appSetting.BrushSetting.TextBoxSelectBrush.ToString();
             set
             {
                 if (TryColorParse(value, out var color))
                 {
-                    appSetting.TextBoxSelectBrush = new SolidColorBrush(color);
+                    appSetting.BrushSetting.TextBoxSelectBrush = new SolidColorBrush(color);
                     OnPropertyChanged();
                 }
             }
@@ -142,12 +142,12 @@ namespace gRpcurlUI.ViewModel
 
         public string MouseOverBackground
         {
-            get => appSetting.MouseOverBackground.ToString();
+            get => appSetting.BrushSetting.MouseOverBackground.ToString();
             set
             {
                 if (TryColorParse(value, out var color))
                 {
-                    appSetting.MouseOverBackground = new SolidColorBrush(color);
+                    appSetting.BrushSetting.MouseOverBackground = new SolidColorBrush(color);
                     OnPropertyChanged();
                 }
             }
@@ -155,12 +155,12 @@ namespace gRpcurlUI.ViewModel
 
         public string SelectedBackground
         {
-            get => appSetting.SelectedBackground.ToString();
+            get => appSetting.BrushSetting.SelectedBackground.ToString();
             set
             {
                 if (TryColorParse(value, out var color))
                 {
-                    appSetting.SelectedBackground = new SolidColorBrush(color);
+                    appSetting.BrushSetting.SelectedBackground = new SolidColorBrush(color);
                     OnPropertyChanged();
                 }
             }
@@ -168,12 +168,12 @@ namespace gRpcurlUI.ViewModel
 
         public string ScrolBarTabBrush
         {
-            get => appSetting.ScrolBarTabBrush.ToString();
+            get => appSetting.BrushSetting.ScrolBarTabBrush.ToString();
             set
             {
                 if (TryColorParse(value, out var color))
                 {
-                    appSetting.ScrolBarTabBrush = new SolidColorBrush(color);
+                    appSetting.BrushSetting.ScrolBarTabBrush = new SolidColorBrush(color);
                     OnPropertyChanged();
                 }
             }

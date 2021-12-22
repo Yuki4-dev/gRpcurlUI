@@ -95,7 +95,7 @@
 
                 <TextBlock Text="{TemplateBinding Content}"
                            VerticalAlignment="Center"
-                           Foreground="{StaticResource DefaultPageForeground}"
+                           Foreground="{DynamicResource DefaultPageForeground}"
                            FontSize="{TemplateBinding FontSize}"
                            FontWeight="{TemplateBinding FontWeight}"/>
 
@@ -131,7 +131,7 @@
 
                             <TextBlock Text="{TemplateBinding Content}"
                                        VerticalAlignment="Center"
-                                       Foreground="{StaticResource DefaultPageForeground}"
+                                       Foreground="{DynamicResource DefaultPageForeground}"
                                        FontSize="{TemplateBinding FontSize}"
                                        FontWeight="{TemplateBinding FontWeight}"/>
 
@@ -192,7 +192,7 @@
         <Setter Property="Template" Value="{StaticResource IconButtonTemplate}"/>
         <Style.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="Foreground" Value="{StaticResource DefaultMouseOverBackground}" />
+                <Setter Property="Foreground" Value="{DynamicResource DefaultMouseOverBackground}" />
             </Trigger>
         </Style.Triggers>
     </Style>
