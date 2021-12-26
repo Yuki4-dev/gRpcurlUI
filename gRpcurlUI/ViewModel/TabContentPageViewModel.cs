@@ -91,6 +91,8 @@ namespace gRpcurlUI.ViewModel
 
         private readonly List<IProject> removeProject = new List<IProject>();
 
+        public TabContentPageViewModel() : this(new LoadModel(), new ExecutePageViewModel()) { }
+
         public TabContentPageViewModel(ILoadModel load, ExecutePageViewModel executePageViewmodel)
         {
             loadModel = load;
@@ -196,11 +198,7 @@ namespace gRpcurlUI.ViewModel
                 try
                 {
                     var Context = (IProjectContext)loadModel.Load(fileName, ProjectContext.GetType());
-                    ProjectContext.Validate(Context);
-                    foreach (var project in Context.Projects)
-                    {
-                        ProjectContext.AddProject(project);
-                    }
+                    ProjectContext.Marge(Context);
                 }
                 catch (Exception ex)
                 {

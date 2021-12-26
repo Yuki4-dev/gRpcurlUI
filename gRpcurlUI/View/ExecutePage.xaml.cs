@@ -11,15 +11,16 @@ namespace gRpcurlUI.View
     {
         private readonly IWindowOwner windowOwner;
 
-        public ExecutePage()
-        {
-            InitializeComponent();
-        }
+        public ExecutePage() : this(WindowOwner.Current) { }
 
-        public ExecutePage(IWindowOwner owner) : this()
+        public ExecutePage(IWindowOwner owner)
         {
             windowOwner = owner;
-            windowOwner.WindowSizeChenged += Owner_WindowSizeChenged;
+            if (windowOwner != null)
+            {
+                windowOwner.WindowSizeChenged += Owner_WindowSizeChenged;
+            }
+            InitializeComponent();
         }
 
         private void Owner_WindowSizeChenged(double height, double width)

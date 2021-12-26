@@ -13,16 +13,15 @@ namespace gRpcurlUI.View
 
         private readonly IWindowOwner windowOwner;
 
-        public TabContentPage()
-        {
-            excutePage = new ExecutePage();
-            InitializeComponent();
-        }
+        public TabContentPage() : this(WindowOwner.Current) { }
 
         public TabContentPage(IWindowOwner owner)
         {
             windowOwner = owner;
-            windowOwner.WindowSizeChenged += Owner_WindowSizeChenged;
+            if (owner != null)
+            {
+                windowOwner.WindowSizeChenged += Owner_WindowSizeChenged;
+            }
             excutePage = new ExecutePage(windowOwner);
             InitializeComponent();
         }

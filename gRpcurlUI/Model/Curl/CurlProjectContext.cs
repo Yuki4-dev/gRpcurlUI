@@ -52,9 +52,9 @@ namespace gRpcurlUI.Model.Curl
             projectsInternal.Add((CurlProject)project);
         }
 
-        public void Validate(IProjectContext other)
+        public void Marge(IProjectContext other)
         {
-            if (other is CurlProjectContext)
+            if (other is CurlProjectContext curl)
             {
                 if (Verion != other.Verion)
                 {
@@ -67,6 +67,11 @@ namespace gRpcurlUI.Model.Curl
                 else if (other.Projects == null || other.Projects.Count() == 0)
                 {
                     throw new Exception($"Export Error. Project is Nothing");
+                }
+
+                foreach (var p in curl.projectsInternal)
+                {
+                    projectsInternal.Add(p);
                 }
             }
             else

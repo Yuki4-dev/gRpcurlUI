@@ -1,5 +1,4 @@
-﻿using gRpcurlUI.Core;
-using gRpcurlUI.Model;
+﻿using gRpcurlUI.Model;
 using gRpcurlUI.Model.Curl;
 using gRpcurlUI.Model.Grpcurl;
 using gRpcurlUI.View;
@@ -13,8 +12,6 @@ namespace gRpcurlUI
     /// </summary>
     public partial class MainWindow : Window
     {
-        private readonly WindowOwner windowOwner;
-
         private readonly SettingPage settingPage;
 
         private readonly TabContentPage curlPage;
@@ -23,26 +20,24 @@ namespace gRpcurlUI
 
         private readonly AppSetting appSetting;
 
-        private readonly ILoadModel loadModel = new LoadModel();
-
         public MainWindow()
         {
             appSetting = new AppSetting(App.Current.Resources);
-            windowOwner = new WindowOwner(this);
-            settingPage = new SettingPage(windowOwner);
+            WindowOwner.Current = new WindowOwner(this);
+            settingPage = new SettingPage(WindowOwner.Current);
             settingPage.DataContext = new SettingPageViewModel(appSetting);
-            curlPage = new TabContentPage(windowOwner);
-            gRpcCurlPage = new TabContentPage(windowOwner);
+            curlPage = new TabContentPage(WindowOwner.Current);
+            gRpcCurlPage = new TabContentPage(WindowOwner.Current);
 
             var curl = new CurlProjectContext();
             curl.SetSetting(appSetting);
-            var curlViewModel = new TabContentPageViewModel(loadModel, new ExecutePageViewModel(new ProcessExecuter()));
+            var curlViewModel = new TabContentPageViewModel();
             curlViewModel.ProjectContext = curl;
             curlPage.DataContext = curlViewModel;
 
             var grpcurl = new GrpcurlProjectContext();
             grpcurl.SetSetting(appSetting);
-            var grpcurlViewModel = new TabContentPageViewModel(loadModel, new ExecutePageViewModel(new ProcessExecuter()));
+            var grpcurlViewModel = new TabContentPageViewModel();
             grpcurlViewModel.ProjectContext = grpcurl;
             gRpcCurlPage.DataContext = grpcurlViewModel;
 

@@ -12,7 +12,7 @@ namespace gRpcurlUI.Model
 
         void SetSetting(IReadOnlyAppSetting setting);
 
-        void Validate(IProjectContext other);
+        void Marge(IProjectContext other);
 
         void AddProject(IProject project = null);
 

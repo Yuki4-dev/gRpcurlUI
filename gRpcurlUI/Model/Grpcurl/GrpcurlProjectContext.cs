@@ -5,7 +5,6 @@ using System.Linq;
 
 namespace gRpcurlUI.Model.Grpcurl
 {
-
     public class GrpcurlProjectContext : Observable, IProjectContext
     {
         private string _Verion;
@@ -56,9 +55,9 @@ namespace gRpcurlUI.Model.Grpcurl
             projectsInternal.Add((GrpcurlProject)project);
         }
 
-        public void Validate(IProjectContext other)
+        public void Marge(IProjectContext other)
         {
-            if (other is GrpcurlProjectContext)
+            if (other is GrpcurlProjectContext grpcurl)
             {
                 if (Verion != other.Verion)
                 {
@@ -71,6 +70,11 @@ namespace gRpcurlUI.Model.Grpcurl
                 else if (other.Projects == null || other.Projects.Count() == 0)
                 {
                     throw new Exception($"Export Error. Project is Nothing.");
+                }
+
+                foreach (var p in grpcurl.projectsInternal)
+                {
+                    projectsInternal.Add(p);
                 }
             }
             else

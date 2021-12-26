@@ -22,6 +22,8 @@ namespace gRpcurlUI.View
 
     public class WindowOwner : IWindowOwner
     {
+        public static WindowOwner Current;
+
         private readonly List<ViewModelBase> viewModels = new List<ViewModelBase>();
 
         public event Action<double, double> WindowSizeChenged;

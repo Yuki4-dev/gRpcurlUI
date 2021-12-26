@@ -106,17 +106,14 @@ namespace gRpcurlUI.ViewModel
 
         private CancellationTokenSource tokenSource;
 
+        public ExecutePageViewModel() : this(new ProcessExecuter()) { }
+
         public ExecutePageViewModel(IProcessExecuter executer)
         {
             processExecuter = executer;
             processExecuter.StanderdOutputRecieve += (data) => StandardOutput = data;
             processExecuter.StanderdErrorRecieve += (data) => StandardError = data;
 
-            SetCommand();
-        }
-
-        private void SetCommand()
-        {
             SendCommand = new Command(SendExecuteAsync);
             SendCancelCommand = new Command(SendCancelExecute) { CanExecuteValue = false };
             SendContentFormatCommand = new Command(SendContentFormatExecute);
@@ -146,7 +143,7 @@ namespace gRpcurlUI.ViewModel
 
             if (!SelectedProject.PrepareProject(out var message))
             {
-                var result = await OnShowMessageDialog(message, MessageBoxButton.YesNo);
+                var result = await OnShowMessageDialog("continue?\r\n" + message, MessageBoxButton.YesNo);
                 if (result != MessageBoxResult.Yes)
                 {
                     return;

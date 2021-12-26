@@ -11,14 +11,12 @@ namespace gRpcurlUI.View
     {
         private readonly IWindowOwner windowOwner;
 
-        public SettingPage()
-        {
-            InitializeComponent();
-        }
+        public SettingPage() : this(WindowOwner.Current) { }
 
-        public SettingPage(IWindowOwner owner) : this()
+        public SettingPage(IWindowOwner owner)
         {
             windowOwner = owner;
+            InitializeComponent();
         }
 
         private void Page_DataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
