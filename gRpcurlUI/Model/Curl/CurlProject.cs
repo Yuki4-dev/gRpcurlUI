@@ -1,8 +1,26 @@
 ﻿
+using gRpcurlUI.Core;
+using Newtonsoft.Json;
+using System;
+using System.Text;
+
 namespace gRpcurlUI.Model.Curl
 {
     public class CurlProject : Observable, IProject
     {
+        private string _AppPath = "curl";
+        public string AppPath
+        {
+            get => _AppPath;
+            set
+            {
+                if (!string.IsNullOrWhiteSpace(value))
+                {
+                    OnPropertyChanged(ref _AppPath, value);
+                }
+            }
+        }
+
         private string _ProjectName = "";
         public string ProjectName
         {
@@ -52,14 +70,53 @@ namespace gRpcurlUI.Model.Curl
 
         public CurlProject() { }
 
+        public bool PrepareProject(out string message)
+        {
+            var sb = new StringBuilder();
+            if (string.IsNullOrWhiteSpace(EndPoint))
+            {
+                sb.AppendLine("EndPoint Is Blank.");
+            }
+
+            if (!string.IsNullOrWhiteSpace(SendContent) && IsJsonContent)
+            {
+                try
+                {
+                    SendContent = FormatJson(SendContent, FormatType.View);
+                }
+                catch (Exception ex)
+                {
+                    sb.AppendLine(ex.Message);
+                }
+            }
+
+            message = sb.ToString();
+            return sb.Length == 0;
+        }
+
+        public IProccesCommand CreateCommand()
+        {
+            return new CurlCommand(AppPath, Option, EndPoint, SendContent);
+        }
+
         public object Clone()
         {
             return new CurlProject()
             {
+                AppPath = AppPath,
                 ProjectName = _ProjectName,
                 EndPoint = _EndPoint,
                 Option = _Option,
+                IsJsonContent = _IsJsonContent,
             };
+        }
+
+        private string FormatJson(string json, FormatType formatType = FormatType.None)
+        {
+            var fomat = formatType == FormatType.None ? Formatting.None : Formatting.Indented;
+            var parsedJson = JsonConvert.DeserializeObject(json);
+            return JsonConvert.SerializeObject(parsedJson, fomat);
         }
     }
 }
+

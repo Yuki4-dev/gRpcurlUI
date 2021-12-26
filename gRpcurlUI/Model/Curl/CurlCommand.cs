@@ -4,12 +4,14 @@ namespace gRpcurlUI.Model.Curl
 {
     public class CurlCommand : IProccesCommand
     {
-        public string AppPath { get; } = "curl";
+        public string AppPath { get; }
 
         public string Arguments { get; }
 
-        public CurlCommand(string option, string endPoint, string content)
+        public CurlCommand(string appPath, string option, string endPoint, string content)
         {
+            AppPath = appPath;
+
             if (string.IsNullOrWhiteSpace(content))
             {
                 Arguments = $"{option} {endPoint}";

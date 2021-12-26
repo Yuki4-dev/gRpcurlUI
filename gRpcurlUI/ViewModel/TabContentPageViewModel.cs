@@ -2,7 +2,6 @@
 using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Windows;
 using System.Windows.Input;
 
@@ -10,11 +9,25 @@ namespace gRpcurlUI.ViewModel
 {
     public class TabContentPageViewModel : ViewModelBase
     {
-        private IExecutePageViewModel<IProject> _ExcutePageViewModel;
-        public IExecutePageViewModel<IProject> ExecutePageViewModel
+        private ExecutePageViewModel _ExcutePageViewModel;
+        public ExecutePageViewModel ExecutePageViewModel
         {
             get => _ExcutePageViewModel;
             set => OnPropertyChanged(ref _ExcutePageViewModel, value);
+        }
+
+        private IProjectContext _ProjectContext;
+        public IProjectContext ProjectContext
+        {
+            get => _ProjectContext;
+            set
+            {
+                if (SetProperty(ref _ProjectContext, value))
+                {
+                    ExecutePageViewModel.SelectedProject = null;
+                    OnPropertyChanged();
+                }
+            }
         }
 
         private bool _IsRemoveMode;
@@ -78,16 +91,11 @@ namespace gRpcurlUI.ViewModel
 
         private readonly List<IProject> removeProject = new List<IProject>();
 
-        public TabContentPageViewModel(ILoadModel load, IExecutePageViewModel<IProject> holder)
+        public TabContentPageViewModel(ILoadModel load, ExecutePageViewModel executePageViewmodel)
         {
             loadModel = load;
-            ExecutePageViewModel = holder;
+            ExecutePageViewModel = executePageViewmodel;
 
-            SetCommand();
-        }
-
-        private void SetCommand()
-        {
             SelectedCommand = Command.Create<IProject>(SelectedExecute);
             AddCommand = new Command(AddExecute);
             RemoveCommand = new Command(RemoveExecutAsynce);
@@ -121,7 +129,7 @@ namespace gRpcurlUI.ViewModel
                 var result = await OnShowMessageDialog($"{removeProject.Count} Peoject Remove.", MessageBoxButton.YesNo);
                 if (result == MessageBoxResult.Yes)
                 {
-                    removeProject.ForEach(p => ExecutePageViewModel.Remove(p));
+                    removeProject.ForEach(p => ProjectContext.RemoveProject(p));
                 }
             }
             IsRemoveMode = false;
@@ -135,7 +143,7 @@ namespace gRpcurlUI.ViewModel
         private void AddExecute()
         {
             var project = (IProject)ExecutePageViewModel.SelectedProject?.Clone();
-            ExecutePageViewModel.Add(project);
+            ProjectContext.AddProject(project);
         }
 
         private async void ExportExecuteAsync()
@@ -158,7 +166,7 @@ namespace gRpcurlUI.ViewModel
             {
                 try
                 {
-                    loadModel.Save(ExecutePageViewModel.Context, fileName);
+                    loadModel.Save(ProjectContext, fileName);
                 }
                 catch (Exception ex)
                 {
@@ -187,19 +195,11 @@ namespace gRpcurlUI.ViewModel
             {
                 try
                 {
-                    var Context = (IProjectContext<IProject>)loadModel.Load(fileName, ExecutePageViewModel.Context.GetType());
-                    if (Context.Verion != ExecutePageViewModel.Context.Verion)
-                    {
-                        throw new Exception($"Version Error. Export Version:{Context.Verion} This Version:{ExecutePageViewModel.Context.Verion}");
-                    }
-                    else if (Context.Projects == null || Context.Projects.Count() == 0)
-                    {
-                        throw new Exception($"Export Error. Project is Nothing.");
-                    }
-
+                    var Context = (IProjectContext)loadModel.Load(fileName, ProjectContext.GetType());
+                    ProjectContext.Validate(Context);
                     foreach (var project in Context.Projects)
                     {
-                        ExecutePageViewModel.Add(project);
+                        ProjectContext.AddProject(project);
                     }
                 }
                 catch (Exception ex)

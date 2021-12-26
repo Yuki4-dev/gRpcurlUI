@@ -3,35 +3,25 @@ using gRpcurlUI.Model;
 using System;
 using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 
 namespace gRpcurlUI.ViewModel
 {
-    public interface IExecutePageViewModel<out T> : IProjectHolder<T> where T : IProject
+    public class ExecutePageViewModel : ViewModelBase
     {
-        string StandardOutput { get; set; }
+        private IProject _SelectedProject;
+        public IProject SelectedProject
+        {
+            get => _SelectedProject;
+            set
+            {
+                OnPropertyChanged(ref _SelectedProject, value);
+                OnPropertyChanged(nameof(IsEnabled));
+            }
+        }
+        public bool IsEnabled => SelectedProject != null;
 
-        string StandardError { get; set; }
-
-        bool ClearRepsponse { get; set; }
-
-        bool IsSending { get; set; }
-
-        Visibility SenddingProgressVisible { get; }
-
-        ICommand SendCommand { get; set; }
-
-        ICommand SendCancelCommand { get; set; }
-
-        ICommand SendContentFormatCommand { get; set; }
-
-        ICommand TextBoxClearCommand { get; set; }
-    }
-
-    public abstract class ExecutePageViewModel<T> : ViewModelBase, IExecutePageViewModel<T> where T : IProject
-    {
         private readonly StringBuilder standerdOutputStringBuilder = new StringBuilder();
         public string StandardOutput
         {
@@ -112,12 +102,6 @@ namespace gRpcurlUI.ViewModel
             set => OnPropertyChanged(ref _TextBoxClearCommand, value);
         }
 
-        public bool IsEnabled => SelectedProject != null;
-
-        public abstract IProject SelectedProject { get; set; }
-
-        public abstract IProjectContext<T> Context { get; }
-
         protected readonly IProcessExecuter processExecuter;
 
         private CancellationTokenSource tokenSource;
@@ -139,55 +123,46 @@ namespace gRpcurlUI.ViewModel
             TextBoxClearCommand = Command.Create<string>(TextBoxClearCommandExecute);
         }
 
-        protected virtual void TextBoxClearCommandExecute(string type)
+        private void TextBoxClearCommandExecute(string type)
         {
-            var area = Enum.Parse<ClearArea>(type);
-            switch (area)
+            switch (type)
             {
-                case ClearArea.SendContent:
+                case "1":
                     SelectedProject.SendContent = "";
                     break;
-                case ClearArea.Standard:
+                case "2":
                     standerdOutputStringBuilder.Clear();
                     OnPropertyChanged(nameof(StandardOutput));
                     break;
-                case ClearArea.Error:
+                case "3":
                     standardErrorStringBuilder.Clear();
                     OnPropertyChanged(nameof(StandardError));
                     break;
             }
         }
 
-        protected virtual async void SendExecuteAsync()
+        private async void SendExecuteAsync()
         {
-            if (!PreSending(out var message))
+
+            if (!SelectedProject.PrepareProject(out var message))
             {
-                _ = OnShowMessageDialog(message);
-                return;
+                var result = await OnShowMessageDialog(message, MessageBoxButton.YesNo);
+                if (result != MessageBoxResult.Yes)
+                {
+                    return;
+                }
             }
 
             IsSending = true;
-
             if (ClearRepsponse)
             {
-                TextBoxClearCommandExecute(ClearArea.Standard.ToString());
+                TextBoxClearCommandExecute("2");
             }
 
-            await SendExecuteCoreAsync();
-
-            IsSending = false;
-        }
-
-        private async Task SendExecuteCoreAsync()
-        {
-            tokenSource = new CancellationTokenSource();
             try
             {
-                var cmd = await CreateCommandAsync();
-                if (cmd != null)
-                {
-                    await processExecuter.ExecuteAysnc(cmd, tokenSource.Token);
-                }
+                tokenSource = new CancellationTokenSource();
+                await processExecuter.ExecuteAysnc(SelectedProject.CreateCommand(), tokenSource.Token);
             }
             catch (Exception ex)
             {
@@ -195,12 +170,13 @@ namespace gRpcurlUI.ViewModel
             }
             finally
             {
-                tokenSource.Dispose();
+                tokenSource?.Dispose();
                 tokenSource = null;
+                IsSending = false;
             }
         }
 
-        protected virtual async void SendCancelExecute()
+        private async void SendCancelExecute()
         {
             var result = await OnShowMessageDialog("Cancel Sendding?", MessageBoxButton.YesNo);
             if (result == MessageBoxResult.Yes)
@@ -209,19 +185,12 @@ namespace gRpcurlUI.ViewModel
             }
         }
 
-        protected abstract bool PreSending(out string message);
-
-        protected abstract Task<IProccesCommand> CreateCommandAsync();
-
-        protected abstract void SendContentFormatExecute();
-
-        public abstract void Add(IProject project = null);
-
-        public abstract bool Remove(IProject project);
-    }
-
-    public enum ClearArea
-    {
-        SendContent, Standard, Error
+        private void SendContentFormatExecute()
+        {
+            if (!SelectedProject.PrepareProject(out var message))
+            {
+                OnShowMessageDialog(message);
+            }
+        }
     }
 }

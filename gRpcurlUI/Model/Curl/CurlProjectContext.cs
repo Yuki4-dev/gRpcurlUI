@@ -1,9 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 
 namespace gRpcurlUI.Model.Curl
 {
-    public class CurlProjectContext : Observable, IProjectContext<CurlProject>
+    public class CurlProjectContext : Observable, IProjectContext
     {
         private string _Verion;
         public string Verion
@@ -20,22 +22,57 @@ namespace gRpcurlUI.Model.Curl
         }
 
         private readonly ICollection<CurlProject> projectsInternal = new ObservableCollection<CurlProject>();
-        public IEnumerable<CurlProject> Projects => projectsInternal;
-
-        public void AddPrject(CurlProject project)
-        {
-            projectsInternal.Add(project);
-        }
-
-        public bool RemovePrject(CurlProject project)
-        {
-            return projectsInternal.Remove(project);
-        }
+        public IEnumerable<IProject> Projects => projectsInternal;
 
         public CurlProjectContext()
         {
             Verion = "1.0.0";
             ProjectType = "curl";
+        }
+
+        public void SetSetting(IReadOnlyAppSetting setting)
+        {
+            //
+        }
+
+        public bool RemoveProject(IProject project)
+        {
+            return projectsInternal.Remove((CurlProject)project);
+        }
+
+        public void AddProject(IProject project = null)
+        {
+            if (project == null)
+            {
+                project = new CurlProject()
+                {
+                    ProjectName = "new Project"
+                };
+            }
+            projectsInternal.Add((CurlProject)project);
+        }
+
+        public void Validate(IProjectContext other)
+        {
+            if (other is CurlProjectContext)
+            {
+                if (Verion != other.Verion)
+                {
+                    throw new Exception($"Version Error. Export Version:{other.Verion} This Version:{Verion}");
+                }
+                else if (ProjectType != other.ProjectType)
+                {
+                    throw new Exception($"ProjectType Error. Export ProjectType:{other.ProjectType} This ProjectType:{ProjectType}");
+                }
+                else if (other.Projects == null || other.Projects.Count() == 0)
+                {
+                    throw new Exception($"Export Error. Project is Nothing");
+                }
+            }
+            else
+            {
+                throw new Exception("Export Project is not CurlProjectContext");
+            }
         }
     }
 }

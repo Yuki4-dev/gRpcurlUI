@@ -74,7 +74,7 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
-        <controls:HeaderContent Title="{Binding ExecutePageViewModel.Context.ProjectType}">
+        <controls:HeaderContent Title="{Binding ProjectContext.ProjectType}">
 
             <controls:HeaderContent.Header>
                 <ContentControl Template="{StaticResource ProjectListHeaderTemplate}"/>
@@ -83,7 +83,7 @@
             <controls:ProjectListBox IsMultiSelect="{Binding IsRemoveMode}"
                                      Background="{DynamicResource DefaulEditAreaBoxBrush}"
                                      SelectedCommand="{Binding SelectedCommand}"
-                                     ItemsSource="{Binding ExecutePageViewModel.Context.Projects}"/>
+                                     ItemsSource="{Binding ProjectContext.Projects}"/>
 
         </controls:HeaderContent>
 

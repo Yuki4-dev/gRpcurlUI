@@ -72,7 +72,7 @@
 
                         <Button Style="{StaticResource IconButtonStyleTooltip}"
                                 Command="{Binding TextBoxClearCommand}"
-                                CommandParameter="SendContent"
+                                CommandParameter="1"
                                 Tag="{StaticResource Clear}"
                                 Content="All Clear"/>
 
@@ -121,7 +121,7 @@
                                       Style="{StaticResource CheckedToggleButtonStyle}"/>
 
                         <Button HorizontalAlignment="Right"
-                                CommandParameter="Standard"
+                                CommandParameter="2"
                                 Command="{Binding TextBoxClearCommand}"
                                 Style="{StaticResource IconButtonStyleTooltip}"
                                 Tag="{StaticResource Clear}"
@@ -151,7 +151,7 @@
                     
                     <StackPanel Style="{StaticResource OparetionAreaStackPanelStyle}">
 
-                        <Button CommandParameter="Error"
+                        <Button CommandParameter="3"
                                 Command="{Binding TextBoxClearCommand}"
                                 Style="{StaticResource IconButtonStyleTooltip}"
                                 Tag="{StaticResource Clear}"

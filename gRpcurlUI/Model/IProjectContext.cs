@@ -1,21 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace gRpcurlUI.Model
 {
-    public interface IProjectContext<out T> where T : IProject
+    public interface IProjectContext
     {
         string ProjectType { get; }
 
         string Verion { get; }
 
-        IEnumerable<T> Projects { get; }
-    }
+        IEnumerable<IProject> Projects { get; }
 
-    public interface IProject : ICloneable
-    {
-        string ProjectName { get; set; }
+        void SetSetting(IReadOnlyAppSetting setting);
 
-        string SendContent { get; set; }
+        void Validate(IProjectContext other);
+
+        void AddProject(IProject project = null);
+
+        bool RemoveProject(IProject project);
     }
 }

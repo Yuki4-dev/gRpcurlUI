@@ -12,11 +12,14 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+    <Compile Remove="ViewModel\Dialog\**" />
+    <EmbeddedResource Remove="ViewModel\Dialog\**" />
+    <None Remove="ViewModel\Dialog\**" />
+    <Page Remove="ViewModel\Dialog\**" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="ViewModel\Dialog\" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
   </ItemGroup>
 
 </Project>
