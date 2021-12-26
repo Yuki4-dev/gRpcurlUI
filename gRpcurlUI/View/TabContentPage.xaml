@@ -1,17 +1,19 @@
-﻿<Page x:Class="gRpcurlUI.View.TabContentPage"
-      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      xmlns:local="clr-namespace:gRpcurlUI.View"
-      xmlns:viewmodel="clr-namespace:gRpcurlUI.ViewModel" 
-      xmlns:controls="clr-namespace:gRpcurlUI.Controls"
-      mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
-      Loaded="Page_Loaded"
-      Background="{DynamicResource DefaultPageBackground}"
-      DataContextChanged="Page_DataContextChanged"
-      Title="TabContentPage">
+﻿<Page
+    x:Class="gRpcurlUI.View.TabContentPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="clr-namespace:gRpcurlUI.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:gRpcurlUI.View"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:viewmodel="clr-namespace:gRpcurlUI.ViewModel"
+    Title="TabContentPage"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    Background="{DynamicResource DefaultPageBackground}"
+    DataContextChanged="Page_DataContextChanged"
+    Loaded="Page_Loaded"
+    mc:Ignorable="d">
 
     <Page.Resources>
 
@@ -19,46 +21,51 @@
 
             <StackPanel Style="{StaticResource OparetionAreaStackPanelStyle}">
 
-                <Button  x:Name="ExportButton"
-                         Style="{StaticResource IconButtonStyleTooltip}"
-                         Command="{Binding ExportCommand}"
-                         Tag="{StaticResource Export}"
-                         Content="Export"/>
+                <Button
+                    x:Name="ExportButton"
+                    Command="{Binding ExportCommand}"
+                    Content="Export"
+                    Style="{StaticResource IconButtonStyleTooltip}"
+                    Tag="{StaticResource Export}" />
 
-                <Button  x:Name="ImportButton"
-                         Style="{StaticResource IconButtonStyleTooltip}"
-                         Command="{Binding ImportCommand}"
-                         Tag="{StaticResource Import}"
-                         Content="Import"/>
+                <Button
+                    x:Name="ImportButton"
+                    Command="{Binding ImportCommand}"
+                    Content="Import"
+                    Style="{StaticResource IconButtonStyleTooltip}"
+                    Tag="{StaticResource Import}" />
 
-                <Button  x:Name="AddButton"
-                         Style="{StaticResource IconButtonStyleTooltip}"
-                         Command="{Binding AddCommand}"
-                         Tag="{StaticResource Add}"
-                         Content="Add"/>
+                <Button
+                    x:Name="AddButton"
+                    Command="{Binding AddCommand}"
+                    Content="Add"
+                    Style="{StaticResource IconButtonStyleTooltip}"
+                    Tag="{StaticResource Add}" />
 
-                <Button x:Name="RemoveButton"
-                        Style="{StaticResource IconButtonStyleTooltip}"
-                        Command="{Binding RemoveCommand}"
-                        CommandParameter="1"
-                        Tag="{StaticResource Remove}"
-                        Content="Remove"/>
+                <Button
+                    x:Name="RemoveButton"
+                    Command="{Binding RemoveCommand}"
+                    CommandParameter="1"
+                    Content="Remove"
+                    Style="{StaticResource IconButtonStyleTooltip}"
+                    Tag="{StaticResource Remove}" />
 
-                <Button x:Name="CancelButton"
-                        Visibility="Collapsed"
-                        Style="{StaticResource IconButtonStyleTooltip}"
-                        Command="{Binding CancelCommand}"
-                        Tag="{StaticResource Cancel}"
-                        Content="Cancel"/>
+                <Button
+                    x:Name="CancelButton"
+                    Command="{Binding CancelCommand}"
+                    Content="Cancel"
+                    Style="{StaticResource IconButtonStyleTooltip}"
+                    Tag="{StaticResource Cancel}"
+                    Visibility="Collapsed" />
 
             </StackPanel>
 
             <ControlTemplate.Triggers>
                 <DataTrigger Binding="{Binding IsRemoveMode}" Value="True">
-                    <Setter TargetName="ExportButton" Property="Visibility" Value="Collapsed"/>
-                    <Setter TargetName="ImportButton" Property="Visibility" Value="Collapsed"/>
-                    <Setter TargetName="AddButton" Property="Visibility" Value="Collapsed"/>
-                    <Setter TargetName="CancelButton" Property="Visibility" Value="Visible"/>
+                    <Setter TargetName="ExportButton" Property="Visibility" Value="Collapsed" />
+                    <Setter TargetName="ImportButton" Property="Visibility" Value="Collapsed" />
+                    <Setter TargetName="AddButton" Property="Visibility" Value="Collapsed" />
+                    <Setter TargetName="CancelButton" Property="Visibility" Value="Visible" />
                 </DataTrigger>
             </ControlTemplate.Triggers>
 
@@ -69,30 +76,35 @@
     <Grid x:Name="MainHost">
 
         <Grid.ColumnDefinitions>
-            <ColumnDefinition x:Name="LeftColumn" MinWidth="100" MaxWidth="450" Width="200"/>
-            <ColumnDefinition Width="3"/>
-            <ColumnDefinition Width="*"/>
+            <ColumnDefinition
+                x:Name="LeftColumn"
+                Width="200"
+                MinWidth="100"
+                MaxWidth="450" />
+            <ColumnDefinition Width="3" />
+            <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
 
         <controls:HeaderContent Title="{Binding ProjectContext.ProjectType}">
 
             <controls:HeaderContent.Header>
-                <ContentControl Template="{StaticResource ProjectListHeaderTemplate}"/>
+                <ContentControl Template="{StaticResource ProjectListHeaderTemplate}" />
             </controls:HeaderContent.Header>
 
-            <controls:ProjectListBox IsMultiSelect="{Binding IsRemoveMode}"
-                                     Background="{DynamicResource DefaulEditAreaBoxBrush}"
-                                     SelectedCommand="{Binding SelectedCommand}"
-                                     ItemsSource="{Binding ProjectContext.Projects}"/>
+            <controls:ProjectListBox
+                Background="{DynamicResource DefaulEditAreaBoxBrush}"
+                IsMultiSelect="{Binding IsRemoveMode}"
+                ItemsSource="{Binding ProjectContext.Projects}"
+                SelectedCommand="{Binding SelectedCommand}" />
 
         </controls:HeaderContent>
 
-        <GridSplitter Grid.Column="1"
-                      Style="{StaticResource DefaultGridSplitterStyle}"/>
+        <GridSplitter Grid.Column="1" Style="{StaticResource DefaultGridSplitterStyle}" />
 
-        <Frame x:Name="MainFrame"
-               NavigationUIVisibility="Hidden"
-               Grid.Column="2"/>
+        <Frame
+            x:Name="MainFrame"
+            Grid.Column="2"
+            NavigationUIVisibility="Hidden" />
 
     </Grid>
 </Page>

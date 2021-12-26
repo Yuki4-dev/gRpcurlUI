@@ -1,20 +1,23 @@
-﻿<UserControl x:Class="gRpcurlUI.Controls.ProjectListBox"
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:gRpcurlUI.Controls" xmlns:System="clr-namespace:System;assembly=netstandard"
-             mc:Ignorable="d" 
-             x:Name="Root"
-             Style="{DynamicResource ProjectListBoxStyle}"
-             d:DesignHeight="450" d:DesignWidth="800">
+﻿<UserControl
+    x:Class="gRpcurlUI.Controls.ProjectListBox"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:System="clr-namespace:System;assembly=netstandard"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:gRpcurlUI.Controls"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    x:Name="Root"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    Style="{DynamicResource ProjectListBoxStyle}"
+    mc:Ignorable="d">
 
     <UserControl.Resources>
 
         <System:Double x:Key="RowHeight">40</System:Double>
-        
-        <ControlTemplate x:Key="ListBoxRudioButtonTemlate" TargetType="RadioButton">  
-            <ContentPresenter/>
+
+        <ControlTemplate x:Key="ListBoxRudioButtonTemlate" TargetType="RadioButton">
+            <ContentPresenter />
         </ControlTemplate>
 
         <Style x:Key="ListBoxStyle" TargetType="ListBox">
@@ -25,11 +28,11 @@
                         <Setter Property="Template">
                             <Setter.Value>
                                 <ControlTemplate TargetType="{x:Type ListBoxItem}">
-                                    <ContentPresenter/>
+                                    <ContentPresenter />
                                 </ControlTemplate>
                             </Setter.Value>
                         </Setter>
-                        <Setter Property="Focusable" Value="False"/>
+                        <Setter Property="Focusable" Value="False" />
                     </Style>
                 </Setter.Value>
             </Setter>
@@ -38,7 +41,7 @@
                 <Setter.Value>
                     <ControlTemplate TargetType="ListBox">
                         <local:CustomScrollViewer VerticalScrollBarVisibility="Auto">
-                            <ItemsPresenter/>
+                            <ItemsPresenter />
                         </local:CustomScrollViewer>
                     </ControlTemplate>
                 </Setter.Value>
@@ -50,39 +53,41 @@
                     <DataTemplate DataType="model:IProject">
                         <Grid>
 
-                            <Border x:Name="SelectBorder"
-                                    BorderBrush="Transparent"
-                                    Background="Transparent"
-                                    BorderThickness="0"/>
+                            <Border
+                                x:Name="SelectBorder"
+                                Background="Transparent"
+                                BorderBrush="Transparent"
+                                BorderThickness="0" />
 
-                            <RadioButton x:Name="SelectRudioButton"
-                                         Click="SelectRudioButton_Click"
-                                         GroupName="Select1"
-                                         Height="{StaticResource RowHeight}"
-                                         Command="{Binding SelectedCommand, ElementName=Root}"
-                                         CommandParameter="{Binding}"
-                                         Template="{StaticResource ListBoxRudioButtonTemlate}">
+                            <RadioButton
+                                x:Name="SelectRudioButton"
+                                Height="{StaticResource RowHeight}"
+                                Click="SelectRudioButton_Click"
+                                Command="{Binding SelectedCommand, ElementName=Root}"
+                                CommandParameter="{Binding}"
+                                GroupName="Select1"
+                                Template="{StaticResource ListBoxRudioButtonTemlate}">
 
-                                <TextBlock Text="{Binding ProjectName}"
-                                           Margin="4"
-                                           VerticalAlignment="Center"
-                                           FontSize="24"
-                                           Style="{StaticResource DefaultTextBlockStyle}"/>
+                                <TextBlock
+                                    Margin="4"
+                                    VerticalAlignment="Center"
+                                    FontSize="24"
+                                    Style="{StaticResource DefaultTextBlockStyle}"
+                                    Text="{Binding ProjectName}" />
 
                                 <RadioButton.ToolTip>
-                                    <ToolTip Style="{StaticResource DefaultToolTipStyle}"
-                                             Content="{Binding ProjectName}"/>
+                                    <ToolTip Content="{Binding ProjectName}" Style="{StaticResource DefaultToolTipStyle}" />
                                 </RadioButton.ToolTip>
 
                             </RadioButton>
                         </Grid>
 
                         <DataTemplate.Triggers>
-                            <Trigger Property="IsChecked" Value="true" SourceName="SelectRudioButton">
-                                <Setter TargetName="SelectBorder" Property="Background" Value="{DynamicResource DefaultSelectedBackground}"/>
+                            <Trigger SourceName="SelectRudioButton" Property="IsChecked" Value="true">
+                                <Setter TargetName="SelectBorder" Property="Background" Value="{DynamicResource DefaultSelectedBackground}" />
                             </Trigger>
                             <Trigger Property="IsMouseOver" Value="true">
-                                <Setter TargetName="SelectBorder" Property="Background" Value="{DynamicResource DefaultMouseOverBackground}"/>
+                                <Setter TargetName="SelectBorder" Property="Background" Value="{DynamicResource DefaultMouseOverBackground}" />
                             </Trigger>
                         </DataTemplate.Triggers>
                     </DataTemplate>
@@ -94,8 +99,7 @@
 
         <ControlTemplate x:Key="ProjectListBoxTemaplate" TargetType="local:ProjectListBox">
             <Grid Background="{TemplateBinding Background}">
-                <ListBox Style="{StaticResource ListBoxStyle}"
-                         ItemsSource="{TemplateBinding ItemsSource}"/>
+                <ListBox ItemsSource="{TemplateBinding ItemsSource}" Style="{StaticResource ListBoxStyle}" />
             </Grid>
         </ControlTemplate>
 
@@ -107,11 +111,11 @@
                         <Setter Property="Template">
                             <Setter.Value>
                                 <ControlTemplate TargetType="{x:Type ListBoxItem}">
-                                    <ContentPresenter/>
+                                    <ContentPresenter />
                                 </ControlTemplate>
                             </Setter.Value>
                         </Setter>
-                        <Setter Property="Focusable" Value="False"/>
+                        <Setter Property="Focusable" Value="False" />
                     </Style>
                 </Setter.Value>
             </Setter>
@@ -119,9 +123,8 @@
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="ListBox">
-                        <local:CustomScrollViewer VerticalScrollBarVisibility="Auto"
-                                                  TabBrush="{DynamicResource DefaulScrolBarTabBrush}">
-                            <ItemsPresenter/>
+                        <local:CustomScrollViewer TabBrush="{DynamicResource DefaulScrolBarTabBrush}" VerticalScrollBarVisibility="Auto">
+                            <ItemsPresenter />
                         </local:CustomScrollViewer>
                     </ControlTemplate>
                 </Setter.Value>
@@ -130,38 +133,39 @@
             <Setter Property="ItemTemplate">
                 <Setter.Value>
 
-                    <DataTemplate DataType="model:IProject" >
+                    <DataTemplate DataType="model:IProject">
                         <Grid>
 
-                            <Border x:Name="SelectBorder"
-                                    BorderBrush="Transparent"
-                                    Background="Transparent"
-                                    BorderThickness="0"/>
+                            <Border
+                                x:Name="SelectBorder"
+                                Background="Transparent"
+                                BorderBrush="Transparent"
+                                BorderThickness="0" />
 
-                            <ToggleButton x:Name="CheckToggleButton"
-                                          Click="CheckToggleButton_Click"
-                                          IsChecked="{Binding IsAllSelected, ElementName=Root,Mode=OneWay}"
-                                          Height="{StaticResource RowHeight}"
-                                          Content="{Binding ProjectName}"
-                                          Command="{Binding SelectedCommand, ElementName=Root}"
-                                          CommandParameter="{Binding}"
-                                          Style="{StaticResource CheckedToggleButtonStyle}"
-                                          FontSize="24">
+                            <ToggleButton
+                                x:Name="CheckToggleButton"
+                                Height="{StaticResource RowHeight}"
+                                Click="CheckToggleButton_Click"
+                                Command="{Binding SelectedCommand, ElementName=Root}"
+                                CommandParameter="{Binding}"
+                                Content="{Binding ProjectName}"
+                                FontSize="24"
+                                IsChecked="{Binding IsAllSelected, ElementName=Root, Mode=OneWay}"
+                                Style="{StaticResource CheckedToggleButtonStyle}">
 
                                 <ToggleButton.ToolTip>
-                                    <ToolTip Style="{StaticResource DefaultToolTipStyle}"
-                                             Content="{Binding ProjectName}"/>
+                                    <ToolTip Content="{Binding ProjectName}" Style="{StaticResource DefaultToolTipStyle}" />
                                 </ToggleButton.ToolTip>
 
                             </ToggleButton>
                         </Grid>
 
                         <DataTemplate.Triggers>
-                            <Trigger Property="IsChecked" Value="true" SourceName="CheckToggleButton">
-                                <Setter TargetName="SelectBorder" Property="Background" Value="{DynamicResource DefaultSelectedBackground}"/>
+                            <Trigger SourceName="CheckToggleButton" Property="IsChecked" Value="true">
+                                <Setter TargetName="SelectBorder" Property="Background" Value="{DynamicResource DefaultSelectedBackground}" />
                             </Trigger>
                             <Trigger Property="IsMouseOver" Value="true">
-                                <Setter TargetName="SelectBorder" Property="Background" Value="{DynamicResource DefaultMouseOverBackground}"/>
+                                <Setter TargetName="SelectBorder" Property="Background" Value="{DynamicResource DefaultMouseOverBackground}" />
                             </Trigger>
                         </DataTemplate.Triggers>
                     </DataTemplate>
@@ -175,18 +179,17 @@
 
             <Grid Background="{StaticResource DefaulEditAreaBoxBrush}">
 
-                <ListBox Style="{StaticResource MultiSelectListBoxStyle}"
-                         ItemsSource="{TemplateBinding ItemsSource}"/>
+                <ListBox ItemsSource="{TemplateBinding ItemsSource}" Style="{StaticResource MultiSelectListBoxStyle}" />
 
             </Grid>
 
         </ControlTemplate>
 
         <Style x:Key="ProjectListBoxStyle" TargetType="local:ProjectListBox">
-            <Setter Property="Template" Value="{StaticResource ProjectListBoxTemaplate}"/>
+            <Setter Property="Template" Value="{StaticResource ProjectListBoxTemaplate}" />
             <Style.Triggers>
                 <Trigger Property="IsMultiSelect" Value="True">
-                    <Setter Property="Template" Value="{StaticResource MultiSelectProjectListBoxTemaplate}"/>
+                    <Setter Property="Template" Value="{StaticResource MultiSelectProjectListBoxTemaplate}" />
                 </Trigger>
             </Style.Triggers>
         </Style>
