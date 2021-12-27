@@ -96,7 +96,16 @@ namespace gRpcurlUI.Model.Curl
 
         public IProccesCommand CreateCommand()
         {
-            return new CurlCommand(AppPath, Option, EndPoint, SendContent);
+            string jsonContent = SendContent;
+            try
+            {
+                if (IsJsonContent)
+                {
+                    jsonContent = FormatJson(jsonContent);
+                }
+            }
+            catch { }
+            return new CurlCommand(AppPath, Option, EndPoint, jsonContent);
         }
 
         public object Clone()

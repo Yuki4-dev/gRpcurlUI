@@ -64,28 +64,43 @@
 
                         <Button
                             Command="{Binding SendCommand}"
-                            Content="Send"
-                            Style="{StaticResource IconButtonStyleTooltip}"
-                            Tag="{StaticResource Send}" />
+                            Style="{StaticResource IconButtonStyle}"
+                            Tag="{StaticResource Send}">
+                            <Button.ToolTip>
+                                <ToolTip Content="Send" Style="{StaticResource DefaultToolTipStyle}" />
+                            </Button.ToolTip>
+                        </Button>
 
                         <Button
                             Command="{Binding SendCancelCommand}"
                             Content="Cancel"
-                            Style="{StaticResource IconButtonStyleTooltip}"
-                            Tag="{StaticResource Cancel}" />
+                            Style="{StaticResource IconButtonStyle}"
+                            Tag="{StaticResource Cancel}">
+                            <Button.ToolTip>
+                                <ToolTip Content="Cancel" Style="{StaticResource DefaultToolTipStyle}" />
+                            </Button.ToolTip>
+                        </Button>
 
                         <Button
                             Command="{Binding SendContentFormatCommand}"
                             Content="Format"
-                            Style="{StaticResource IconButtonStyleTooltip}"
-                            Tag="{StaticResource Format}" />
+                            Style="{StaticResource IconButtonStyle}"
+                            Tag="{StaticResource Format}">
+                            <Button.ToolTip>
+                                <ToolTip Content="Fromat Text" Style="{StaticResource DefaultToolTipStyle}" />
+                            </Button.ToolTip>
+                        </Button>
 
                         <Button
                             Command="{Binding TextBoxClearCommand}"
                             CommandParameter="1"
                             Content="All Clear"
-                            Style="{StaticResource IconButtonStyleTooltip}"
-                            Tag="{StaticResource Clear}" />
+                            Style="{StaticResource IconButtonStyle}"
+                            Tag="{StaticResource Clear}">
+                            <Button.ToolTip>
+                                <ToolTip Content="Clear Text" Style="{StaticResource DefaultToolTipStyle}" />
+                            </Button.ToolTip>
+                        </Button>
 
                     </StackPanel>
 
@@ -142,8 +157,13 @@
                             Command="{Binding TextBoxClearCommand}"
                             CommandParameter="2"
                             Content="All Clear"
-                            Style="{StaticResource IconButtonStyleTooltip}"
-                            Tag="{StaticResource Clear}" />
+                            Style="{StaticResource IconButtonStyle}"
+                            Tag="{StaticResource Clear}">
+                            <Button.ToolTip>
+                                <ToolTip Content="Clear Text" Style="{StaticResource DefaultToolTipStyle}" />
+                            </Button.ToolTip>
+                        </Button>
+
 
                     </StackPanel>
 
@@ -172,8 +192,13 @@
                             Command="{Binding TextBoxClearCommand}"
                             CommandParameter="3"
                             Content="All Clear"
-                            Style="{StaticResource IconButtonStyleTooltip}"
-                            Tag="{StaticResource Clear}" />
+                            Style="{StaticResource IconButtonStyle}"
+                            Tag="{StaticResource Clear}">
+                            <Button.ToolTip>
+                                <ToolTip Content="Clear Text" Style="{StaticResource DefaultToolTipStyle}" />
+                            </Button.ToolTip>
+                        </Button>
+
 
                     </StackPanel>
 

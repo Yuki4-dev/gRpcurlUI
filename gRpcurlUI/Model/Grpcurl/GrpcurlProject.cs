@@ -97,7 +97,13 @@ namespace gRpcurlUI.Model.Grpcurl
 
         public IProccesCommand CreateCommand()
         {
-            return new GrpcurlCommand(AppPath, Option, EndPoint, SendContent, Service);
+            string jsonContent = SendContent;
+            try
+            {
+                jsonContent = FormatJson(jsonContent);
+            }
+            catch { }
+            return new GrpcurlCommand(AppPath, Option, EndPoint, jsonContent, Service);
         }
 
         public object Clone()

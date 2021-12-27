@@ -95,8 +95,13 @@
             <Button
                 Click="SettingButton_Click"
                 Content="Setting"
-                Style="{StaticResource IconButtonStyleTooltip}"
-                Tag="{StaticResource Setting}" />
+                Style="{StaticResource IconButtonStyle}"
+                Tag="{StaticResource Setting}">
+                <Button.ToolTip>
+                    <ToolTip Content="Setting" Style="{StaticResource DefaultToolTipStyle}" />
+                </Button.ToolTip>
+            </Button>
+
 
         </StackPanel>
 

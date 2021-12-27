@@ -206,16 +206,4 @@
         </Style.Triggers>
     </Style>
 
-    <Style x:Key="OparetionAreaStackPanelStyle" TargetType="StackPanel">
-        <Setter Property="Height" Value="32" />
-        <Setter Property="HorizontalAlignment" Value="Right" />
-        <Setter Property="Orientation" Value="Horizontal" />
-    </Style>
-
-    <Style x:Key="DefaultGridSplitterStyle" TargetType="GridSplitter">
-        <Setter Property="BorderThickness" Value="1" />
-        <Setter Property="HorizontalAlignment" Value="Stretch" />
-        <Setter Property="Background" Value="{StaticResource DefaulBorderBrush}" />
-    </Style>
-
 </ResourceDictionary>

@@ -49,10 +49,14 @@
                                 </TextBlock>
 
                                 <ToggleButton
-                                    Content="Edit."
                                     IsChecked="{Binding IsOpen, Mode=TwoWay, ElementName=ProjectNameEditPopup}"
-                                    Style="{StaticResource IconButtonStyleTooltip}"
-                                    Tag="{StaticResource Edit}" />
+                                    Style="{StaticResource IconButtonStyle}"
+                                    Tag="{StaticResource Edit}">
+                                    <ToggleButton.ToolTip>
+                                        <ToolTip Content="Edit" Style="{StaticResource DefaultToolTipStyle}" />
+                                    </ToggleButton.ToolTip>
+
+                                </ToggleButton>
 
                             </StackPanel>
 

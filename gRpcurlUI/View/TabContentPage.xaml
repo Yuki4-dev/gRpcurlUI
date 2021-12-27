@@ -25,38 +25,62 @@
                     x:Name="ExportButton"
                     Command="{Binding ExportCommand}"
                     Content="Export"
-                    Style="{StaticResource IconButtonStyleTooltip}"
-                    Tag="{StaticResource Export}" />
+                    Style="{StaticResource IconButtonStyle}"
+                    Tag="{StaticResource Export}">
+                    <Button.ToolTip>
+                        <ToolTip Content="Export Project" Style="{StaticResource DefaultToolTipStyle}" />
+                    </Button.ToolTip>
+                </Button>
+
 
                 <Button
                     x:Name="ImportButton"
                     Command="{Binding ImportCommand}"
                     Content="Import"
-                    Style="{StaticResource IconButtonStyleTooltip}"
-                    Tag="{StaticResource Import}" />
+                    Style="{StaticResource IconButtonStyle}"
+                    Tag="{StaticResource Import}">
+                    <Button.ToolTip>
+                        <ToolTip Content="Import Project" Style="{StaticResource DefaultToolTipStyle}" />
+                    </Button.ToolTip>
+                </Button>
+
 
                 <Button
                     x:Name="AddButton"
                     Command="{Binding AddCommand}"
                     Content="Add"
-                    Style="{StaticResource IconButtonStyleTooltip}"
-                    Tag="{StaticResource Add}" />
+                    Style="{StaticResource IconButtonStyle}"
+                    Tag="{StaticResource Add}">
+                    <Button.ToolTip>
+                        <ToolTip Content="Add Project" Style="{StaticResource DefaultToolTipStyle}" />
+                    </Button.ToolTip>
+                </Button>
+
 
                 <Button
                     x:Name="RemoveButton"
                     Command="{Binding RemoveCommand}"
                     CommandParameter="1"
                     Content="Remove"
-                    Style="{StaticResource IconButtonStyleTooltip}"
-                    Tag="{StaticResource Remove}" />
+                    Style="{StaticResource IconButtonStyle}"
+                    Tag="{StaticResource Remove}">
+                    <Button.ToolTip>
+                        <ToolTip Content="Remove Project" Style="{StaticResource DefaultToolTipStyle}" />
+                    </Button.ToolTip>
+                </Button>
+
 
                 <Button
                     x:Name="CancelButton"
                     Command="{Binding CancelCommand}"
                     Content="Cancel"
-                    Style="{StaticResource IconButtonStyleTooltip}"
+                    Style="{StaticResource IconButtonStyle}"
                     Tag="{StaticResource Cancel}"
-                    Visibility="Collapsed" />
+                    Visibility="Collapsed">
+                    <Button.ToolTip>
+                        <ToolTip Content="Cancel" Style="{StaticResource DefaultToolTipStyle}" />
+                    </Button.ToolTip>
+                </Button>
 
             </StackPanel>
 
