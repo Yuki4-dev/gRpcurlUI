@@ -82,7 +82,7 @@ namespace gRpcurlUI.Model.Curl
             {
                 try
                 {
-                    SendContent = FormatJson(SendContent, FormatType.View);
+                    SendContent = FormatJson(SendContent, Formatting.Indented);
                 }
                 catch (Exception ex)
                 {
@@ -97,14 +97,14 @@ namespace gRpcurlUI.Model.Curl
         public IProccesCommand CreateCommand()
         {
             string jsonContent = SendContent;
-            try
+            if (!string.IsNullOrWhiteSpace(jsonContent) && IsJsonContent)
             {
-                if (IsJsonContent)
+                try
                 {
                     jsonContent = FormatJson(jsonContent);
                 }
+                catch { }
             }
-            catch { }
             return new CurlCommand(AppPath, Option, EndPoint, jsonContent);
         }
 
@@ -120,11 +120,10 @@ namespace gRpcurlUI.Model.Curl
             };
         }
 
-        private string FormatJson(string json, FormatType formatType = FormatType.None)
+        private string FormatJson(string json, Formatting format = Formatting.None)
         {
-            var fomat = formatType == FormatType.None ? Formatting.None : Formatting.Indented;
             var parsedJson = JsonConvert.DeserializeObject(json);
-            return JsonConvert.SerializeObject(parsedJson, fomat);
+            return JsonConvert.SerializeObject(parsedJson, format);
         }
     }
 }

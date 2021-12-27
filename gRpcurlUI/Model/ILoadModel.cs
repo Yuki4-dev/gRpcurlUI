@@ -15,12 +15,7 @@ namespace gRpcurlUI.Model
         object Load(string path, Type type);
     }
 
-    public enum FormatType
-    {
-        None, View
-    }
-
-    public class LoadModel : ILoadModel
+    public class JsonLoadModel : ILoadModel
     {
         public string OpenFileter => "json(*.Json;*.json)|*.Json;*.json";
 

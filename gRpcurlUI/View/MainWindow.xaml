@@ -24,21 +24,27 @@
                 Background="{TemplateBinding Background}"
                 BorderBrush="{TemplateBinding BorderBrush}"
                 BorderThickness="{TemplateBinding BorderThickness}">
+
                 <Grid>
+
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="9*" />
+                        <RowDefinition Height="1*" />
+                    </Grid.RowDefinitions>
+
                     <TextBlock
                         Margin="4"
                         HorizontalAlignment="Left"
                         VerticalAlignment="Center"
                         FontSize="{TemplateBinding FontSize}"
-                        FontWeight="{TemplateBinding FontWeight}"
-                        Foreground="{TemplateBinding Foreground}"
+                        Style="{StaticResource DefaultTextBlockStyle}"
                         Text="{TemplateBinding Content}" />
 
                     <Border
                         x:Name="SelectedBorder"
-                        Height="2"
+                        Grid.Row="1"
                         Margin="2,0,2,0"
-                        VerticalAlignment="Bottom"
+                        VerticalAlignment="Stretch"
                         Background="{DynamicResource DefaulIconBrush}"
                         Visibility="Collapsed" />
                 </Grid>
@@ -85,6 +91,7 @@
                 Click="GrpcurlButton_Click_1"
                 Content="Grpcurl"
                 Style="{StaticResource TabHeaderButtonStyle}" />
+
         </StackPanel>
 
         <StackPanel
@@ -101,7 +108,6 @@
                     <ToolTip Content="Setting" Style="{StaticResource DefaultToolTipStyle}" />
                 </Button.ToolTip>
             </Button>
-
 
         </StackPanel>
 

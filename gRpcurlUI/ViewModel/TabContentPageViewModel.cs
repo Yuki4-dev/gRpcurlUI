@@ -91,7 +91,7 @@ namespace gRpcurlUI.ViewModel
 
         private readonly List<IProject> removeProject = new List<IProject>();
 
-        public TabContentPageViewModel() : this(new LoadModel(), new ExecutePageViewModel()) { }
+        public TabContentPageViewModel() : this(new JsonLoadModel(), new ExecutePageViewModel()) { }
 
         public TabContentPageViewModel(ILoadModel load, ExecutePageViewModel executePageViewmodel)
         {
@@ -144,8 +144,7 @@ namespace gRpcurlUI.ViewModel
 
         private void AddExecute()
         {
-            var project = (IProject)ExecutePageViewModel.SelectedProject?.Clone();
-            ProjectContext.AddProject(project);
+            ProjectContext.AddProject();
         }
 
         private async void ExportExecuteAsync()

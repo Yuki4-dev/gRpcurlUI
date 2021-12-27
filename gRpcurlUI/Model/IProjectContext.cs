@@ -1,8 +1,9 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel;
 
 namespace gRpcurlUI.Model
 {
-    public interface IProjectContext
+    public interface IProjectContext : INotifyPropertyChanged
     {
         string ProjectType { get; }
 
