@@ -41,8 +41,7 @@ namespace gRpcurlUI.Model.Grpcurl
             {
                 project = new GrpcurlProject()
                 {
-                    //AppPath = appSetting?.AppPath,
-                    ProjectName = "new Project"
+                    ProjectName = "new GrpcProject"
                 };
             }
             projectsInternal.Add((GrpcurlProject)project);

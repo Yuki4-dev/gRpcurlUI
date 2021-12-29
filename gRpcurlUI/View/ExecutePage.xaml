@@ -161,7 +161,6 @@
                             </Button.ToolTip>
                         </Button>
 
-
                     </StackPanel>
 
                 </controls:HeaderContent.Header>
@@ -210,4 +209,5 @@
         </Grid>
 
     </Grid>
+
 </Page>

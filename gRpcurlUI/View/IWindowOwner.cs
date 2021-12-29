@@ -28,7 +28,7 @@ namespace gRpcurlUI.View
 
         public event Action<double, double> WindowSizeChenged;
 
-        public Dispatcher Dispatcher => window?.Dispatcher;
+        public Dispatcher Dispatcher => window.Dispatcher;
 
         private readonly Window window;
 

@@ -120,7 +120,6 @@ namespace gRpcurlUI.ViewModel
 
         private async void SendExecuteAsync()
         {
-
             if (!SelectedProject.PrepareProject(out var message))
             {
                 var result = await OnShowMessageDialog("continue?\r\n" + message, MessageBoxButton.YesNo);

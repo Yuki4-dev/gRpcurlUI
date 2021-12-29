@@ -32,7 +32,6 @@
                     </Button.ToolTip>
                 </Button>
 
-
                 <Button
                     x:Name="ImportButton"
                     Command="{Binding ImportCommand}"
@@ -42,7 +41,6 @@
                         <ToolTip Content="Import Project" Style="{StaticResource DefaultToolTipStyle}" />
                     </Button.ToolTip>
                 </Button>
-
 
                 <Button
                     x:Name="AddButton"
@@ -54,7 +52,6 @@
                     </Button.ToolTip>
                 </Button>
 
-
                 <Button
                     x:Name="RemoveButton"
                     Command="{Binding RemoveCommand}"
@@ -65,7 +62,6 @@
                         <ToolTip Content="Remove Project" Style="{StaticResource DefaultToolTipStyle}" />
                     </Button.ToolTip>
                 </Button>
-
 
                 <Button
                     x:Name="CancelButton"
@@ -127,4 +123,5 @@
             NavigationUIVisibility="Hidden" />
 
     </Grid>
+
 </Page>

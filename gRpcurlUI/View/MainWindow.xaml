@@ -19,6 +19,7 @@
     <Window.Resources>
 
         <ControlTemplate x:Key="TabHeaderButtonTemplate" TargetType="ToggleButton">
+
             <Border
                 x:Name="RootBorder"
                 Background="{TemplateBinding Background}"
@@ -47,7 +48,9 @@
                         VerticalAlignment="Stretch"
                         Background="{DynamicResource DefaulIconBrush}"
                         Visibility="Collapsed" />
+
                 </Grid>
+
             </Border>
 
             <ControlTemplate.Triggers>
@@ -59,6 +62,7 @@
                     <Setter TargetName="RootBorder" Property="Background" Value="{DynamicResource DefaultMouseOverBackground}" />
                 </Trigger>
             </ControlTemplate.Triggers>
+
         </ControlTemplate>
 
         <Style x:Key="TabHeaderButtonStyle" TargetType="ToggleButton">
@@ -74,6 +78,7 @@
     </Window.Resources>
 
     <Grid>
+
         <Grid.RowDefinitions>
             <RowDefinition Height="30" />
             <RowDefinition Height="*" />
