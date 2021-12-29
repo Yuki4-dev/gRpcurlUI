@@ -1,6 +1,8 @@
 ﻿using gRpcurlUI.Core;
 using gRpcurlUI.Model;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Windows;
@@ -46,6 +48,23 @@ namespace gRpcurlUI.ViewModel
                 {
                     standardErrorStringBuilder.AppendLine(value);
                     OnPropertyChanged();
+                }
+            }
+        }
+
+        public string Encode
+        {
+            get => processExecuter.Encoding.BodyName;
+            set
+            {
+                try
+                {
+                    processExecuter.Encoding = Encoding.GetEncoding(value);
+                    OnPropertyChanged();
+                }
+                catch (Exception ex)
+                {
+                    OnShowMessageDialog(ex.Message);
                 }
             }
         }

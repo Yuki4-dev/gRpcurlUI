@@ -135,7 +135,7 @@
                     <StackPanel Style="{StaticResource OparetionAreaStackPanelStyle}">
 
                         <ProgressBar
-                            Width="200"
+                            Width="160"
                             Height="8"
                             Margin="4"
                             HorizontalAlignment="Center"
@@ -143,6 +143,20 @@
                             IsIndeterminate="{Binding IsSending}"
                             Style="{StaticResource DefaultProgressBarStyle}"
                             Visibility="{Binding SenddingProgressVisible, Mode=OneWay}" />
+
+                        <!--
+                        <TextBlock
+                            VerticalAlignment="Center"
+                            FontSize="12"
+                            Style="{StaticResource DefaultTextBlockStyle}"
+                            Text="Encode" />
+
+                        <TextBox
+                            Width="120"
+                            Margin="4"
+                            Style="{StaticResource DefaultTextBoxStyle}"
+                            Text="{Binding Encode, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" />
+                        -->
 
                         <ToggleButton
                             Height="30"
