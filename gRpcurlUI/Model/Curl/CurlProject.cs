@@ -75,7 +75,7 @@ namespace gRpcurlUI.Model.Curl
             var sb = new StringBuilder();
             if (string.IsNullOrWhiteSpace(EndPoint))
             {
-                sb.AppendLine("EndPoint Is Blank.");
+                sb.AppendLine("EndPoint is Blank.");
             }
 
             if (!string.IsNullOrWhiteSpace(SendContent) && IsJsonContent)

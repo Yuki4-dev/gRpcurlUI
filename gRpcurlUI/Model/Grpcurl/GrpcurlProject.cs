@@ -82,7 +82,7 @@ namespace gRpcurlUI.Model.Grpcurl
 
             if (string.IsNullOrWhiteSpace(EndPoint))
             {
-                sb.AppendLine("EndPoint Is Blank.");
+                sb.AppendLine("EndPoint is Blank.");
             }
 
             if (!string.IsNullOrWhiteSpace(SendContent))
