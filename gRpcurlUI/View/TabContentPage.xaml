@@ -12,6 +12,7 @@
     d:DesignWidth="800"
     Background="{DynamicResource DefaultPageBackground}"
     DataContextChanged="Page_DataContextChanged"
+    FontFamily="{DynamicResource DefaultFontFamily}"
     Loaded="Page_Loaded"
     mc:Ignorable="d">
 
@@ -24,7 +25,6 @@
                 <Button
                     x:Name="ExportButton"
                     Command="{Binding ExportCommand}"
-                    Content="Export"
                     Style="{StaticResource IconButtonStyle}"
                     Tag="{StaticResource Export}">
                     <Button.ToolTip>
@@ -36,7 +36,6 @@
                 <Button
                     x:Name="ImportButton"
                     Command="{Binding ImportCommand}"
-                    Content="Import"
                     Style="{StaticResource IconButtonStyle}"
                     Tag="{StaticResource Import}">
                     <Button.ToolTip>
@@ -48,7 +47,6 @@
                 <Button
                     x:Name="AddButton"
                     Command="{Binding AddCommand}"
-                    Content="Add"
                     Style="{StaticResource IconButtonStyle}"
                     Tag="{StaticResource Add}">
                     <Button.ToolTip>
@@ -61,7 +59,6 @@
                     x:Name="RemoveButton"
                     Command="{Binding RemoveCommand}"
                     CommandParameter="1"
-                    Content="Remove"
                     Style="{StaticResource IconButtonStyle}"
                     Tag="{StaticResource Remove}">
                     <Button.ToolTip>
@@ -73,7 +70,6 @@
                 <Button
                     x:Name="CancelButton"
                     Command="{Binding CancelCommand}"
-                    Content="Cancel"
                     Style="{StaticResource IconButtonStyle}"
                     Tag="{StaticResource Cancel}"
                     Visibility="Collapsed">
@@ -116,7 +112,7 @@
             </controls:HeaderContent.Header>
 
             <controls:ProjectListBox
-                Background="{DynamicResource DefaulEditAreaBoxBrush}"
+                Background="{DynamicResource DefaulEditAreaTextBoxBrush}"
                 IsMultiSelect="{Binding IsRemoveMode}"
                 ItemsSource="{Binding ProjectContext.Projects}"
                 SelectedCommand="{Binding SelectedCommand}" />

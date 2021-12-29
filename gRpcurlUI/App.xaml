@@ -26,7 +26,7 @@
             <system:Double x:Key="EditTextBoxFontSize">14</system:Double>
             <system:Double x:Key="SettingTextBlockFontSize">18</system:Double>
 
-            <FontFamily x:Key="DefaultFontFamily">Yu Gothic UI</FontFamily>
+            <FontFamily x:Key="DefaultFontFamily">Consolas</FontFamily>
 
             <Style x:Key="DefaultProgressBarStyle" TargetType="ProgressBar">
                 <Setter Property="Foreground" Value="#55000000" />
@@ -46,7 +46,7 @@
                 <Setter Property="SelectionBrush" Value="{DynamicResource DefaultTextBoxSelectBrush}" />
                 <Setter Property="BorderBrush" Value="{DynamicResource DefaulBorderBrush}" />
                 <Setter Property="Foreground" Value="{DynamicResource DefaultPageForeground}" />
-                <Setter Property="Background" Value="{DynamicResource DefaulEditAreaBoxBrush}" />
+                <Setter Property="Background" Value="{DynamicResource DefaulEditAreaTextBoxBrush}" />
                 <Setter Property="Template">
                     <Setter.Value>
                         <ControlTemplate TargetType="TextBox">

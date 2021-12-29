@@ -74,33 +74,13 @@ namespace gRpcurlUI.ViewModel
         }
         public Visibility SenddingProgressVisible => IsSending ? Visibility.Visible : Visibility.Collapsed;
 
-        private ICommand _SendCommand;
-        public ICommand SendCommand
-        {
-            get => _SendCommand;
-            set => OnPropertyChanged(ref _SendCommand, value);
-        }
+        public ICommand SendCommand { get; }
 
-        private ICommand _SendCancelCommand;
-        public ICommand SendCancelCommand
-        {
-            get => _SendCancelCommand;
-            set => OnPropertyChanged(ref _SendCancelCommand, value);
-        }
+        public ICommand SendCancelCommand { get; }
 
-        private ICommand _SendContentFormatCommand;
-        public ICommand SendContentFormatCommand
-        {
-            get => _SendContentFormatCommand;
-            set => OnPropertyChanged(ref _SendContentFormatCommand, value);
-        }
+        public ICommand SendContentFormatCommand { get; }
 
-        private ICommand _TextBoxClearCommand;
-        public ICommand TextBoxClearCommand
-        {
-            get => _TextBoxClearCommand;
-            set => OnPropertyChanged(ref _TextBoxClearCommand, value);
-        }
+        public ICommand TextBoxClearCommand { get; }
 
         protected readonly IProcessExecuter processExecuter;
 

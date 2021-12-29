@@ -11,8 +11,6 @@ namespace gRpcurlUI.Model
 
         IEnumerable<IProject> Projects { get; }
 
-        void SetSetting(IReadOnlyAppSetting setting);
-
         void Marge(IProjectContext other);
 
         void AddProject(IProject project = null);

@@ -10,6 +10,7 @@
     Title="MessageDialog"
     Width="550"
     Height="250"
+    FontFamily="{DynamicResource DefaultFontFamily}"
     KeyDown="Root_KeyDown"
     ResizeMode="NoResize"
     mc:Ignorable="d">

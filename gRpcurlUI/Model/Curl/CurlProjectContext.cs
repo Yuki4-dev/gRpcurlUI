@@ -30,11 +30,6 @@ namespace gRpcurlUI.Model.Curl
             ProjectType = "curl";
         }
 
-        public void SetSetting(IReadOnlyAppSetting setting)
-        {
-            //
-        }
-
         public bool RemoveProject(IProject project)
         {
             return projectsInternal.Remove((CurlProject)project);

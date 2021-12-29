@@ -11,6 +11,7 @@
     d:DesignWidth="800"
     Background="{DynamicResource DefaultPageBackground}"
     DataContextChanged="ExecutePage_DataContextChanged"
+    FontFamily="{DynamicResource DefaultFontFamily}"
     IsEnabled="{Binding IsEnabled, Mode=OneWay}"
     mc:Ignorable="d">
 
@@ -73,7 +74,6 @@
 
                         <Button
                             Command="{Binding SendCancelCommand}"
-                            Content="Cancel"
                             Style="{StaticResource IconButtonStyle}"
                             Tag="{StaticResource Cancel}">
                             <Button.ToolTip>
@@ -83,7 +83,6 @@
 
                         <Button
                             Command="{Binding SendContentFormatCommand}"
-                            Content="Format"
                             Style="{StaticResource IconButtonStyle}"
                             Tag="{StaticResource Format}">
                             <Button.ToolTip>
@@ -94,7 +93,6 @@
                         <Button
                             Command="{Binding TextBoxClearCommand}"
                             CommandParameter="1"
-                            Content="All Clear"
                             Style="{StaticResource IconButtonStyle}"
                             Tag="{StaticResource Clear}">
                             <Button.ToolTip>
@@ -156,7 +154,6 @@
                             HorizontalAlignment="Right"
                             Command="{Binding TextBoxClearCommand}"
                             CommandParameter="2"
-                            Content="All Clear"
                             Style="{StaticResource IconButtonStyle}"
                             Tag="{StaticResource Clear}">
                             <Button.ToolTip>
@@ -191,7 +188,6 @@
                         <Button
                             Command="{Binding TextBoxClearCommand}"
                             CommandParameter="3"
-                            Content="All Clear"
                             Style="{StaticResource IconButtonStyle}"
                             Tag="{StaticResource Clear}">
                             <Button.ToolTip>

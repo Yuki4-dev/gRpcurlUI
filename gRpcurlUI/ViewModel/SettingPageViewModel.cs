@@ -1,6 +1,5 @@
-﻿using gRpcurlUI.Model;
+﻿using gRpcurlUI.Model.Setting;
 using System.Diagnostics;
-using System.IO;
 using System.Windows.Input;
 using System.Windows.Media;
 
@@ -8,42 +7,56 @@ namespace gRpcurlUI.ViewModel
 {
     public class SettingPageViewModel : ViewModelBase
     {
-        private readonly AppSetting appSetting;
+        private readonly FontSetting fontSetting;
 
-        public string AppPath
+        private readonly BrushSetting brushSetting;
+
+        private bool _IsResetEnable = false;
+        public bool IsResetEnable
         {
-            get => appSetting.AppPath;
+            get => _IsResetEnable;
             set
             {
-                if (string.IsNullOrEmpty(value) || File.Exists(value))
+                if (SetProperty(ref _IsResetEnable, value))
                 {
-                    AppPathMessage = "";
-                    appSetting.AppPath = value;
+                    if (_IsResetEnable)
+                    {
+                        fontSetting.Caputure();
+                        brushSetting.Caputure();
+                    }
                     OnPropertyChanged();
-                }
-                else
-                {
-                    AppPathMessage = value + " is Not Found.";
                 }
             }
         }
 
-        private string _AppPathMessage;
-        public string AppPathMessage
+        public string FontFamily
         {
-            get => _AppPathMessage;
-            set => OnPropertyChanged(ref _AppPathMessage, value);
+            get => fontSetting.FontFamily.ToString();
+            set
+            {
+                if (!string.IsNullOrWhiteSpace(value))
+                {
+                    var font = new FontFamily(value);
+                    if (font.FamilyNames.Values.Contains(value))
+                    {
+                        IsResetEnable = true;
+                        fontSetting.FontFamily = font;
+                        OnPropertyChanged();
+                    }
+                }
+            }
         }
 
         public string EditFontSize
         {
-            get => appSetting.EditFontSize.ToString();
+            get => fontSetting.EditFontSize.ToString();
             set
             {
                 if (int.TryParse(value, out var size)
                     && size > 0)
                 {
-                    appSetting.EditFontSize = (uint)size;
+                    IsResetEnable = true;
+                    fontSetting.EditFontSize = (uint)size;
                     OnPropertyChanged();
                 }
             }
@@ -51,12 +64,13 @@ namespace gRpcurlUI.ViewModel
 
         public string WindowBackground
         {
-            get => appSetting.BrushSetting.WindowBackground.ToString();
+            get => brushSetting.WindowBackground.ToString();
             set
             {
                 if (TryColorParse(value, out var color))
                 {
-                    appSetting.BrushSetting.WindowBackground = new SolidColorBrush(color);
+                    IsResetEnable = true;
+                    brushSetting.WindowBackground = new SolidColorBrush(color);
                     OnPropertyChanged();
                 }
             }
@@ -64,12 +78,13 @@ namespace gRpcurlUI.ViewModel
 
         public string PageBackground
         {
-            get => appSetting.BrushSetting.PageBackground.ToString();
+            get => brushSetting.PageBackground.ToString();
             set
             {
                 if (TryColorParse(value, out var color))
                 {
-                    appSetting.BrushSetting.PageBackground = new SolidColorBrush(color);
+                    IsResetEnable = true;
+                    brushSetting.PageBackground = new SolidColorBrush(color);
                     OnPropertyChanged();
                 }
             }
@@ -77,12 +92,13 @@ namespace gRpcurlUI.ViewModel
 
         public string PageForeground
         {
-            get => appSetting.BrushSetting.PageForeground.ToString();
+            get => brushSetting.PageForeground.ToString();
             set
             {
                 if (TryColorParse(value, out var color))
                 {
-                    appSetting.BrushSetting.PageForeground = new SolidColorBrush(color);
+                    IsResetEnable = true;
+                    brushSetting.PageForeground = new SolidColorBrush(color);
                     OnPropertyChanged();
                 }
             }
@@ -90,12 +106,13 @@ namespace gRpcurlUI.ViewModel
 
         public string BorderBrush
         {
-            get => appSetting.BrushSetting.BorderBrush.ToString();
+            get => brushSetting.BorderBrush.ToString();
             set
             {
                 if (TryColorParse(value, out var color))
                 {
-                    appSetting.BrushSetting.BorderBrush = new SolidColorBrush(color);
+                    IsResetEnable = true;
+                    brushSetting.BorderBrush = new SolidColorBrush(color);
                     OnPropertyChanged();
                 }
             }
@@ -103,25 +120,27 @@ namespace gRpcurlUI.ViewModel
 
         public string IconBrush
         {
-            get => appSetting.BrushSetting.IconBrush.ToString();
+            get => brushSetting.IconBrush.ToString();
             set
             {
                 if (TryColorParse(value, out var color))
                 {
-                    appSetting.BrushSetting.IconBrush = new SolidColorBrush(color);
+                    IsResetEnable = true;
+                    brushSetting.IconBrush = new SolidColorBrush(color);
                     OnPropertyChanged();
                 }
             }
         }
 
-        public string EditAreaBoxBrush
+        public string EditAreaTextBoxBrush
         {
-            get => appSetting.BrushSetting.EditAreaBoxBrush.ToString();
+            get => brushSetting.EditAreaTextBoxBrush.ToString();
             set
             {
                 if (TryColorParse(value, out var color))
                 {
-                    appSetting.BrushSetting.EditAreaBoxBrush = new SolidColorBrush(color);
+                    IsResetEnable = true;
+                    brushSetting.EditAreaTextBoxBrush = new SolidColorBrush(color);
                     OnPropertyChanged();
                 }
             }
@@ -129,12 +148,13 @@ namespace gRpcurlUI.ViewModel
 
         public string TextBoxSelectBrush
         {
-            get => appSetting.BrushSetting.TextBoxSelectBrush.ToString();
+            get => brushSetting.TextBoxSelectBrush.ToString();
             set
             {
                 if (TryColorParse(value, out var color))
                 {
-                    appSetting.BrushSetting.TextBoxSelectBrush = new SolidColorBrush(color);
+                    IsResetEnable = true;
+                    brushSetting.TextBoxSelectBrush = new SolidColorBrush(color);
                     OnPropertyChanged();
                 }
             }
@@ -142,12 +162,13 @@ namespace gRpcurlUI.ViewModel
 
         public string MouseOverBackground
         {
-            get => appSetting.BrushSetting.MouseOverBackground.ToString();
+            get => brushSetting.MouseOverBackground.ToString();
             set
             {
                 if (TryColorParse(value, out var color))
                 {
-                    appSetting.BrushSetting.MouseOverBackground = new SolidColorBrush(color);
+                    IsResetEnable = true;
+                    brushSetting.MouseOverBackground = new SolidColorBrush(color);
                     OnPropertyChanged();
                 }
             }
@@ -155,12 +176,13 @@ namespace gRpcurlUI.ViewModel
 
         public string SelectedBackground
         {
-            get => appSetting.BrushSetting.SelectedBackground.ToString();
+            get => brushSetting.SelectedBackground.ToString();
             set
             {
                 if (TryColorParse(value, out var color))
                 {
-                    appSetting.BrushSetting.SelectedBackground = new SolidColorBrush(color);
+                    IsResetEnable = true;
+                    brushSetting.SelectedBackground = new SolidColorBrush(color);
                     OnPropertyChanged();
                 }
             }
@@ -168,36 +190,42 @@ namespace gRpcurlUI.ViewModel
 
         public string ScrolBarTabBrush
         {
-            get => appSetting.BrushSetting.ScrolBarTabBrush.ToString();
+            get => brushSetting.ScrolBarTabBrush.ToString();
             set
             {
                 if (TryColorParse(value, out var color))
                 {
-                    appSetting.BrushSetting.ScrolBarTabBrush = new SolidColorBrush(color);
+                    IsResetEnable = true;
+                    brushSetting.ScrolBarTabBrush = new SolidColorBrush(color);
                     OnPropertyChanged();
                 }
             }
         }
 
-        private ICommand _OpenSourceCommand;
-        public ICommand OpenSourceCommand
-        {
-            get => _OpenSourceCommand;
-            set => OnPropertyChanged(ref _OpenSourceCommand, value);
-        }
+        public ICommand ResetCommand { get; }
 
-        private ICommand _AboutCommand;
-        public ICommand AboutCommand
-        {
-            get => _AboutCommand;
-            set => OnPropertyChanged(ref _AboutCommand, value);
-        }
+        public ICommand OpenSourceCommand { get; }
 
-        public SettingPageViewModel(AppSetting setting)
+        public ICommand AboutCommand { get; }
+
+        public SettingPageViewModel(FontSetting fontSetting, BrushSetting brushSetting)
         {
-            appSetting = setting;
+            this.fontSetting = fontSetting;
+            this.brushSetting = brushSetting;
+            ResetCommand = new Command(ResetExecute);
             OpenSourceCommand = new Command(OpenSourceExecute);
             AboutCommand = new Command(AboutExecute);
+        }
+
+        private void ResetExecute()
+        {
+            IsResetEnable = false;
+            fontSetting.ResetToCaputure();
+            brushSetting.ResetToCaputure();
+            foreach (var prop in typeof(SettingPageViewModel).GetProperties())
+            {
+                OnPropertyChanged(prop.Name);
+            }
         }
 
         private async void AboutExecute()

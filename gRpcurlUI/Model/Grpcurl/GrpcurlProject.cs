@@ -2,6 +2,7 @@
 using gRpcurlUI.Core;
 using Newtonsoft.Json;
 using System;
+using System.IO;
 using System.Text;
 
 namespace gRpcurlUI.Model.Grpcurl
@@ -14,7 +15,7 @@ namespace gRpcurlUI.Model.Grpcurl
             get => _AppPath;
             set
             {
-                if (!string.IsNullOrWhiteSpace(value))
+                if (string.IsNullOrEmpty(value))
                 {
                     OnPropertyChanged(ref _AppPath, value);
                 }
@@ -74,6 +75,11 @@ namespace gRpcurlUI.Model.Grpcurl
         public bool PrepareProject(out string message)
         {
             var sb = new StringBuilder();
+            if (!File.Exists(AppPath))
+            {
+                sb.AppendLine($"{AppPath} does Not Exists.");
+            }
+
             if (string.IsNullOrWhiteSpace(EndPoint))
             {
                 sb.AppendLine("EndPoint Is Blank.");
@@ -113,7 +119,7 @@ namespace gRpcurlUI.Model.Grpcurl
         {
             return new GrpcurlProject()
             {
-                AppPath = AppPath,
+                AppPath = _AppPath,
                 ProjectName = _ProjectName,
                 EndPoint = _EndPoint,
                 Option = _Option,

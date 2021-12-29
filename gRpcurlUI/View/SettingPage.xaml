@@ -11,7 +11,30 @@
     d:DesignWidth="800"
     Background="{DynamicResource DefaultPageBackground}"
     DataContextChanged="Page_DataContextChanged"
+    FontFamily="{DynamicResource DefaultFontFamily}"
     mc:Ignorable="d">
+
+    <Page.Resources>
+
+        <Style
+            x:Key="ResetButtonStyle"
+            BasedOn="{StaticResource IconButtonStyle}"
+            TargetType="Button">
+            <Setter Property="Visibility" Value="Collapsed" />
+            <Setter Property="Tag" Value="{StaticResource Reset}" />
+            <Setter Property="ToolTip">
+                <Setter.Value>
+                    <ToolTip Content="Reset Value" Style="{StaticResource DefaultToolTipStyle}" />
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding IsResetEnable}" Value="True">
+                    <Setter Property="Visibility" Value="Visible" />
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+
+    </Page.Resources>
 
     <Grid>
 
@@ -21,12 +44,17 @@
             <RowDefinition Height="90" />
         </Grid.RowDefinitions>
 
+        <StackPanel Orientation="Horizontal">
 
-        <TextBlock
-            Margin="2"
-            FontSize="32"
-            Style="{StaticResource DefaultTextBlockStyle}"
-            Text="Setting" />
+            <TextBlock
+                Margin="2"
+                FontSize="32"
+                Style="{StaticResource DefaultTextBlockStyle}"
+                Text="Setting" />
+
+            <Button Command="{Binding ResetCommand}" Style="{StaticResource ResetButtonStyle}" />
+
+        </StackPanel>
 
         <Border
             Height="1"
@@ -42,109 +70,52 @@
                     <Style BasedOn="{StaticResource DefaultTextBlockStyle}" TargetType="TextBlock">
                         <Setter Property="FontSize" Value="{StaticResource SettingTextBlockFontSize}" />
                         <Setter Property="Margin" Value="4" />
-                    </Style>
-
-                    <Style
-                        x:Key="MessageTextBlockStyle"
-                        BasedOn="{StaticResource DefaultTextBlockStyle}"
-                        TargetType="TextBlock">
-                        <Setter Property="FontSize" Value="12" />
-                        <Setter Property="Margin" Value="4" />
-                        <Setter Property="Foreground" Value="Red" />
+                        <Setter Property="FontWeight" Value="Light" />
                     </Style>
 
                     <Style BasedOn="{StaticResource DefaultTextBoxStyle}" TargetType="TextBox">
-                        <Setter Property="Width" Value="auto" />
+                        <Setter Property="Width" Value="120" />
+                        <Setter Property="Margin" Value="0,0,0,12" />
                         <Setter Property="HorizontalAlignment" Value="Left" />
                     </Style>
 
                 </StackPanel.Resources>
 
-                <StackPanel VerticalAlignment="Center" Orientation="Horizontal">
-
-                    <TextBlock Text="AppPath" />
-                    <TextBlock Style="{StaticResource MessageTextBlockStyle}" Text="{Binding AppPathMessage}" />
-
-                </StackPanel>
-
-                <TextBox MinWidth="450" Text="{Binding AppPath, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" />
+                <TextBlock Text="FontFamily" />
+                <TextBox MinWidth="100" Text="{Binding FontFamily, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" />
 
                 <TextBlock Text="FontSize" />
-                <TextBox
-                    Width="100"
-                    MinWidth="100"
-                    Text="{Binding EditFontSize, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"
-                    TextAlignment="Right" />
+                <TextBox Text="{Binding EditFontSize, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" TextAlignment="Right" />
 
                 <TextBlock Text="WindowBackground" />
-                <TextBox
-                    Width="100"
-                    MinWidth="100"
-                    Text="{Binding WindowBackground, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"
-                    TextAlignment="Right" />
+                <TextBox Text="{Binding WindowBackground, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" TextAlignment="Right" />
 
                 <TextBlock Text="PageBackground" />
-                <TextBox
-                    Width="100"
-                    MinWidth="100"
-                    Text="{Binding PageBackground, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"
-                    TextAlignment="Right" />
+                <TextBox Text="{Binding PageBackground, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" TextAlignment="Right" />
 
                 <TextBlock Text="PageForeground" />
-                <TextBox
-                    Width="100"
-                    MinWidth="100"
-                    Text="{Binding PageForeground, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"
-                    TextAlignment="Right" />
+                <TextBox Text="{Binding PageForeground, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" TextAlignment="Right" />
 
                 <TextBlock Text="BorderBrush" />
-                <TextBox
-                    Width="100"
-                    MinWidth="100"
-                    Text="{Binding BorderBrush, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"
-                    TextAlignment="Right" />
+                <TextBox Text="{Binding BorderBrush, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" TextAlignment="Right" />
 
                 <TextBlock Text="IconBrush" />
-                <TextBox
-                    Width="100"
-                    MinWidth="100"
-                    Text="{Binding IconBrush, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"
-                    TextAlignment="Right" />
+                <TextBox Text="{Binding IconBrush, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" TextAlignment="Right" />
 
-                <TextBlock Text="EditAreaBoxBrush" />
-                <TextBox
-                    Width="100"
-                    MinWidth="100"
-                    Text="{Binding EditAreaBoxBrush, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"
-                    TextAlignment="Right" />
+                <TextBlock Text="EditAreaTextBoxBrush" />
+                <TextBox Text="{Binding EditAreaTextBoxBrush, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" TextAlignment="Right" />
 
                 <TextBlock Text="TextBoxSelectBrush" />
-                <TextBox
-                    Width="100"
-                    MinWidth="100"
-                    Text="{Binding TextBoxSelectBrush, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"
-                    TextAlignment="Right" />
+                <TextBox Text="{Binding TextBoxSelectBrush, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" TextAlignment="Right" />
 
                 <TextBlock Text="MouseOverBackground" />
-                <TextBox
-                    Width="100"
-                    MinWidth="100"
-                    Text="{Binding MouseOverBackground, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"
-                    TextAlignment="Right" />
+                <TextBox Text="{Binding MouseOverBackground, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" TextAlignment="Right" />
 
                 <TextBlock Text="SelectedBackground" />
-                <TextBox
-                    Width="100"
-                    MinWidth="100"
-                    Text="{Binding SelectedBackground, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"
-                    TextAlignment="Right" />
+                <TextBox Text="{Binding SelectedBackground, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" TextAlignment="Right" />
 
                 <TextBlock Text="ScrolBarTabBrush" />
-                <TextBox
-                    Width="100"
-                    MinWidth="100"
-                    Text="{Binding ScrolBarTabBrush, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"
-                    TextAlignment="Right" />
+                <TextBox Text="{Binding ScrolBarTabBrush, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" TextAlignment="Right" />
 
             </StackPanel>
 

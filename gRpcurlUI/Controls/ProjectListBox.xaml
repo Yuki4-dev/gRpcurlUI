@@ -177,7 +177,7 @@
 
         <ControlTemplate x:Key="MultiSelectProjectListBoxTemaplate" TargetType="local:ProjectListBox">
 
-            <Grid Background="{StaticResource DefaulEditAreaBoxBrush}">
+            <Grid Background="{StaticResource DefaulEditAreaTextBoxBrush}">
 
                 <ListBox ItemsSource="{TemplateBinding ItemsSource}" Style="{StaticResource MultiSelectListBoxStyle}" />
 

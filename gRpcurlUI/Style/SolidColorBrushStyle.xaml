@@ -5,7 +5,7 @@
     <SolidColorBrush x:Key="DefaultPageBackground">Transparent</SolidColorBrush>
     <SolidColorBrush x:Key="DefaulBorderBrush">Black</SolidColorBrush>
     <SolidColorBrush x:Key="DefaulIconBrush">LightGray</SolidColorBrush>
-    <SolidColorBrush x:Key="DefaulEditAreaBoxBrush">#202020</SolidColorBrush>
+    <SolidColorBrush x:Key="DefaulEditAreaTextBoxBrush">#202020</SolidColorBrush>
     <SolidColorBrush x:Key="DefaultTextBoxSelectBrush">DimGray</SolidColorBrush>
     <SolidColorBrush x:Key="DefaulScrolBarTabBrush">DimGray</SolidColorBrush>
 

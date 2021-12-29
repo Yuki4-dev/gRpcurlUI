@@ -1,6 +1,6 @@
-﻿using gRpcurlUI.Model;
-using gRpcurlUI.Model.Curl;
+﻿using gRpcurlUI.Model.Curl;
 using gRpcurlUI.Model.Grpcurl;
+using gRpcurlUI.Model.Setting;
 using gRpcurlUI.View;
 using gRpcurlUI.ViewModel;
 using System.Windows;
@@ -18,27 +18,20 @@ namespace gRpcurlUI
 
         private readonly TabContentPage gRpcCurlPage;
 
-        private readonly AppSetting appSetting;
-
         public MainWindow()
         {
-            appSetting = new AppSetting(App.Current.Resources);
             WindowOwner.Current = new WindowOwner(this);
             settingPage = new SettingPage(WindowOwner.Current);
-            settingPage.DataContext = new SettingPageViewModel(appSetting);
+            settingPage.DataContext = new SettingPageViewModel(new FontSetting(App.Current.Resources), new BrushSetting(App.Current.Resources));
             curlPage = new TabContentPage(WindowOwner.Current);
             gRpcCurlPage = new TabContentPage(WindowOwner.Current);
 
-            var curl = new CurlProjectContext();
-            curl.SetSetting(appSetting);
             var curlViewModel = new TabContentPageViewModel();
-            curlViewModel.ProjectContext = curl;
+            curlViewModel.ProjectContext = new CurlProjectContext();
             curlPage.DataContext = curlViewModel;
 
-            var grpcurl = new GrpcurlProjectContext();
-            grpcurl.SetSetting(appSetting);
             var grpcurlViewModel = new TabContentPageViewModel();
-            grpcurlViewModel.ProjectContext = grpcurl;
+            grpcurlViewModel.ProjectContext = new GrpcurlProjectContext();
             gRpcCurlPage.DataContext = grpcurlViewModel;
 
             InitializeComponent();

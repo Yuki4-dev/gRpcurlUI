@@ -24,17 +24,10 @@ namespace gRpcurlUI.Model.Grpcurl
         private readonly ICollection<GrpcurlProject> projectsInternal = new ObservableCollection<GrpcurlProject>();
         public IEnumerable<IProject> Projects => projectsInternal;
 
-        private IReadOnlyAppSetting appSetting;
-
         public GrpcurlProjectContext()
         {
             Verion = "1.0.0";
             ProjectType = "gRpcurl";
-        }
-
-        public void SetSetting(IReadOnlyAppSetting setting)
-        {
-            appSetting = setting;
         }
 
         public bool RemoveProject(IProject project)
@@ -48,7 +41,7 @@ namespace gRpcurlUI.Model.Grpcurl
             {
                 project = new GrpcurlProject()
                 {
-                    AppPath = appSetting?.AppPath,
+                    //AppPath = appSetting?.AppPath,
                     ProjectName = "new Project"
                 };
             }

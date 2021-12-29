@@ -45,47 +45,17 @@ namespace gRpcurlUI.ViewModel
             }
         }
 
-        private ICommand _SelectedCommand;
-        public ICommand SelectedCommand
-        {
-            get => _SelectedCommand;
-            set => OnPropertyChanged(ref _SelectedCommand, value);
-        }
+        public ICommand SelectedCommand { get; }
 
-        private ICommand _AddCommand;
-        public ICommand AddCommand
-        {
-            get => _AddCommand;
-            set => OnPropertyChanged(ref _AddCommand, value);
-        }
+        public ICommand AddCommand { get; }
 
-        private ICommand _RemoveCommand;
-        public ICommand RemoveCommand
-        {
-            get => _RemoveCommand;
-            set => OnPropertyChanged(ref _RemoveCommand, value);
-        }
+        public ICommand RemoveCommand { get; }
 
-        private ICommand _ImportCommand;
-        public ICommand ImportCommand
-        {
-            get => _ImportCommand;
-            set => OnPropertyChanged(ref _ImportCommand, value);
-        }
+        public ICommand ImportCommand { get; }
 
-        private ICommand _ExportCommand;
-        public ICommand ExportCommand
-        {
-            get => _ExportCommand;
-            set => OnPropertyChanged(ref _ExportCommand, value);
-        }
+        public ICommand ExportCommand { get; }
 
-        private ICommand _CancelCommand;
-        public ICommand CancelCommand
-        {
-            get => _CancelCommand;
-            set => OnPropertyChanged(ref _CancelCommand, value);
-        }
+        public ICommand CancelCommand { get; }
 
         private readonly ILoadModel loadModel;
 
