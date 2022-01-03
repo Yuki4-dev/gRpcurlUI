@@ -24,7 +24,7 @@ namespace gRpcurlUI.ViewModel
             {
                 if (SetProperty(ref _ProjectContext, value))
                 {
-                    ExecutePageViewModel.SelectedProject = null;
+                    SelectedDefault(null);
                     OnPropertyChanged();
                 }
             }
