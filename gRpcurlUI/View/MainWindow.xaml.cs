@@ -1,7 +1,6 @@
 ﻿using gRpcurlUI.Model.Curl;
 using gRpcurlUI.Model.Grpcurl;
 using gRpcurlUI.Model.Setting;
-using gRpcurlUI.View;
 using gRpcurlUI.ViewModel;
 using System.Windows;
 
@@ -39,7 +38,6 @@ namespace gRpcurlUI.View
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            new OpenProtoWindow().Show();
             ContentFrame.Content = curlPage;
         }
 
