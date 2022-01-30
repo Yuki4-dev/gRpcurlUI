@@ -1,4 +1,4 @@
-﻿namespace gRpcurlUI.Core
+﻿namespace gRpcurlUI.Core.Procces
 {
     public interface IProccesCommand
     {

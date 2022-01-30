@@ -5,7 +5,7 @@ using gRpcurlUI.View;
 using gRpcurlUI.ViewModel;
 using System.Windows;
 
-namespace gRpcurlUI
+namespace gRpcurlUI.View
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
@@ -39,6 +39,7 @@ namespace gRpcurlUI
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
+            new OpenProtoWindow().Show();
             ContentFrame.Content = curlPage;
         }
 

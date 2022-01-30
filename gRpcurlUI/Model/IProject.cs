@@ -1,4 +1,4 @@
-﻿using gRpcurlUI.Core;
+﻿using gRpcurlUI.Core.Procces;
 using System;
 using System.ComponentModel;
 

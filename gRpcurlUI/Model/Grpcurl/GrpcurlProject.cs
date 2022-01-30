@@ -1,5 +1,4 @@
-﻿
-using gRpcurlUI.Core;
+﻿using gRpcurlUI.Core.Procces;
 using Newtonsoft.Json;
 using System;
 using System.IO;

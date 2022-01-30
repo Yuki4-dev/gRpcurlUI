@@ -1,0 +1,45 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:curlmodel="clr-namespace:gRpcurlUI.Model.Curl">
+
+    <DataTemplate DataType="{x:Type curlmodel:CurlProject}">
+
+        <StackPanel>
+
+            <StackPanel.Resources>
+
+                <Style BasedOn="{StaticResource DefaultTextBlockStyle}" TargetType="TextBlock">
+                    <Setter Property="FontSize" Value="16" />
+                    <Setter Property="Margin" Value="4" />
+                </Style>
+
+                <Style BasedOn="{StaticResource DefaultTextBoxStyle}" TargetType="TextBox">
+                    <Setter Property="HorizontalAlignment" Value="Stretch" />
+                </Style>
+
+            </StackPanel.Resources>
+
+            <TextBlock Text="EndPoint" />
+            <TextBox Text="{Binding EndPoint, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" />
+
+            <TextBlock Text="Option" />
+            <TextBox Text="{Binding Option, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" />
+
+            <Border
+                Margin="0,12,0,0"
+                BorderBrush="{StaticResource DefaulBorderBrush}"
+                BorderThickness="1">
+
+                <ToggleButton
+                    Height="30"
+                    Content="Json"
+                    IsChecked="{Binding IsJsonContent}"
+                    Style="{StaticResource CheckedToggleButtonStyle}" />
+            </Border>
+
+        </StackPanel>
+
+    </DataTemplate>
+
+</ResourceDictionary>

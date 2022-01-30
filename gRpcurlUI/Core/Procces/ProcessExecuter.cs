@@ -4,7 +4,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace gRpcurlUI.Core
+namespace gRpcurlUI.Core.Procces
 {
     public class ProcessExecuter : IProcessExecuter
     {

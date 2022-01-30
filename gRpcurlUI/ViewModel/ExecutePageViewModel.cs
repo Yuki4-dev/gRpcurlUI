@@ -1,4 +1,5 @@
 ﻿using gRpcurlUI.Core;
+using gRpcurlUI.Core.Procces;
 using gRpcurlUI.Model;
 using System;
 using System.Collections.Generic;
