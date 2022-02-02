@@ -18,7 +18,7 @@ namespace gRpcurlUI.Model.Grpcurl
             }
             else
             {
-                Arguments = $"{option} -d {Replace(content)} {endPoint} {service}";
+                Arguments = $"{option} -d \"{Replace(content)}\" {endPoint} {service}";
             }
         }
 
