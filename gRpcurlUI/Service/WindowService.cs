@@ -1,8 +1,6 @@
 ﻿using gRpcurlUI.View.Dialog;
 using Microsoft.Win32;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Threading;
@@ -66,7 +64,7 @@ namespace gRpcurlUI.Service
             await Dispatcher.InvokeAsync(() =>
             {
                 var dialog = (Window?)Activator.CreateInstance(dialogType);
-                if(dialog is null)
+                if (dialog is null)
                 {
                     throw new InvalidOperationException("dialog is null.");
                 }

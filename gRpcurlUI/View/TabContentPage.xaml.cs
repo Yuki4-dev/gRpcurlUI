@@ -1,5 +1,4 @@
 ﻿using gRpcurlUI.Service;
-using gRpcurlUI.ViewModel;
 using System.Windows;
 using System.Windows.Controls;
 

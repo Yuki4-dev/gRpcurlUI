@@ -112,7 +112,7 @@ namespace gRpcurlUI.ViewModel
             get => _StandardError.ToString();
             set
             {
-                if(value != null)
+                if (value != null)
                 {
                     _StandardError.Append(value);
                     OnPropertyChanged(nameof(StandardError));

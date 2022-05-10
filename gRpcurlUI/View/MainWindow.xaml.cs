@@ -1,7 +1,6 @@
 ﻿using gRpcurlUI.Core.Procces;
 using gRpcurlUI.Model.Curl;
 using gRpcurlUI.Model.Grpcurl;
-using gRpcurlUI.Model.Setting;
 using gRpcurlUI.Service;
 using gRpcurlUI.ViewModel;
 using System.Windows;
@@ -29,12 +28,16 @@ namespace gRpcurlUI.View
             var pe = DI.Get<IProcessExecuter>();
             var pd = DI.Get<IProjectDataService>();
 
-            var curlViewModel = new TabContentPageViewModel(windowService, pe, pd);
-            curlViewModel.ProjectContext = new CurlProjectContext();
+            var curlViewModel = new TabContentPageViewModel(windowService, pe, pd)
+            {
+                ProjectContext = new CurlProjectContext()
+            };
             curlPage.DataContext = curlViewModel;
 
-            var grpcurlViewModel = new TabContentPageViewModel(windowService, pe, pd);
-            grpcurlViewModel.ProjectContext = new GrpcurlProjectContext();
+            var grpcurlViewModel = new TabContentPageViewModel(windowService, pe, pd)
+            {
+                ProjectContext = new GrpcurlProjectContext()
+            };
             gRpcCurlPage.DataContext = grpcurlViewModel;
 
             InitializeComponent();

@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace gRpcurlUI.Core.Reader
+﻿namespace gRpcurlUI.Core.Reader
 {
     public interface IObjectTextReader
     {

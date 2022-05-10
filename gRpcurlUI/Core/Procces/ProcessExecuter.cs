@@ -33,7 +33,7 @@ namespace gRpcurlUI.Core.Procces
             };
 
             process.OutputDataReceived += (s, e) => StanderdOutputRecieve?.Invoke(e.Data ?? string.Empty);
-            process.ErrorDataReceived += (s, e) => StanderdErrorRecieve?.Invoke(e.Data?? string.Empty);
+            process.ErrorDataReceived += (s, e) => StanderdErrorRecieve?.Invoke(e.Data ?? string.Empty);
 
             var pTask = Task.Run(() =>
             {
