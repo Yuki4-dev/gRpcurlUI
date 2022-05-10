@@ -1,36 +1,50 @@
-﻿using gRpcurlUI.Model;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
+using gRpcurlUI.Core.Procces;
+using gRpcurlUI.Model;
+using gRpcurlUI.Service;
 using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
+using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 
 namespace gRpcurlUI.ViewModel
 {
-    public class TabContentPageViewModel : ViewModelBase
+    [ObservableObject]
+    public partial class TabContentPageViewModel
     {
-        private ExecutePageViewModel _ExcutePageViewModel;
-        public ExecutePageViewModel ExecutePageViewModel
-        {
-            get => _ExcutePageViewModel;
-            set => OnPropertyChanged(ref _ExcutePageViewModel, value);
-        }
-
-        private IProjectContext _ProjectContext;
-        public IProjectContext ProjectContext
+        private IProjectContext? _ProjectContext;
+        public IProjectContext? ProjectContext
         {
             get => _ProjectContext;
             set
             {
                 if (SetProperty(ref _ProjectContext, value))
                 {
-                    SelectedDefault(null);
-                    OnPropertyChanged();
+                    SelectedProject = null;
                 }
             }
         }
 
-        private bool _IsRemoveMode;
+        private IProject? _SelectedProject;
+        public IProject? SelectedProject
+        {
+            get => _SelectedProject;
+            set
+            {
+                if (SetProperty(ref _SelectedProject, value))
+                {
+                    OnPropertyChanged(nameof(IsEnabled));
+                }
+            }
+        }
+        public bool IsEnabled => SelectedProject != null;
+
+        private bool _IsRemoveMode = false;
         public bool IsRemoveMode
         {
             get => _IsRemoveMode;
@@ -38,57 +52,176 @@ namespace gRpcurlUI.ViewModel
             {
                 if (SetProperty(ref _IsRemoveMode, value))
                 {
+                    SelectedProject = null;
                     removeProject.Clear();
-                    SelectedDefault(null);
-                    OnPropertyChanged();
                 }
             }
         }
 
-        public ICommand SelectedCommand { get; }
+        public string Encode
+        {
+            get => processExecuter.Encoding.BodyName;
+            set
+            {
+                try
+                {
+                    processExecuter.Encoding = Encoding.GetEncoding(value);
+                    OnPropertyChanged();
+                }
+                catch (Exception ex)
+                {
+                    windowService.ShowMessageDialogAsync("Error", ex.Message);
+                }
+            }
+        }
 
-        public ICommand AddCommand { get; }
+        private bool _IsSending = false;
+        public bool IsSending
+        {
+            get => _IsSending;
+            set
+            {
+                if (SetProperty(ref _IsSending, value))
+                {
+                    OnPropertyChanged();
+                    OnPropertyChanged(nameof(SenddingProgressVisible));
+                    OnPropertyChanged(nameof(IsNotSending));
+                }
+            }
+        }
+        public bool IsNotSending => !IsSending;
+        public Visibility SenddingProgressVisible => IsSending ? Visibility.Visible : Visibility.Collapsed;
 
-        public ICommand RemoveCommand { get; }
+        private readonly StringBuilder _StandardOutput = new();
+        public string StandardOutput
+        {
+            get => _StandardOutput.ToString();
+            set
+            {
+                if (value != null)
+                {
+                    _StandardOutput.Append(value);
+                    OnPropertyChanged(nameof(StandardOutput));
+                }
+            }
+        }
 
-        public ICommand ImportCommand { get; }
+        private readonly StringBuilder _StandardError = new();
+        public string StandardError
+        {
+            get => _StandardError.ToString();
+            set
+            {
+                if(value != null)
+                {
+                    _StandardError.Append(value);
+                    OnPropertyChanged(nameof(StandardError));
+                }
+            }
+        }
 
-        public ICommand ExportCommand { get; }
+        [ObservableProperty]
+        private bool clearRepsponse = true;
 
-        public ICommand CancelCommand { get; }
+        private readonly IWindowService windowService;
 
-        private readonly ILoadModel loadModel;
+        protected readonly IProcessExecuter processExecuter;
+
+        private readonly IProjectDataService projectDataService;
 
         private readonly List<IProject> removeProject = new List<IProject>();
 
-        public TabContentPageViewModel() : this(new JsonLoadModel(), new ExecutePageViewModel()) { }
+        private CancellationTokenSource? tokenSource;
 
-        public TabContentPageViewModel(ILoadModel load, ExecutePageViewModel executePageViewmodel)
+        public TabContentPageViewModel(IWindowService windowService, IProcessExecuter processExecuter, IProjectDataService projectDataService)
         {
-            loadModel = load;
-            ExecutePageViewModel = executePageViewmodel;
+            this.processExecuter = processExecuter;
+            this.windowService = windowService;
+            this.projectDataService = projectDataService;
 
-            SelectedCommand = Command.Create<IProject>(SelectedExecute);
-            AddCommand = new Command(AddExecute);
-            RemoveCommand = new Command(RemoveExecutAsynce);
-            ImportCommand = new Command(ImportExecuteAsync);
-            ExportCommand = new Command(ExportExecuteAsync);
-            CancelCommand = new Command(CancelExecute);
+            this.processExecuter.StanderdOutputRecieve += (data) => StandardOutput = data;
+            this.processExecuter.StanderdErrorRecieve += (data) => StandardError = data;
         }
 
-        private void SelectedExecute(IProject project)
+        [ICommand]
+        private void Selected(IProject? project)
         {
-            if (IsRemoveMode)
+            if (project != null && IsRemoveMode)
             {
-                SelectedRemove(project);
+                if (removeProject.Contains(project))
+                {
+                    removeProject.Remove(project);
+                }
+                else
+                {
+                    removeProject.Add(project);
+                }
             }
             else
             {
-                SelectedDefault(project);
+                SelectedProject = project;
             }
         }
 
-        private async void RemoveExecutAsynce()
+        [ICommand]
+        private async Task Export()
+        {
+            string fileName = "";
+            var result = await windowService.ShowCommonDialogAsync<SaveFileDialog>(
+                (d) =>
+                {
+                    d.Title = "Project Save";
+                    d.Filter = projectDataService.SaveFileter;
+                },
+                (d) =>
+                {
+                    fileName = d.FileName;
+                });
+
+            if (result)
+            {
+                try
+                {
+                    projectDataService.Save(ProjectContext, fileName);
+                }
+                catch (Exception ex)
+                {
+                    await windowService.ShowMessageDialogAsync("Error", ex.Message);
+                }
+            }
+        }
+
+        [ICommand]
+        private async Task Import()
+        {
+            string fileName = string.Empty;
+            var result = await windowService.ShowCommonDialogAsync<OpenFileDialog>(
+                (d) =>
+                {
+                    d.Title = "Project Open";
+                    d.Filter = projectDataService.OpenFileter;
+                },
+                (d) =>
+                {
+                    fileName = d.FileName;
+                });
+
+            if (result)
+            {
+                try
+                {
+                    var Context = (IProjectContext)projectDataService.Load(fileName, ProjectContext.GetType());
+                    ProjectContext.Marge(Context);
+                }
+                catch (Exception ex)
+                {
+                    await windowService.ShowMessageDialogAsync("Error", ex.Message);
+                }
+            }
+        }
+
+        [ICommand]
+        private async Task Remove()
         {
             if (!IsRemoveMode)
             {
@@ -96,9 +229,14 @@ namespace gRpcurlUI.ViewModel
                 return;
             }
 
+            if (ProjectContext is null)
+            {
+                return;
+            }
+
             if (removeProject.Count > 0)
             {
-                var result = await OnShowMessageDialog($"{removeProject.Count} Peoject Remove.", MessageBoxButton.YesNo);
+                var result = await windowService.ShowMessageDialogAsync("Remove", $"{removeProject.Count} Peoject Remove.", MessageBoxButton.YesNo);
                 if (result == MessageBoxResult.Yes)
                 {
                     removeProject.ForEach(p => ProjectContext.RemoveProject(p));
@@ -107,92 +245,103 @@ namespace gRpcurlUI.ViewModel
             IsRemoveMode = false;
         }
 
-        private void CancelExecute()
+        [ICommand]
+        private void Cancel()
         {
             IsRemoveMode = false;
         }
 
-        private void AddExecute()
+        [ICommand]
+        private void Add()
         {
-            ProjectContext.AddProject();
+            ProjectContext?.AddProject();
         }
 
-        private async void ExportExecuteAsync()
+        [ICommand]
+        private async void Send()
         {
-            string fileName = "";
-            var result = await OnShowCommonDialog(typeof(SaveFileDialog),
-                (d) =>
-                {
-                    var sfd = ((SaveFileDialog)d);
-                    sfd.Title = "Project Save";
-                    sfd.Filter = loadModel.SaveFileter;
-                },
-                (d) =>
-                {
-                    var sfd = ((SaveFileDialog)d);
-                    fileName = sfd.FileName;
-                });
-
-            if (result)
+            if (SelectedProject is null)
             {
-                try
-                {
-                    loadModel.Save(ProjectContext, fileName);
-                }
-                catch (Exception ex)
-                {
-                    _ = OnShowMessageDialog(ex.Message);
-                }
+                throw new ArgumentNullException(nameof(SelectedProject));
             }
-        }
 
-        private async void ImportExecuteAsync()
-        {
-            string fileName = "";
-            var result = await OnShowCommonDialog(typeof(OpenFileDialog),
-                (d) =>
-                {
-                    var ofd = ((OpenFileDialog)d);
-                    ofd.Title = "Project Open";
-                    ofd.Filter = loadModel.OpenFileter;
-                },
-                (d) =>
-                {
-                    var ofd = ((OpenFileDialog)d);
-                    fileName = ofd.FileName;
-                });
-
-            if (result)
+            if (!SelectedProject.PrepareProject(out var message))
             {
-                try
+                var result = await windowService.ShowMessageDialogAsync("Send", "continue?\r\n" + message, MessageBoxButton.YesNo);
+                if (result != MessageBoxResult.Yes)
                 {
-                    var Context = (IProjectContext)loadModel.Load(fileName, ProjectContext.GetType());
-                    ProjectContext.Marge(Context);
-                }
-                catch (Exception ex)
-                {
-                    _ = OnShowMessageDialog(ex.Message);
                     return;
                 }
             }
-        }
 
-        private void SelectedDefault(IProject project)
-        {
-            ExecutePageViewModel.SelectedProject = project;
-        }
-
-        private void SelectedRemove(IProject project)
-        {
-            if (removeProject.Contains(project))
+            IsSending = true;
+            if (ClearRepsponse)
             {
-                removeProject.Remove(project);
+                TextBoxClear("2");
             }
-            else
+
+            try
             {
-                removeProject.Add(project);
+                tokenSource = new CancellationTokenSource();
+                await processExecuter.ExecuteAysnc(SelectedProject.CreateCommand(), tokenSource.Token);
+            }
+            catch (Exception ex)
+            {
+                await windowService.ShowMessageDialogAsync("Error", ex.Message);
+            }
+            finally
+            {
+                tokenSource?.Dispose();
+                tokenSource = null;
+                IsSending = false;
             }
         }
 
+        [ICommand]
+        private async void SendCancel()
+        {
+            var result = await windowService.ShowMessageDialogAsync("Send", "Cancel Sendding?", MessageBoxButton.YesNo);
+            if (result == MessageBoxResult.Yes)
+            {
+                tokenSource?.Cancel();
+            }
+        }
+
+        [ICommand]
+        private void SendContentFormat()
+        {
+            if (SelectedProject is null)
+            {
+                return;
+            }
+
+            if (!SelectedProject.PrepareProject(out var message))
+            {
+                windowService.ShowMessageDialogAsync("Error", message);
+            }
+        }
+
+        [ICommand]
+        private void TextBoxClear(string type)
+        {
+            switch (type)
+            {
+                case "1":
+                    if (SelectedProject != null)
+                    {
+                        SelectedProject.SendContent = "";
+                    }
+                    break;
+                case "2":
+                    _StandardOutput.Clear();
+                    OnPropertyChanged(nameof(StandardOutput));
+                    break;
+                case "3":
+                    _StandardError.Clear();
+                    OnPropertyChanged(nameof(StandardError));
+                    break;
+            }
+        }
     }
 }
+

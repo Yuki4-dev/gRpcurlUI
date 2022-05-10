@@ -9,28 +9,10 @@ namespace gRpcurlUI.View
     /// </summary>
     public partial class SettingPage : Page
     {
-        private readonly IWindowOwner windowOwner;
-
-        public SettingPage() : this(WindowOwner.Current) { }
-
-        public SettingPage(IWindowOwner owner)
+        public SettingPage()
         {
-            windowOwner = owner;
+            DataContext = DI.Get<SettingPageViewModel>();
             InitializeComponent();
         }
-
-        private void Page_DataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
-        {
-            if (e.OldValue is ViewModelBase oldVm)
-            {
-                windowOwner?.RemoveViewModel(oldVm);
-            }
-
-            if (DataContext is ViewModelBase vm)
-            {
-                windowOwner?.AddViewModel(vm);
-            }
-        }
-
     }
 }

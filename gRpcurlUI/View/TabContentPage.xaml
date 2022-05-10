@@ -6,17 +6,31 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:gRpcurlUI.View"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:system="clr-namespace:System;assembly=netstandard"
     xmlns:viewmodel="clr-namespace:gRpcurlUI.ViewModel"
     Title="TabContentPage"
+    d:DataContext="{d:DesignInstance viewmodel:TabContentPageViewModel}"
     d:DesignHeight="450"
     d:DesignWidth="800"
     Background="{DynamicResource DefaultPageBackground}"
-    DataContextChanged="Page_DataContextChanged"
     FontFamily="{DynamicResource DefaultFontFamily}"
-    Loaded="Page_Loaded"
     mc:Ignorable="d">
 
     <Page.Resources>
+
+        <Style
+            x:Key="EditAreaTextBoxStyle"
+            BasedOn="{StaticResource DefaultTextBoxStyle}"
+            TargetType="TextBox">
+            <Setter Property="FontSize" Value="{DynamicResource EditTextBoxFontSize}" />
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="Height" Value="auto" />
+            <Setter Property="Width" Value="auto" />
+            <Setter Property="AcceptsReturn" Value="True" />
+            <Setter Property="AcceptsTab" Value="True" />
+        </Style>
+
+        <system:Double x:Key="TopRowHeight">220</system:Double>
 
         <ControlTemplate x:Key="ProjectListHeaderTemplate" TargetType="ContentControl">
 
@@ -89,7 +103,7 @@
 
     </Page.Resources>
 
-    <Grid x:Name="MainHost">
+    <Grid>
 
         <Grid.ColumnDefinitions>
             <ColumnDefinition
@@ -110,17 +124,205 @@
             <controls:ProjectListBox
                 Background="{DynamicResource DefaulEditAreaTextBoxBrush}"
                 IsMultiSelect="{Binding IsRemoveMode}"
-                ItemsSource="{Binding ProjectContext.Projects}"
+                ItemsSource="{Binding ProjectContext.Projects, Mode=OneWay}"
                 SelectedCommand="{Binding SelectedCommand}" />
 
         </controls:HeaderContent>
 
         <GridSplitter Grid.Column="1" Style="{StaticResource DefaultGridSplitterStyle}" />
 
-        <Frame
-            x:Name="MainFrame"
-            Grid.Column="2"
-            NavigationUIVisibility="Hidden" />
+        <Grid Grid.Column="2">
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition
+                    x:Name="MidColumn"
+                    Width="300"
+                    MinWidth="100"
+                    MaxWidth="700" />
+                <ColumnDefinition Width="3" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <Grid>
+
+                <Grid.RowDefinitions>
+                    <RowDefinition MinHeight="{StaticResource TopRowHeight}" MaxHeight="{StaticResource TopRowHeight}" />
+                    <RowDefinition Height="1" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+
+                <controls:OperationInputArea Title="{Binding SelectedProject.ProjectName, Mode=TwoWay}" Content="{Binding SelectedProject, Mode=OneWay}" />
+
+                <Border Grid.Row="1" Background="{DynamicResource DefaulBorderBrush}" />
+
+                <controls:HeaderContent Title="Request" Grid.Row="2">
+
+                    <controls:HeaderContent.Header>
+
+                        <StackPanel Style="{StaticResource OparetionAreaStackPanelStyle}">
+
+                            <Button
+                                Command="{Binding SendCommand}"
+                                IsEnabled="{Binding IsNotSending}"
+                                Style="{StaticResource IconButtonStyle}"
+                                Tag="{StaticResource Send}">
+                                <Button.ToolTip>
+                                    <ToolTip Content="Send" Style="{StaticResource DefaultToolTipStyle}" />
+                                </Button.ToolTip>
+                            </Button>
+
+                            <Button
+                                Command="{Binding SendCancelCommand}"
+                                IsEnabled="{Binding IsSending}"
+                                Style="{StaticResource IconButtonStyle}"
+                                Tag="{StaticResource Cancel}">
+                                <Button.ToolTip>
+                                    <ToolTip Content="Cancel" Style="{StaticResource DefaultToolTipStyle}" />
+                                </Button.ToolTip>
+                            </Button>
+
+                            <Button
+                                Command="{Binding SendContentFormatCommand}"
+                                Style="{StaticResource IconButtonStyle}"
+                                Tag="{StaticResource Format}">
+                                <Button.ToolTip>
+                                    <ToolTip Content="Fromat Text" Style="{StaticResource DefaultToolTipStyle}" />
+                                </Button.ToolTip>
+                            </Button>
+
+                            <Button
+                                Command="{Binding TextBoxClearCommand}"
+                                CommandParameter="1"
+                                Style="{StaticResource IconButtonStyle}"
+                                Tag="{StaticResource Clear}">
+                                <Button.ToolTip>
+                                    <ToolTip Content="Clear Text" Style="{StaticResource DefaultToolTipStyle}" />
+                                </Button.ToolTip>
+                            </Button>
+
+                        </StackPanel>
+
+
+                    </controls:HeaderContent.Header>
+
+                    <TextBox
+                        IsReadOnly="false"
+                        Style="{StaticResource EditAreaTextBoxStyle}"
+                        Text="{Binding SelectedProject.SendContent, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+
+                </controls:HeaderContent>
+
+            </Grid>
+
+            <GridSplitter Grid.Column="1" Style="{StaticResource DefaultGridSplitterStyle}" />
+
+            <Grid Grid.Column="2">
+
+                <Grid.RowDefinitions>
+                    <RowDefinition
+                        x:Name="RightRow"
+                        Height="400"
+                        MinHeight="{StaticResource TopRowHeight}"
+                        MaxHeight="700" />
+                    <RowDefinition Height="3" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+
+                <controls:HeaderContent Title="Response">
+
+                    <controls:HeaderContent.Header>
+
+                        <StackPanel Style="{StaticResource OparetionAreaStackPanelStyle}">
+
+                            <ProgressBar
+                                Width="160"
+                                Height="8"
+                                Margin="4"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                IsIndeterminate="{Binding IsSending}"
+                                Style="{StaticResource DefaultProgressBarStyle}"
+                                Visibility="{Binding SenddingProgressVisible, Mode=OneWay}" />
+
+                            <!--
+                        <TextBlock
+                            VerticalAlignment="Center"
+                            FontSize="12"
+                            Style="{StaticResource DefaultTextBlockStyle}"
+                            Text="Encode" />
+
+                        <TextBox
+                            Width="120"
+                            Margin="4"
+                            Style="{StaticResource DefaultTextBoxStyle}"
+                            Text="{Binding Encode, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" />
+                            -->
+
+                            <ToggleButton
+                                Height="30"
+                                Content="Clear"
+                                IsChecked="{Binding ClearRepsponse}"
+                                Style="{StaticResource CheckedToggleButtonStyle}" />
+
+                            <Button
+                                HorizontalAlignment="Right"
+                                Command="{Binding TextBoxClearCommand}"
+                                CommandParameter="2"
+                                Style="{StaticResource IconButtonStyle}"
+                                Tag="{StaticResource Clear}">
+                                <Button.ToolTip>
+                                    <ToolTip Content="Clear Text" Style="{StaticResource DefaultToolTipStyle}" />
+                                </Button.ToolTip>
+                            </Button>
+
+                        </StackPanel>
+
+                    </controls:HeaderContent.Header>
+
+                    <Grid>
+
+                        <TextBox
+                            IsReadOnly="true"
+                            Style="{StaticResource EditAreaTextBoxStyle}"
+                            Text="{Binding StandardOutput, Mode=OneWay}" />
+
+                    </Grid>
+
+                </controls:HeaderContent>
+
+                <GridSplitter Grid.Row="1" Style="{StaticResource DefaultGridSplitterStyle}" />
+
+                <controls:HeaderContent Title="Error" Grid.Row="2">
+
+                    <controls:HeaderContent.Header>
+
+                        <StackPanel Style="{StaticResource OparetionAreaStackPanelStyle}">
+
+                            <Button
+                                Command="{Binding TextBoxClearCommand}"
+                                CommandParameter="3"
+                                Style="{StaticResource IconButtonStyle}"
+                                Tag="{StaticResource Clear}">
+                                <Button.ToolTip>
+                                    <ToolTip Content="Clear Text" Style="{StaticResource DefaultToolTipStyle}" />
+                                </Button.ToolTip>
+                            </Button>
+
+
+                        </StackPanel>
+
+                    </controls:HeaderContent.Header>
+
+                    <TextBox
+                        IsReadOnly="true"
+                        Style="{StaticResource EditAreaTextBoxStyle}"
+                        Text="{Binding StandardError, Mode=OneWay}" />
+
+                </controls:HeaderContent>
+
+            </Grid>
+
+        </Grid>
 
     </Grid>
 

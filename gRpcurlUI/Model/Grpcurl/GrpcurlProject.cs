@@ -1,4 +1,5 @@
-﻿using gRpcurlUI.Core.Procces;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using gRpcurlUI.Core.Procces;
 using Newtonsoft.Json;
 using System;
 using System.IO;
@@ -6,7 +7,7 @@ using System.Text;
 
 namespace gRpcurlUI.Model.Grpcurl
 {
-    public class GrpcurlProject : Observable, IProject
+    public partial class GrpcurlProject : ObservableObject, IProject
     {
         private string _AppPath = "grpcurl.exe";
         public string AppPath
@@ -16,12 +17,12 @@ namespace gRpcurlUI.Model.Grpcurl
             {
                 if (string.IsNullOrEmpty(value))
                 {
-                    OnPropertyChanged(ref _AppPath, value);
+                    SetProperty(ref _AppPath, value);
                 }
             }
         }
 
-        private string _ProjectName = "";
+        private string _ProjectName = string.Empty;
         public string ProjectName
         {
             get => _ProjectName;
@@ -29,12 +30,12 @@ namespace gRpcurlUI.Model.Grpcurl
             {
                 if (!string.IsNullOrWhiteSpace(value))
                 {
-                    OnPropertyChanged(ref _ProjectName, value);
+                    SetProperty(ref _ProjectName, value);
                 }
             }
         }
 
-        private string _EndPoint = "";
+        private string _EndPoint = string.Empty;
         public string EndPoint
         {
             get => _EndPoint;
@@ -42,32 +43,19 @@ namespace gRpcurlUI.Model.Grpcurl
             {
                 if (!string.IsNullOrWhiteSpace(value))
                 {
-                    OnPropertyChanged(ref _EndPoint, value);
+                    SetProperty(ref _EndPoint, value);
                 }
             }
         }
 
-        private string _Option = "";
-        public string Option
-        {
-            get => _Option;
-            set => OnPropertyChanged(ref _Option, value?.Trim());
-        }
+        [ObservableProperty]
+        private string option = string.Empty;
 
-        private string _Service = "";
-        public string Service
-        {
-            get => _Service;
-            set => OnPropertyChanged(ref _Service, value?.Trim());
-        }
+        [ObservableProperty]
+        private string service = string.Empty;
 
-        private string _SendContent = "";
-        public string SendContent
-        {
-            get => _SendContent;
-            set => OnPropertyChanged(ref _SendContent, value);
-        }
-
+        [ObservableProperty]
+        private string sendContent = string.Empty;
 
         public GrpcurlProject() { }
 
@@ -121,8 +109,9 @@ namespace gRpcurlUI.Model.Grpcurl
                 AppPath = _AppPath,
                 ProjectName = _ProjectName,
                 EndPoint = _EndPoint,
-                Option = _Option,
-                Service = _Service
+                Option = option,
+                Service = service,
+                SendContent = sendContent
             };
         }
 

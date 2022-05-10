@@ -13,7 +13,6 @@
     MinHeight="350"
     Background="{DynamicResource DefaultWindowBackground}"
     FontFamily="{DynamicResource DefaultFontFamily}"
-    Loaded="Window_Loaded"
     mc:Ignorable="d">
 
     <Window.Resources>
@@ -125,6 +124,7 @@
             x:Name="ContentFrame"
             Grid.Row="1"
             NavigationUIVisibility="Hidden" />
+
     </Grid>
 
 </Window>

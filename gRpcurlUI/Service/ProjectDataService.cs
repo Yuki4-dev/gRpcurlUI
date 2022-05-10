@@ -1,21 +1,14 @@
 ﻿using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace gRpcurlUI.Model
+namespace gRpcurlUI.Service
 {
-    public interface ILoadModel
-    {
-        string OpenFileter { get; }
-
-        string SaveFileter { get; }
-
-        void Save<T>(T content, string path);
-
-        object Load(string path, Type type);
-    }
-
-    public class JsonLoadModel : ILoadModel
+    public class ProjectDataService : IProjectDataService
     {
         public string OpenFileter => "json(*.Json;*.json)|*.Json;*.json";
 
@@ -24,7 +17,7 @@ namespace gRpcurlUI.Model
         public object Load(string path, Type type)
         {
             var json = File.ReadAllText(path);
-            return JsonConvert.DeserializeObject(json, type);
+            return JsonConvert.DeserializeObject(json, type) ?? string.Empty;
         }
 
         public void Save<T>(T content, string path)

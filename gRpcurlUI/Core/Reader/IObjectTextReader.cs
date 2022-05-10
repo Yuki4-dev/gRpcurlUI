@@ -12,6 +12,6 @@ namespace gRpcurlUI.Core.Reader
 
         bool ReadLine(string line, out string message);
 
-        object GetObject(bool clear);
+        object? GetObject(bool clear);
     }
 }

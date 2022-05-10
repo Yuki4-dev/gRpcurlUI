@@ -9,7 +9,7 @@ namespace gRpcurlUI.Model.Setting
     {
         private readonly IDictionary resources;
 
-        private IDictionary buffer;
+        private IDictionary? buffer;
 
         public ResourceSetting()
         {
@@ -38,7 +38,7 @@ namespace gRpcurlUI.Model.Setting
 
         public IDictionary CopyResources()
         {
-            var newResources = new Dictionary<string, object>();
+            var newResources = new Dictionary<string, object?>();
             foreach (var key in Keys)
             {
                 newResources.Add(key, resources[key]);
@@ -59,7 +59,7 @@ namespace gRpcurlUI.Model.Setting
             return resources[key];
         }
 
-        public void SetResources(string key, object value)
+        public void SetResources(string key, object? value)
         {
             if (resources is ResourceDictionary rdic)
             {

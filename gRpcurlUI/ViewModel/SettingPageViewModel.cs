@@ -1,16 +1,16 @@
-﻿using gRpcurlUI.Model.Setting;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
+using gRpcurlUI.Model.Setting;
+using gRpcurlUI.Service;
 using System.Diagnostics;
-using System.Windows.Input;
+using System.Threading.Tasks;
 using System.Windows.Media;
 
 namespace gRpcurlUI.ViewModel
 {
-    public class SettingPageViewModel : ViewModelBase
+    [ObservableObject]
+    public partial class SettingPageViewModel
     {
-        private readonly FontSetting fontSetting;
-
-        private readonly BrushSetting brushSetting;
-
         private bool _IsResetEnable = false;
         public bool IsResetEnable
         {
@@ -202,22 +202,23 @@ namespace gRpcurlUI.ViewModel
             }
         }
 
-        public ICommand ResetCommand { get; }
+        private readonly IWindowService windowService;
 
-        public ICommand OpenSourceCommand { get; }
+        private readonly FontSetting fontSetting;
 
-        public ICommand AboutCommand { get; }
+        private readonly BrushSetting brushSetting;
 
-        public SettingPageViewModel(FontSetting fontSetting, BrushSetting brushSetting)
+        public SettingPageViewModel() : this(DI.Get<IWindowService>(), new FontSetting(App.Current.Resources), new BrushSetting(App.Current.Resources)) { }
+
+        public SettingPageViewModel(IWindowService windowService, FontSetting fontSetting, BrushSetting brushSetting)
         {
+            this.windowService = windowService;
             this.fontSetting = fontSetting;
             this.brushSetting = brushSetting;
-            ResetCommand = new Command(ResetExecute);
-            OpenSourceCommand = new Command(OpenSourceExecute);
-            AboutCommand = new Command(AboutExecute);
         }
 
-        private void ResetExecute()
+        [ICommand]
+        private void Reset()
         {
             IsResetEnable = false;
             fontSetting.ResetToCaputure();
@@ -228,13 +229,14 @@ namespace gRpcurlUI.ViewModel
             }
         }
 
-        private async void AboutExecute()
+        [ICommand]
+        private async Task About()
         {
-            await OnShowMessageDialog("gRpcurlUI Ver 1.0.0" + "\r\n"
-                                         + "Preview");
+            await windowService.ShowMessageDialogAsync("About...", "gRpcurlUI Ver 1.0.0" + "\r\n" + "Preview");
         }
 
-        private void OpenSourceExecute()
+        [ICommand]
+        private void OpenSource()
         {
             var pi = new ProcessStartInfo()
             {

@@ -5,9 +5,9 @@ namespace gRpcurlUI.ViewModel
 {
     public class Command : ICommand
     {
-        public event EventHandler CanExecuteChanged;
+        public event EventHandler? CanExecuteChanged;
 
-        private readonly Action<object> command;
+        private readonly Action<object?> command;
 
         private bool canExecuteValue = true;
         public bool CanExecuteValue
@@ -25,22 +25,22 @@ namespace gRpcurlUI.ViewModel
 
         public Command(Action action) : this((p) => action.Invoke()) { }
 
-        public Command(Action<object> action)
+        public Command(Action<object?> action)
         {
             command = action;
         }
 
-        public bool CanExecute(object parameter)
+        public bool CanExecute(object? parameter)
         {
             return CanExecuteValue;
         }
 
-        public void Execute(object parameter)
+        public void Execute(object? parameter)
         {
             command(parameter);
         }
 
-        public static Command<T> Create<T>(Action<T> action)
+        public static Command<T> Create<T>(Action<T?> action)
         {
             return new Command<T>(action);
         }
@@ -59,7 +59,7 @@ namespace gRpcurlUI.ViewModel
 
     public class Command<T> : Command
     {
-        public Command(Action<T> action) : base((p) => action((T)p)) { }
+        public Command(Action<T?> action) : base((p) => action((T?)p)) { }
     }
 
 }

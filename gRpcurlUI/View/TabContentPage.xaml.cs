@@ -1,4 +1,5 @@
-﻿using gRpcurlUI.ViewModel;
+﻿using gRpcurlUI.Service;
+using gRpcurlUI.ViewModel;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -9,49 +10,21 @@ namespace gRpcurlUI.View
     /// </summary>
     public partial class TabContentPage : Page
     {
-        private readonly ExecutePage excutePage;
+        private readonly IWindowService windowService;
 
-        private readonly IWindowOwner windowOwner;
-
-        public TabContentPage() : this(WindowOwner.Current) { }
-
-        public TabContentPage(IWindowOwner owner)
+        public TabContentPage()
         {
-            windowOwner = owner;
-            if (owner != null)
-            {
-                windowOwner.WindowSizeChenged += Owner_WindowSizeChenged;
-            }
-            excutePage = new ExecutePage(windowOwner);
+            windowService = DI.Get<IWindowService>();
+            windowService.WindowSizeChenged += WindowService_WindowSizeChenged;
+
             InitializeComponent();
         }
 
-        private void Owner_WindowSizeChenged(double height, double width)
+        private void WindowService_WindowSizeChenged(double height, double width)
         {
             LeftColumn.Width = new GridLength(width * 0.2);
-        }
-
-        private void Page_Loaded(object sender, RoutedEventArgs e)
-        {
-            MainFrame.Navigate(excutePage);
-        }
-
-        private void Page_DataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
-        {
-            if (e.OldValue is ViewModelBase oldVm)
-            {
-                windowOwner?.RemoveViewModel(oldVm);
-            }
-
-            if (DataContext is ViewModelBase vm)
-            {
-                windowOwner?.AddViewModel(vm);
-            }
-
-            if (DataContext is TabContentPageViewModel tabPageVm)
-            {
-                excutePage.DataContext = tabPageVm.ExecutePageViewModel;
-            }
+            MidColumn.Width = new GridLength(width * 0.25);
+            RightRow.Height = new GridLength(height * 0.6);
         }
     }
 }

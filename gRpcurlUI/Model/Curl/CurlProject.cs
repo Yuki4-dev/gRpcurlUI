@@ -1,11 +1,13 @@
-﻿using gRpcurlUI.Core.Procces;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using gRpcurlUI.Core.Procces;
 using Newtonsoft.Json;
 using System;
+using System.ComponentModel;
 using System.Text;
 
 namespace gRpcurlUI.Model.Curl
 {
-    public class CurlProject : Observable, IProject
+    public partial class CurlProject : ObservableObject, IProject
     {
         private string _AppPath = "curl";
         public string AppPath
@@ -15,7 +17,7 @@ namespace gRpcurlUI.Model.Curl
             {
                 if (!string.IsNullOrWhiteSpace(value))
                 {
-                    OnPropertyChanged(ref _AppPath, value);
+                    SetProperty(ref _AppPath, value);
                 }
             }
         }
@@ -28,7 +30,7 @@ namespace gRpcurlUI.Model.Curl
             {
                 if (!string.IsNullOrWhiteSpace(value))
                 {
-                    OnPropertyChanged(ref _ProjectName, value);
+                    SetProperty(ref _ProjectName, value);
                 }
             }
         }
@@ -41,31 +43,19 @@ namespace gRpcurlUI.Model.Curl
             {
                 if (!string.IsNullOrWhiteSpace(value))
                 {
-                    OnPropertyChanged(ref _EndPoint, value);
+                    SetProperty(ref _EndPoint, value);
                 }
             }
         }
 
-        private string _Option = "";
-        public string Option
-        {
-            get => _Option;
-            set => OnPropertyChanged(ref _Option, value?.Trim());
-        }
+        [ObservableProperty]
+        private string option = string.Empty;
 
-        private bool _IsJsonContent = false;
-        public bool IsJsonContent
-        {
-            get => _IsJsonContent;
-            set => OnPropertyChanged(ref _IsJsonContent, value);
-        }
+        [ObservableProperty]
+        private bool isJsonContent = false;
 
-        private string _SendContent = "";
-        public string SendContent
-        {
-            get => _SendContent;
-            set => OnPropertyChanged(ref _SendContent, value);
-        }
+        [ObservableProperty]
+        private string sendContent = string.Empty;
 
         public CurlProject() { }
 
@@ -114,8 +104,8 @@ namespace gRpcurlUI.Model.Curl
                 AppPath = AppPath,
                 ProjectName = _ProjectName,
                 EndPoint = _EndPoint,
-                Option = _Option,
-                IsJsonContent = _IsJsonContent,
+                Option = option,
+                IsJsonContent = isJsonContent,
             };
         }
 

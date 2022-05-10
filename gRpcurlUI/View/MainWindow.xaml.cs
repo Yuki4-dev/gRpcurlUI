@@ -1,6 +1,8 @@
-﻿using gRpcurlUI.Model.Curl;
+﻿using gRpcurlUI.Core.Procces;
+using gRpcurlUI.Model.Curl;
 using gRpcurlUI.Model.Grpcurl;
 using gRpcurlUI.Model.Setting;
+using gRpcurlUI.Service;
 using gRpcurlUI.ViewModel;
 using System.Windows;
 
@@ -11,33 +13,32 @@ namespace gRpcurlUI.View
     /// </summary>
     public partial class MainWindow : Window
     {
-        private readonly SettingPage settingPage;
+        private readonly IWindowService windowService;
 
-        private readonly TabContentPage curlPage;
+        private readonly SettingPage settingPage = new();
 
-        private readonly TabContentPage gRpcCurlPage;
+        private readonly TabContentPage curlPage = new();
+
+        private readonly TabContentPage gRpcCurlPage = new();
 
         public MainWindow()
         {
-            WindowOwner.Current = new WindowOwner(this);
-            settingPage = new SettingPage(WindowOwner.Current);
-            settingPage.DataContext = new SettingPageViewModel(new FontSetting(App.Current.Resources), new BrushSetting(App.Current.Resources));
-            curlPage = new TabContentPage(WindowOwner.Current);
-            gRpcCurlPage = new TabContentPage(WindowOwner.Current);
+            windowService = DI.Get<IWindowService>();
+            windowService.SetBaseWindow(this);
 
-            var curlViewModel = new TabContentPageViewModel();
+            var pe = DI.Get<IProcessExecuter>();
+            var pd = DI.Get<IProjectDataService>();
+
+            var curlViewModel = new TabContentPageViewModel(windowService, pe, pd);
             curlViewModel.ProjectContext = new CurlProjectContext();
             curlPage.DataContext = curlViewModel;
 
-            var grpcurlViewModel = new TabContentPageViewModel();
+            var grpcurlViewModel = new TabContentPageViewModel(windowService, pe, pd);
             grpcurlViewModel.ProjectContext = new GrpcurlProjectContext();
             gRpcCurlPage.DataContext = grpcurlViewModel;
 
             InitializeComponent();
-        }
 
-        private void Window_Loaded(object sender, RoutedEventArgs e)
-        {
             ContentFrame.Content = curlPage;
         }
 

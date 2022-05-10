@@ -3,7 +3,7 @@ using System.ComponentModel;
 
 namespace gRpcurlUI.Model
 {
-    public interface IProjectContext : INotifyPropertyChanged
+    public interface IProjectContext : INotifyPropertyChanged, INotifyPropertyChanging
     {
         string ProjectType { get; }
 
@@ -13,7 +13,7 @@ namespace gRpcurlUI.Model
 
         void Marge(IProjectContext other);
 
-        void AddProject(IProject project = null);
+        void AddProject(IProject? project = null);
 
         bool RemoveProject(IProject project);
     }

@@ -10,9 +10,9 @@ namespace gRpcurlUI.Core.Procces
     {
         public Encoding Encoding { get; set; } = Encoding.UTF8;
 
-        public event Action<string> StanderdOutputRecieve;
+        public event Action<string>? StanderdOutputRecieve;
 
-        public event Action<string> StanderdErrorRecieve;
+        public event Action<string>? StanderdErrorRecieve;
 
         public async Task ExecuteAysnc(IProccesCommand command, CancellationToken token)
         {
@@ -32,8 +32,8 @@ namespace gRpcurlUI.Core.Procces
                 EnableRaisingEvents = true
             };
 
-            process.OutputDataReceived += (s, e) => StanderdOutputRecieve?.Invoke(e.Data);
-            process.ErrorDataReceived += (s, e) => StanderdErrorRecieve?.Invoke(e.Data);
+            process.OutputDataReceived += (s, e) => StanderdOutputRecieve?.Invoke(e.Data ?? string.Empty);
+            process.ErrorDataReceived += (s, e) => StanderdErrorRecieve?.Invoke(e.Data?? string.Empty);
 
             var pTask = Task.Run(() =>
             {

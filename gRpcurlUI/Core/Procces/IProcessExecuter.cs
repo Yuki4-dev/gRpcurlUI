@@ -9,9 +9,9 @@ namespace gRpcurlUI.Core.Procces
     {
         Encoding Encoding { get; set; }
 
-        event Action<string> StanderdOutputRecieve;
+        event Action<string>? StanderdOutputRecieve;
 
-        event Action<string> StanderdErrorRecieve;
+        event Action<string>? StanderdErrorRecieve;
 
         Task ExecuteAysnc(IProccesCommand command, CancellationToken token);
     }

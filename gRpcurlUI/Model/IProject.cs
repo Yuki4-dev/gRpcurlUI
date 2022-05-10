@@ -1,10 +1,11 @@
 ﻿using gRpcurlUI.Core.Procces;
+using CommunityToolkit.Mvvm.ComponentModel;
 using System;
 using System.ComponentModel;
 
 namespace gRpcurlUI.Model
 {
-    public interface IProject : ICloneable, INotifyPropertyChanged
+    public interface IProject : ICloneable, INotifyPropertyChanged, INotifyPropertyChanging
     {
         string AppPath { get; set; }
 

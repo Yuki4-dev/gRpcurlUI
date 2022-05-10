@@ -1,33 +1,26 @@
-﻿using System;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 
 namespace gRpcurlUI.Model.Grpcurl
 {
-    public class GrpcurlProjectContext : Observable, IProjectContext
+    public partial class GrpcurlProjectContext : ObservableObject, IProjectContext
     {
-        private string _Verion;
-        public string Verion
-        {
-            get => _Verion;
-            set => OnPropertyChanged(ref _Verion, value);
-        }
+        [ObservableProperty]
+        private string verion;
 
-        private string _ProjectType;
-        public string ProjectType
-        {
-            get => _ProjectType;
-            set => OnPropertyChanged(ref _ProjectType, value);
-        }
+        [ObservableProperty]
+        private string projectType;
 
         private readonly ICollection<GrpcurlProject> projectsInternal = new ObservableCollection<GrpcurlProject>();
         public IEnumerable<IProject> Projects => projectsInternal;
 
         public GrpcurlProjectContext()
         {
-            Verion = "1.0.0";
-            ProjectType = "gRpcurl";
+            verion = "1.0.0";
+            projectType = "gRpcurl";
         }
 
         public bool RemoveProject(IProject project)
@@ -35,7 +28,7 @@ namespace gRpcurlUI.Model.Grpcurl
             return projectsInternal.Remove((GrpcurlProject)project);
         }
 
-        public void AddProject(IProject project = null)
+        public void AddProject(IProject? project = null)
         {
             if (project == null)
             {
