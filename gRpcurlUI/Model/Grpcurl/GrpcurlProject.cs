@@ -49,6 +49,9 @@ namespace gRpcurlUI.Model.Grpcurl
         }
 
         [ObservableProperty]
+        private bool isSelected = false;
+
+        [ObservableProperty]
         private string option = string.Empty;
 
         [ObservableProperty]

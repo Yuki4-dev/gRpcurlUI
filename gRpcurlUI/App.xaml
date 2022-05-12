@@ -19,6 +19,7 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Style/GeometryStyle.xaml" />
                 <ResourceDictionary Source="Style/ButtonStyle.xaml" />
+                <ResourceDictionary Source="Style/ProjectListBoxStyle.xaml" />
                 <ResourceDictionary Source="Style/SolidColorBrushStyle.xaml" />
             </ResourceDictionary.MergedDictionaries>
 

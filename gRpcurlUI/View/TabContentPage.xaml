@@ -17,6 +17,8 @@
 
     <UserControl.Resources>
 
+        <system:Double x:Key="TopRowHeight">220</system:Double>
+
         <Style
             x:Key="EditAreaTextBoxStyle"
             BasedOn="{StaticResource DefaultTextBoxStyle}"
@@ -29,7 +31,17 @@
             <Setter Property="AcceptsTab" Value="True" />
         </Style>
 
-        <system:Double x:Key="TopRowHeight">220</system:Double>
+        <Style
+            x:Key="ExecutePageProjectListBoxStyle"
+            BasedOn="{StaticResource ProjectListBoxStyle}"
+            TargetType="{x:Type ListBox}">
+            <Setter Property="SelectionMode" Value="Single" />
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding IsRemoveMode}" Value="True">
+                    <Setter Property="SelectionMode" Value="Multiple" />
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
 
         <ControlTemplate x:Key="ProjectListHeaderTemplate" TargetType="ContentControl">
 
@@ -120,11 +132,10 @@
                 <ContentControl Template="{StaticResource ProjectListHeaderTemplate}" />
             </controls:HeaderContent.Header>
 
-            <controls:ProjectListBox
-                Background="{DynamicResource DefaulEditAreaTextBoxBrush}"
-                IsMultiSelect="{Binding IsRemoveMode}"
+            <ListBox
                 ItemsSource="{Binding ProjectContext.Projects, Mode=OneWay}"
-                SelectedCommand="{Binding SelectedCommand}" />
+                SelectedValue="{Binding SelectedProject, Mode=TwoWay}"
+                Style="{StaticResource ExecutePageProjectListBoxStyle}" />
 
         </controls:HeaderContent>
 
@@ -201,7 +212,6 @@
 
                         </StackPanel>
 
-
                     </controls:HeaderContent.Header>
 
                     <TextBox
@@ -242,20 +252,6 @@
                                 IsIndeterminate="{Binding IsSending}"
                                 Style="{StaticResource DefaultProgressBarStyle}"
                                 Visibility="{Binding SenddingProgressVisible, Mode=OneWay}" />
-
-                            <!--
-                            <TextBlock
-                                VerticalAlignment="Center"
-                                FontSize="12"
-                                Style="{StaticResource DefaultTextBlockStyle}"
-                                Text="Encode" />
-
-                            <TextBox
-                                Width="120"
-                                Margin="4"
-                                Style="{StaticResource DefaultTextBoxStyle}"
-                                Text="{Binding Encode, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" />
-                            -->
 
                             <ToggleButton
                                 Height="30"

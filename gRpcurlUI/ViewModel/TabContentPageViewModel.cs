@@ -5,7 +5,7 @@ using gRpcurlUI.Model;
 using gRpcurlUI.Service;
 using Microsoft.Win32;
 using System;
-using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -30,20 +30,6 @@ namespace gRpcurlUI.ViewModel
             }
         }
 
-        private IProject? _SelectedProject;
-        public IProject? SelectedProject
-        {
-            get => _SelectedProject;
-            set
-            {
-                if (SetProperty(ref _SelectedProject, value))
-                {
-                    OnPropertyChanged(nameof(IsEnabled));
-                }
-            }
-        }
-        public bool IsEnabled => SelectedProject != null;
-
         private bool _IsRemoveMode = false;
         public bool IsRemoveMode
         {
@@ -53,24 +39,6 @@ namespace gRpcurlUI.ViewModel
                 if (SetProperty(ref _IsRemoveMode, value))
                 {
                     SelectedProject = null;
-                    removeProject.Clear();
-                }
-            }
-        }
-
-        public string Encode
-        {
-            get => processExecuter.Encoding.BodyName;
-            set
-            {
-                try
-                {
-                    processExecuter.Encoding = Encoding.GetEncoding(value);
-                    OnPropertyChanged();
-                }
-                catch (Exception ex)
-                {
-                    windowService.ShowMessageDialogAsync("Error", ex.Message);
                 }
             }
         }
@@ -123,13 +91,14 @@ namespace gRpcurlUI.ViewModel
         [ObservableProperty]
         private bool clearRepsponse = true;
 
+        [ObservableProperty]
+        private IProject? selectedProject = null;
+
         private readonly IWindowService windowService;
 
         protected readonly IProcessExecuter processExecuter;
 
         private readonly IProjectDataService projectDataService;
-
-        private readonly List<IProject> removeProject = new List<IProject>();
 
         private CancellationTokenSource? tokenSource;
 
@@ -143,26 +112,6 @@ namespace gRpcurlUI.ViewModel
 
             this.processExecuter.StanderdOutputRecieve += (data) => StandardOutput = data;
             this.processExecuter.StanderdErrorRecieve += (data) => StandardError = data;
-        }
-
-        [ICommand]
-        private void Selected(IProject? project)
-        {
-            if (project != null && IsRemoveMode)
-            {
-                if (removeProject.Contains(project))
-                {
-                    removeProject.Remove(project);
-                }
-                else
-                {
-                    removeProject.Add(project);
-                }
-            }
-            else
-            {
-                SelectedProject = project;
-            }
         }
 
         [ICommand]
@@ -236,12 +185,13 @@ namespace gRpcurlUI.ViewModel
                 return;
             }
 
-            if (removeProject.Count > 0)
+            var selectedProject = ProjectContext.Projects.Where(p => p.IsSelected).ToList();
+            if (selectedProject.Count > 0)
             {
-                var result = await windowService.ShowMessageDialogAsync("Remove", $"{removeProject.Count} Peoject Remove.", MessageBoxButton.YesNo);
+                var result = await windowService.ShowMessageDialogAsync("Remove", $"{selectedProject.Count} Peoject Remove.", MessageBoxButton.YesNo);
                 if (result == MessageBoxResult.Yes)
                 {
-                    removeProject.ForEach(p => ProjectContext.RemoveProject(p));
+                    selectedProject.ForEach(p => ProjectContext.RemoveProject(p));
                 }
             }
             IsRemoveMode = false;
@@ -264,7 +214,7 @@ namespace gRpcurlUI.ViewModel
         {
             if (SelectedProject is null)
             {
-                await windowService.ShowMessageDialogAsync("Error","Project is Nothing.");
+                await windowService.ShowMessageDialogAsync("Error", "Project is Nothing.");
                 return;
             }
 

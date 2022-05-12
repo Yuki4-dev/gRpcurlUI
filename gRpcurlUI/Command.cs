@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Input;
 
-namespace gRpcurlUI.ViewModel
+namespace gRpcurlUI
 {
     public class Command : ICommand
     {

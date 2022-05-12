@@ -28,7 +28,7 @@
                 <Setter Property="Margin" Value="0" />
                 <Setter Property="Template">
                     <Setter.Value>
-                        <ControlTemplate TargetType="TabItem">
+                        <ControlTemplate TargetType="{x:Type TabItem}">
 
                             <Grid x:Name="PanelGrid">
 

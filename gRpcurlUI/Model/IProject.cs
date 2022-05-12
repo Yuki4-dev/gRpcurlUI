@@ -6,6 +6,8 @@ namespace gRpcurlUI.Model
 {
     public interface IProject : ICloneable, INotifyPropertyChanged, INotifyPropertyChanging
     {
+        bool IsSelected { get; set; }
+
         string AppPath { get; set; }
 
         string ProjectName { get; set; }

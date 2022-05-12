@@ -1,0 +1,95 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:System="clr-namespace:System;assembly=System.Runtime"
+    xmlns:local="clr-namespace:gRpcurlUI.Controls">
+
+    <System:Double x:Key="RowHeight">40</System:Double>
+
+    <Style x:Key="ListBoxItemContainerStyle" TargetType="{x:Type ListBoxItem}">
+        <Setter Property="IsSelected" Value="{Binding IsSelected, Mode=TwoWay}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ListBoxItem}">
+
+                    <Grid x:Name="PanelGrid" Background="Transparent">
+                        <ContentPresenter />
+                    </Grid>
+
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsSelected" Value="True">
+                            <Setter TargetName="PanelGrid" Property="Background" Value="{StaticResource DefaultSelectedBackground}" />
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="PanelGrid" Property="Background" Value="{StaticResource DefaultMouseOverBackground}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="ListBoxMultipleItemContainerStyle" TargetType="{x:Type ListBoxItem}">
+        <Setter Property="IsSelected" Value="{Binding IsSelected, Mode=TwoWay}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ListBoxItem}">
+
+                    <Grid x:Name="PanelGrid" Background="Transparent">
+
+                        <StackPanel Orientation="Horizontal">
+                            <Canvas Width="30" Height="20">
+                                <Path
+                                    x:Name="MultipleCheckIcon"
+                                    Width="30"
+                                    Height="20"
+                                    Data="{StaticResource Check}"
+                                    Fill="{DynamicResource DefaulIconBrush}"
+                                    Stretch="Uniform" />
+                            </Canvas>
+
+                            <ContentPresenter />
+
+                        </StackPanel>
+
+                    </Grid>
+
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsSelected" Value="True">
+                            <Setter TargetName="MultipleCheckIcon" Property="Data" Value="{StaticResource Checked}" />
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="PanelGrid" Property="Background" Value="{StaticResource DefaultMouseOverBackground}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <DataTemplate x:Key="ListBoxItemTemplate" DataType="model:IProject">
+        <Grid Height="{StaticResource RowHeight}" VerticalAlignment="Bottom">
+            <TextBlock
+                VerticalAlignment="Center"
+                FontSize="24"
+                FontWeight="DemiBold"
+                Foreground="{StaticResource DefaultPageForeground}"
+                Text="{Binding ProjectName}" />
+        </Grid>
+    </DataTemplate>
+
+    <Style x:Key="ProjectListBoxStyle" TargetType="{x:Type ListBox}">
+        <Setter Property="Background" Value="{StaticResource DefaulEditAreaTextBoxBrush}" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="ItemContainerStyle" Value="{StaticResource ListBoxItemContainerStyle}" />
+        <Setter Property="ItemTemplate" Value="{StaticResource ListBoxItemTemplate}" />
+        <Style.Triggers>
+            <Trigger Property="SelectionMode" Value="Multiple">
+                <Setter Property="ItemContainerStyle" Value="{StaticResource ListBoxMultipleItemContainerStyle}" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+</ResourceDictionary>
