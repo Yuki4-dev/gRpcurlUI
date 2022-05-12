@@ -21,7 +21,7 @@ namespace gRpcurlUI.Model.Curl
             }
         }
 
-        private string _ProjectName = "";
+        private string _ProjectName = string.Empty;
         public string ProjectName
         {
             get => _ProjectName;
@@ -34,7 +34,7 @@ namespace gRpcurlUI.Model.Curl
             }
         }
 
-        private string _EndPoint = "";
+        private string _EndPoint = string.Empty;
         public string EndPoint
         {
             get => _EndPoint;

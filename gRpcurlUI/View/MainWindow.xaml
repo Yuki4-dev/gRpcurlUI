@@ -4,6 +4,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:controls="clr-namespace:gRpcurlUI.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:gRpcurlUI.View"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:viewmodel="clr-namespace:gRpcurlUI.ViewModel"
     Title="gRpcurUI"
@@ -11,120 +12,88 @@
     Height="600"
     MinWidth="350"
     MinHeight="350"
+    d:DataContext="{d:DesignInstance viewmodel:MainWindowViewModel}"
     Background="{DynamicResource DefaultWindowBackground}"
     FontFamily="{DynamicResource DefaultFontFamily}"
     mc:Ignorable="d">
 
-    <Window.Resources>
+    <TabControl
+        Background="Transparent"
+        BorderBrush="{StaticResource DefaulBorderBrush}"
+        BorderThickness="1,1,1,0"
+        ItemsSource="{Binding TabContents}">
 
-        <ControlTemplate x:Key="TabHeaderButtonTemplate" TargetType="ToggleButton">
+        <TabControl.ItemContainerStyle>
+            <Style TargetType="{x:Type TabItem}">
+                <Setter Property="Margin" Value="0" />
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="TabItem">
 
-            <Border
-                x:Name="RootBorder"
-                Background="{TemplateBinding Background}"
-                BorderBrush="{TemplateBinding BorderBrush}"
-                BorderThickness="{TemplateBinding BorderThickness}">
+                            <Grid x:Name="PanelGrid">
 
-                <Grid>
+                                <ContentPresenter
+                                    x:Name="ContentSite"
+                                    Margin="0"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    ContentSource="Header" />
 
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="9*" />
-                        <RowDefinition Height="1*" />
-                    </Grid.RowDefinitions>
+                                <Border
+                                    x:Name="TabUnderBorder"
+                                    Margin="4,0,4,0"
+                                    VerticalAlignment="Bottom"
+                                    BorderBrush="{StaticResource DefaultPageForeground}"
+                                    BorderThickness="1.2"
+                                    Visibility="Hidden" />
+
+                            </Grid>
+
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsSelected" Value="True">
+                                    <Setter TargetName="PanelGrid" Property="Background" Value="{StaticResource DefaultSelectedBackground}" />
+                                    <Setter TargetName="TabUnderBorder" Property="Visibility" Value="Visible" />
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+        </TabControl.ItemContainerStyle>
+
+        <TabControl.ItemTemplate>
+            <DataTemplate DataType="{x:Type viewmodel:TabContentPageViewModel}">
+
+                <Border
+                    x:Name="TabBackBorder"
+                    Width="120"
+                    BorderBrush="{StaticResource DefaulBorderBrush}"
+                    BorderThickness="0.5,1,0.5,0">
 
                     <TextBlock
                         Margin="4"
-                        HorizontalAlignment="Left"
-                        VerticalAlignment="Center"
-                        FontSize="{TemplateBinding FontSize}"
+                        FontSize="18"
                         Style="{StaticResource DefaultTextBlockStyle}"
-                        Text="{TemplateBinding Content}" />
+                        Text="{Binding ProjectContext.ProjectType}" />
 
-                    <Border
-                        x:Name="SelectedBorder"
-                        Grid.Row="1"
-                        Margin="2,0,2,0"
-                        VerticalAlignment="Stretch"
-                        Background="{DynamicResource DefaulIconBrush}"
-                        Visibility="Collapsed" />
+                </Border>
 
-                </Grid>
+                <DataTemplate.Triggers>
+                    <Trigger SourceName="TabBackBorder" Property="IsMouseOver" Value="True">
+                        <Setter TargetName="TabBackBorder" Property="Background" Value="{StaticResource DefaultMouseOverBackground}" />
+                    </Trigger>
+                </DataTemplate.Triggers>
 
-            </Border>
+            </DataTemplate>
+        </TabControl.ItemTemplate>
 
-            <ControlTemplate.Triggers>
-                <Trigger Property="IsChecked" Value="True">
-                    <Setter TargetName="SelectedBorder" Property="Visibility" Value="Visible" />
-                    <Setter TargetName="RootBorder" Property="Background" Value="{DynamicResource DefaultSelectedBackground}" />
-                </Trigger>
-                <Trigger Property="IsMouseOver" Value="True">
-                    <Setter TargetName="RootBorder" Property="Background" Value="{DynamicResource DefaultMouseOverBackground}" />
-                </Trigger>
-            </ControlTemplate.Triggers>
+        <TabControl.ContentTemplate>
+            <DataTemplate DataType="{x:Type viewmodel:TabContentPageViewModel}">
+                <local:TabContentPage DataContext="{Binding}" />
+            </DataTemplate>
+        </TabControl.ContentTemplate>
 
-        </ControlTemplate>
-
-        <Style x:Key="TabHeaderButtonStyle" TargetType="ToggleButton">
-            <Setter Property="FontSize" Value="16" />
-            <Setter Property="BorderThickness" Value="1" />
-            <Setter Property="BorderBrush" Value="{DynamicResource DefaulBorderBrush}" />
-            <Setter Property="Foreground" Value="{DynamicResource DefaultPageForeground}" />
-            <Setter Property="Background" Value="Transparent" />
-            <Setter Property="Width" Value="90" />
-            <Setter Property="Template" Value="{StaticResource TabHeaderButtonTemplate}" />
-        </Style>
-
-    </Window.Resources>
-
-    <Grid>
-
-        <Grid.RowDefinitions>
-            <RowDefinition Height="30" />
-            <RowDefinition Height="*" />
-        </Grid.RowDefinitions>
-
-        <StackPanel Margin="4,4,4,0" Orientation="Horizontal">
-
-            <RadioButton
-                Click="CurlButton_Click"
-                Content="Curl"
-                IsChecked="True"
-                Style="{StaticResource TabHeaderButtonStyle}" />
-
-            <RadioButton
-                Click="GrpcurlButton_Click_1"
-                Content="Grpcurl"
-                Style="{StaticResource TabHeaderButtonStyle}" />
-
-        </StackPanel>
-
-        <StackPanel
-            Margin="4"
-            HorizontalAlignment="Right"
-            Orientation="Horizontal">
-
-            <Button
-                Click="SettingButton_Click"
-                Content="Setting"
-                Style="{StaticResource IconButtonStyle}"
-                Tag="{StaticResource Setting}">
-                <Button.ToolTip>
-                    <ToolTip Content="Setting" Style="{StaticResource DefaultToolTipStyle}" />
-                </Button.ToolTip>
-            </Button>
-
-        </StackPanel>
-
-        <Border
-            Height="1"
-            VerticalAlignment="Bottom"
-            Background="{DynamicResource DefaulBorderBrush}" />
-
-        <Frame
-            x:Name="ContentFrame"
-            Grid.Row="1"
-            NavigationUIVisibility="Hidden" />
-
-    </Grid>
+    </TabControl>
 
 </Window>

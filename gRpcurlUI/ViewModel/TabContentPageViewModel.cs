@@ -100,7 +100,7 @@ namespace gRpcurlUI.ViewModel
             {
                 if (value != null)
                 {
-                    _StandardOutput.Append(value);
+                    _StandardOutput.AppendLine(value);
                     OnPropertyChanged(nameof(StandardOutput));
                 }
             }
@@ -114,7 +114,7 @@ namespace gRpcurlUI.ViewModel
             {
                 if (value != null)
                 {
-                    _StandardError.Append(value);
+                    _StandardError.AppendLine(value);
                     OnPropertyChanged(nameof(StandardError));
                 }
             }
@@ -132,6 +132,8 @@ namespace gRpcurlUI.ViewModel
         private readonly List<IProject> removeProject = new List<IProject>();
 
         private CancellationTokenSource? tokenSource;
+
+        public TabContentPageViewModel() : this(DI.Get<IWindowService>(), DI.Get<IProcessExecuter>(), DI.Get<IProjectDataService>()) { }
 
         public TabContentPageViewModel(IWindowService windowService, IProcessExecuter processExecuter, IProjectDataService projectDataService)
         {
@@ -262,7 +264,8 @@ namespace gRpcurlUI.ViewModel
         {
             if (SelectedProject is null)
             {
-                throw new ArgumentNullException(nameof(SelectedProject));
+                await windowService.ShowMessageDialogAsync("Error","Project is Nothing.");
+                return;
             }
 
             if (!SelectedProject.PrepareProject(out var message))

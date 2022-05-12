@@ -7,7 +7,7 @@ namespace gRpcurlUI.View
     /// <summary>
     /// TabContentPage.xaml の相互作用ロジック
     /// </summary>
-    public partial class TabContentPage : Page
+    public partial class TabContentPage : UserControl
     {
         private readonly IWindowService windowService;
 

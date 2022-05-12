@@ -1,4 +1,4 @@
-﻿<Page
+﻿<UserControl
     x:Class="gRpcurlUI.View.TabContentPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -8,7 +8,6 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:system="clr-namespace:System;assembly=netstandard"
     xmlns:viewmodel="clr-namespace:gRpcurlUI.ViewModel"
-    Title="TabContentPage"
     d:DataContext="{d:DesignInstance viewmodel:TabContentPageViewModel}"
     d:DesignHeight="450"
     d:DesignWidth="800"
@@ -16,7 +15,7 @@
     FontFamily="{DynamicResource DefaultFontFamily}"
     mc:Ignorable="d">
 
-    <Page.Resources>
+    <UserControl.Resources>
 
         <Style
             x:Key="EditAreaTextBoxStyle"
@@ -101,7 +100,7 @@
 
         </ControlTemplate>
 
-    </Page.Resources>
+    </UserControl.Resources>
 
     <Grid>
 
@@ -111,7 +110,7 @@
                 Width="200"
                 MinWidth="100"
                 MaxWidth="450" />
-            <ColumnDefinition Width="3" />
+            <ColumnDefinition Width="8" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
 
@@ -129,7 +128,7 @@
 
         </controls:HeaderContent>
 
-        <GridSplitter Grid.Column="1" Style="{StaticResource DefaultGridSplitterStyle}" />
+        <GridSplitter Grid.Column="1" Style="{StaticResource VerticalGridSplitterStyle}" />
 
         <Grid Grid.Column="2">
 
@@ -139,7 +138,7 @@
                     Width="300"
                     MinWidth="100"
                     MaxWidth="700" />
-                <ColumnDefinition Width="3" />
+                <ColumnDefinition Width="8" />
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
 
@@ -214,7 +213,7 @@
 
             </Grid>
 
-            <GridSplitter Grid.Column="1" Style="{StaticResource DefaultGridSplitterStyle}" />
+            <GridSplitter Grid.Column="1" Style="{StaticResource VerticalGridSplitterStyle}" />
 
             <Grid Grid.Column="2">
 
@@ -224,7 +223,7 @@
                         Height="400"
                         MinHeight="{StaticResource TopRowHeight}"
                         MaxHeight="700" />
-                    <RowDefinition Height="3" />
+                    <RowDefinition Height="8" />
                     <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
 
@@ -245,17 +244,17 @@
                                 Visibility="{Binding SenddingProgressVisible, Mode=OneWay}" />
 
                             <!--
-                        <TextBlock
-                            VerticalAlignment="Center"
-                            FontSize="12"
-                            Style="{StaticResource DefaultTextBlockStyle}"
-                            Text="Encode" />
+                            <TextBlock
+                                VerticalAlignment="Center"
+                                FontSize="12"
+                                Style="{StaticResource DefaultTextBlockStyle}"
+                                Text="Encode" />
 
-                        <TextBox
-                            Width="120"
-                            Margin="4"
-                            Style="{StaticResource DefaultTextBoxStyle}"
-                            Text="{Binding Encode, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" />
+                            <TextBox
+                                Width="120"
+                                Margin="4"
+                                Style="{StaticResource DefaultTextBoxStyle}"
+                                Text="{Binding Encode, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" />
                             -->
 
                             <ToggleButton
@@ -290,7 +289,7 @@
 
                 </controls:HeaderContent>
 
-                <GridSplitter Grid.Row="1" Style="{StaticResource DefaultGridSplitterStyle}" />
+                <GridSplitter Grid.Row="1" Style="{StaticResource HorizontalGridSplitterStyle}" />
 
                 <controls:HeaderContent Title="Error" Grid.Row="2">
 
@@ -326,4 +325,4 @@
 
     </Grid>
 
-</Page>
+</UserControl>

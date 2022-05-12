@@ -22,6 +22,7 @@ namespace gRpcurlUI
             sc.AddSingleton<IProcessExecuter, ProcessExecuter>();
             sc.AddSingleton<IProjectDataService, ProjectDataService>();
             sc.AddSingleton<SettingPageViewModel>();
+            sc.AddSingleton<MainWindowViewModel>();
 
             Ioc.Default.ConfigureServices(sc.BuildServiceProvider());
         }
