@@ -13,10 +13,15 @@
     <StartupObject></StartupObject>
     <ApplicationManifest>app.manifest</ApplicationManifest>
     <Nullable>enable</Nullable>
+    <ApplicationIcon>gRpcurlUI.ico</ApplicationIcon>
   </PropertyGroup>
 
   <ItemGroup>
     <None Remove="app.manifest" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="gRpcurlUI.ico" />
   </ItemGroup>
 
   <ItemGroup>
