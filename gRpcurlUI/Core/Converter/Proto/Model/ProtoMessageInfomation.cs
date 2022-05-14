@@ -6,8 +6,8 @@ namespace gRpcurlUI.Core.Converter.Proto.Model
     {
         public string MessageName { get; }
 
-        private readonly IList<ProtoMessageMemberInfomation> _MessageInfomations = new List<ProtoMessageMemberInfomation>();
-        public IEnumerable<ProtoMessageMemberInfomation> MessageInfomations => _MessageInfomations;
+        private readonly IList<ProtoMessageMemberInfomation> _MemberInfomations = new List<ProtoMessageMemberInfomation>();
+        public IEnumerable<ProtoMessageMemberInfomation> MemberInfomations => _MemberInfomations;
 
         public ProtoMessageInfomation(string messageName)
         {
@@ -16,12 +16,12 @@ namespace gRpcurlUI.Core.Converter.Proto.Model
 
         public void AddMemberInfomation(ProtoMessageMemberInfomation infomation)
         {
-            _MessageInfomations.Add(infomation);
+            _MemberInfomations.Add(infomation);
         }
 
         public override string ToString()
         {
-            return $"Name : {MessageName} ({string.Join(",", MessageInfomations)})";
+            return $"Name : {MessageName} ({string.Join(",", MemberInfomations)})";
         }
     }
 

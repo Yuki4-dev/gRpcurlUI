@@ -19,7 +19,7 @@ namespace gRpcurlUI.Core.Converter.Proto.Format
             var primitiveFormatters = new List<PrimitiveProtoValueFormatter>();
 
             var formatValue = new Dictionary<string, object>();
-            foreach (var member in messageInfomation.MessageInfomations)
+            foreach (var member in messageInfomation.MemberInfomations)
             {
 
                 object value;
