@@ -67,6 +67,9 @@ namespace gRpcurlUI.Model.Grpcurl
         [ObservableProperty]
         private string sendContent = string.Empty;
 
+        [ObservableProperty]
+        private bool isReadProtoButtonEnable = true;
+
         public GrpcurlProject() { }
 
         public bool PrepareProject(out string message)

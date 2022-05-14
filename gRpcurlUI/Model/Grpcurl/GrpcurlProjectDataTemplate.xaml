@@ -55,6 +55,7 @@
                                 Margin="4"
                                 Command="{Binding ReadProtoCommand}"
                                 Content="Read Proto File..."
+                                IsEnabled="{Binding IsReadProtoButtonEnable}"
                                 Style="{StaticResource DefaultButtonStyle}" />
 
                         </StackPanel>

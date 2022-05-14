@@ -20,13 +20,15 @@ namespace gRpcurlUI.ViewModel
         {
             this.windowService = windowService;
 
-            var viewModel = new TabContentPageViewModel
+            var pe = DI.Get<IProcessExecuter>();
+            var pds = DI.Get<IProjectDataService>();
+            var viewModel = new TabContentPageViewModel(windowService, pe, pds)
             {
                 ProjectContext = new CurlProjectContext()
             };
             TabContents.Add(viewModel);
 
-            var viewModel2 = new TabContentPageViewModel(windowService, DI.Get<IProcessExecuter>(), DI.Get<IProjectDataService>())
+            var viewModel2 = new TabContentPageViewModel(windowService, pe, pds)
             {
                 ProjectContext = new GrpcurlProjectContext()
             };

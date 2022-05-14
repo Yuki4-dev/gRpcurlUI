@@ -70,23 +70,25 @@
         </Setter>
     </Style>
 
-    <DataTemplate x:Key="ListBoxItemTemplate" DataType="model:IProject">
-        <Grid Height="{StaticResource RowHeight}" VerticalAlignment="Bottom">
-            <TextBlock
-                VerticalAlignment="Center"
-                FontSize="24"
-                FontWeight="DemiBold"
-                Foreground="{DynamicResource DefaultPageForeground}"
-                Text="{Binding ProjectName}" />
-        </Grid>
-    </DataTemplate>
-
     <Style x:Key="ProjectListBoxStyle" TargetType="{x:Type ListBox}">
         <Setter Property="Background" Value="{DynamicResource DefaulEditAreaTextBoxBrush}" />
         <Setter Property="BorderThickness" Value="1" />
         <Setter Property="BorderBrush" Value="{DynamicResource DefaulBorderBrush}" />
         <Setter Property="ItemContainerStyle" Value="{StaticResource ListBoxItemContainerStyle}" />
-        <Setter Property="ItemTemplate" Value="{StaticResource ListBoxItemTemplate}" />
+        <Setter Property="ItemTemplate">
+            <Setter.Value>
+                <DataTemplate DataType="model:IProject">
+                    <Grid Height="{StaticResource RowHeight}" VerticalAlignment="Bottom">
+                        <TextBlock
+                            VerticalAlignment="Center"
+                            FontSize="24"
+                            FontWeight="DemiBold"
+                            Foreground="{DynamicResource DefaultPageForeground}"
+                            Text="{Binding ProjectName}" />
+                    </Grid>
+                </DataTemplate>
+            </Setter.Value>
+        </Setter>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ListBox}">

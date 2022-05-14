@@ -251,7 +251,7 @@ namespace gRpcurlUI.ViewModel
             catch { }
         }
 
-        private bool TryColorParse(string text, out Color color)
+        private static bool TryColorParse(string text, out Color color)
         {
             if (string.IsNullOrWhiteSpace(text))
             {

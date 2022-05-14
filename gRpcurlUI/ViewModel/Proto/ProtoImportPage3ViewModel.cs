@@ -18,8 +18,8 @@ namespace gRpcurlUI.ViewModel.Proto
     {
         public Type PageType => typeof(ProtoImportPage3);
 
-        private readonly ICollection<GrpcurlProject> _Project = new ObservableCollection<GrpcurlProject>();
-        public IEnumerable<IProject> Projects => _Project;
+        private readonly ICollection<GrpcurlProject> _Projects = new ObservableCollection<GrpcurlProject>();
+        public IEnumerable<IProject> Projects => _Projects;
 
         [ObservableProperty]
         private string errorMessage = string.Empty;
@@ -54,12 +54,13 @@ namespace gRpcurlUI.ViewModel.Proto
 
         public void Success()
         {
-            foreach (var p in Projects)
+            foreach (var p in _Projects)
             {
                 p.IsSelected = false;
+                p.IsReadProtoButtonEnable = true;
             }
 
-            WeakReferenceMessenger.Default.Send(new AddGrpcProjectMessage(_Project));
+            WeakReferenceMessenger.Default.Send(new AddGrpcProjectMessage(_Projects));
         }
 
         public void Close()
@@ -74,7 +75,7 @@ namespace gRpcurlUI.ViewModel.Proto
                 throw new InvalidOperationException("");
             }
 
-            _Project.Clear();
+            _Projects.Clear();
             var analyzeresult = protoImportPageShareSetting.ProtoAnalyzeEntryResult;
             var packageName = analyzeresult.ProtoNameInfomatin.PackageNames[0];
             var serviceName = analyzeresult.ProtoNameInfomatin.ServiceNames[0];
@@ -85,10 +86,11 @@ namespace gRpcurlUI.ViewModel.Proto
                 {
                     ProjectName = formatResult.MethodInfomation.MethodName,
                     Service = packageName + "." + serviceName + "/" + formatResult.MethodInfomation.MethodName,
-                    SendContent = ToJson(formatResult.RequestFormat)
+                    SendContent = ToJson(formatResult.RequestFormat),
+                    IsReadProtoButtonEnable = false
                 };
 
-                _Project.Add(project);
+                _Projects.Add(project);
             }
         }
 

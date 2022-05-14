@@ -11,8 +11,16 @@
     d:DataContext="{d:DesignInstance viewModel:ProtoImportPage1ViewModel}"
     d:DesignHeight="600"
     d:DesignWidth="600"
-    Style="{StaticResource ProtoImportPageStyle}"
+    Style="{DynamicResource ProtoImportPageStyle}"
     mc:Ignorable="d">
+
+    <Page.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/View/Proto/ProtoImportPageStyle.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Page.Resources>
 
     <StackPanel HorizontalAlignment="Stretch">
 

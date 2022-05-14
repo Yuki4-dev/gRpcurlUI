@@ -102,8 +102,6 @@ namespace gRpcurlUI.ViewModel
 
         private CancellationTokenSource? tokenSource;
 
-        public TabContentPageViewModel() : this(DI.Get<IWindowService>(), DI.Get<IProcessExecuter>(), DI.Get<IProjectDataService>()) { }
-
         public TabContentPageViewModel(IWindowService windowService, IProcessExecuter processExecuter, IProjectDataService projectDataService)
         {
             this.processExecuter = processExecuter;

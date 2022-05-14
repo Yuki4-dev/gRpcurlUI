@@ -21,7 +21,6 @@
                 <ResourceDictionary Source="Style/ButtonStyle.xaml" />
                 <ResourceDictionary Source="Style/ProjectListBoxStyle.xaml" />
                 <ResourceDictionary Source="Style/SolidColorBrushStyle.xaml" />
-                <ResourceDictionary Source="Style/ProtoImportPageStyle.xaml" />
             </ResourceDictionary.MergedDictionaries>
 
             <system:Double x:Key="DefaultTextBoxFontSize">16</system:Double>
@@ -100,26 +99,27 @@
                 </Setter>
             </Style>
 
-            <ControlTemplate x:Key="DefaultToolTipTemplate" TargetType="ToolTip">
-
-                <Border
-                    Background="{DynamicResource DefaultWindowBackground}"
-                    BorderBrush="{DynamicResource DefaulBorderBrush}"
-                    BorderThickness="1">
-
-                    <TextBlock
-                        Margin="8"
-                        FontSize="22"
-                        Style="{StaticResource DefaultTextBlockStyle}"
-                        Text="{TemplateBinding Content}" />
-
-                </Border>
-
-            </ControlTemplate>
-
             <Style x:Key="DefaultToolTipStyle" TargetType="ToolTip">
                 <Setter Property="Padding" Value="-1" />
-                <Setter Property="Template" Value="{StaticResource DefaultToolTipTemplate}" />
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="ToolTip">
+
+                            <Border
+                                Background="{DynamicResource DefaultWindowBackground}"
+                                BorderBrush="{DynamicResource DefaulBorderBrush}"
+                                BorderThickness="1">
+
+                                <TextBlock
+                                    Margin="8"
+                                    FontSize="22"
+                                    Style="{StaticResource DefaultTextBlockStyle}"
+                                    Text="{TemplateBinding Content}" />
+
+                            </Border>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
             </Style>
 
             <Style x:Key="OparetionAreaStackPanelStyle" TargetType="StackPanel">

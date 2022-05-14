@@ -176,6 +176,7 @@
                 </Setter.Value>
             </Setter>
         </Style>
+
     </ScrollViewer.Resources>
 
 </ScrollViewer>
