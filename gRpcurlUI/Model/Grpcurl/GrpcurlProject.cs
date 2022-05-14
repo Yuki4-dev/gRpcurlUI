@@ -1,5 +1,12 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
+using gRpcurlUI.Core.Converter.Proto.Analyze;
+using gRpcurlUI.Core.Converter.Proto.Format;
 using gRpcurlUI.Core.Procces;
+using gRpcurlUI.Service;
+using gRpcurlUI.View.Dialog;
+using gRpcurlUI.ViewModel.Dialog;
+using gRpcurlUI.ViewModel.Proto;
 using Newtonsoft.Json;
 using System;
 using System.IO;
@@ -118,10 +125,22 @@ namespace gRpcurlUI.Model.Grpcurl
             };
         }
 
-        private string FormatJson(string json, Formatting format = Formatting.None)
+        private static string FormatJson(string json, Formatting format = Formatting.None)
         {
             var parsedJson = JsonConvert.DeserializeObject(json);
             return JsonConvert.SerializeObject(parsedJson, format);
+        }
+
+        [ICommand]
+        public static void ReadProto()
+        {
+            var setting = new ProtoImportPageShareSetting();
+            WizardDialog.ShowWizard(new IWizardDialogViewModel[]
+            {
+                new ProtoImportPage1ViewModel(setting, DI.Get<IWindowService>()),
+                new ProtoImportPage2ViewModel(setting, DI.Get<ProtoAnalyzeEntry>()),
+                new ProtoImportPage3ViewModel(setting, DI.Get<ProtoFormatEntry>()),
+            });
         }
     }
 }

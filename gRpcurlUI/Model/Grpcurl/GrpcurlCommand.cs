@@ -22,7 +22,7 @@ namespace gRpcurlUI.Model.Grpcurl
             }
         }
 
-        private string Replace(string text)
+        private static string Replace(string text)
         {
             return text.Replace("\"", "\\\"").Trim();
         }

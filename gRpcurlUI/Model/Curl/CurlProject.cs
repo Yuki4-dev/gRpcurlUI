@@ -111,7 +111,7 @@ namespace gRpcurlUI.Model.Curl
             };
         }
 
-        private string FormatJson(string json, Formatting format = Formatting.None)
+        private static string FormatJson(string json, Formatting format = Formatting.None)
         {
             var parsedJson = JsonConvert.DeserializeObject(json);
             return JsonConvert.SerializeObject(parsedJson, format);

@@ -33,28 +33,12 @@
                 </Grid.RowDefinitions>
 
                 <Grid>
-
                     <TextBlock Style="{StaticResource EditHeaderTextBlockStyle}" Text="{Binding Title, ElementName=Root, Mode=OneWay}" />
-
                     <ContentPresenter Content="{TemplateBinding Header}" />
-
                 </Grid>
 
-                <Border
-                    Grid.Row="1"
-                    BorderBrush="{DynamicResource DefaulBorderBrush}"
-                    BorderThickness="{TemplateBinding BorderThickness}">
+                <ContentPresenter Grid.Row="1" />
 
-                    <local:CustomScrollViewer
-                        HorizontalScrollBarVisibility="Visible"
-                        TabBrush="{DynamicResource DefaulScrolBarTabBrush}"
-                        VerticalScrollBarVisibility="Visible">
-
-                        <ContentPresenter />
-
-                    </local:CustomScrollViewer>
-
-                </Border>
             </Grid>
 
         </ControlTemplate>

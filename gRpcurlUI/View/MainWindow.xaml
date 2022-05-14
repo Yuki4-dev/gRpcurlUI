@@ -19,7 +19,7 @@
 
     <TabControl
         Background="Transparent"
-        BorderBrush="{StaticResource DefaulBorderBrush}"
+        BorderBrush="{DynamicResource DefaulBorderBrush}"
         BorderThickness="1,1,1,0"
         ItemsSource="{Binding TabContents}">
 
@@ -43,7 +43,7 @@
                                     x:Name="TabUnderBorder"
                                     Margin="4,0,4,0"
                                     VerticalAlignment="Bottom"
-                                    BorderBrush="{StaticResource DefaultPageForeground}"
+                                    BorderBrush="{DynamicResource DefaultPageForeground}"
                                     BorderThickness="1.2"
                                     Visibility="Hidden" />
 
@@ -51,7 +51,7 @@
 
                             <ControlTemplate.Triggers>
                                 <Trigger Property="IsSelected" Value="True">
-                                    <Setter TargetName="PanelGrid" Property="Background" Value="{StaticResource DefaultSelectedBackground}" />
+                                    <Setter TargetName="PanelGrid" Property="Background" Value="{DynamicResource DefaultSelectedBackground}" />
                                     <Setter TargetName="TabUnderBorder" Property="Visibility" Value="Visible" />
                                 </Trigger>
                             </ControlTemplate.Triggers>
@@ -68,7 +68,7 @@
                 <Border
                     x:Name="TabBackBorder"
                     Width="120"
-                    BorderBrush="{StaticResource DefaulBorderBrush}"
+                    BorderBrush="{DynamicResource DefaulBorderBrush}"
                     BorderThickness="0.5,1,0.5,0">
 
                     <TextBlock
@@ -81,7 +81,7 @@
 
                 <DataTemplate.Triggers>
                     <Trigger SourceName="TabBackBorder" Property="IsMouseOver" Value="True">
-                        <Setter TargetName="TabBackBorder" Property="Background" Value="{StaticResource DefaultMouseOverBackground}" />
+                        <Setter TargetName="TabBackBorder" Property="Background" Value="{DynamicResource DefaultMouseOverBackground}" />
                     </Trigger>
                 </DataTemplate.Triggers>
 

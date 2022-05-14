@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Messaging;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -6,7 +7,7 @@ using System.Linq;
 
 namespace gRpcurlUI.Model.Grpcurl
 {
-    public partial class GrpcurlProjectContext : ObservableObject, IProjectContext
+    public partial class GrpcurlProjectContext : ObservableObject, IProjectContext, IRecipient<AddGrpcProjectMessage>
     {
         [ObservableProperty]
         private string verion;
@@ -21,6 +22,7 @@ namespace gRpcurlUI.Model.Grpcurl
         {
             verion = "1.0.0";
             projectType = "gRpcurl";
+            WeakReferenceMessenger.Default.RegisterAll(this);
         }
 
         public bool RemoveProject(IProject project)
@@ -68,5 +70,12 @@ namespace gRpcurlUI.Model.Grpcurl
             }
         }
 
+        public void Receive(AddGrpcProjectMessage message)
+        {
+            foreach (var p in message.Projects)
+            {
+                AddProject(p);
+            }
+        }
     }
 }

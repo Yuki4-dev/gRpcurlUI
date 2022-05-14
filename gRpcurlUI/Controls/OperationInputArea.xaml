@@ -52,6 +52,7 @@
                                     IsChecked="{Binding IsOpen, Mode=TwoWay, ElementName=ProjectNameEditPopup}"
                                     Style="{StaticResource IconButtonStyle}"
                                     Tag="{StaticResource Edit}">
+
                                     <ToggleButton.ToolTip>
                                         <ToolTip Content="Edit" Style="{StaticResource DefaultToolTipStyle}" />
                                     </ToggleButton.ToolTip>

@@ -1,8 +1,10 @@
 ﻿using gRpcurlUI.View.Dialog;
 using Microsoft.Win32;
 using System;
+using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Media;
 using System.Windows.Threading;
 
 namespace gRpcurlUI.Service
@@ -12,6 +14,16 @@ namespace gRpcurlUI.Service
         private Window? window;
 
         public Dispatcher? Dispatcher => window?.Dispatcher;
+
+        public Brush AccentBrush
+        {
+            get
+            {
+                DwmGetColorizationColor(out var rgb, out var _);
+                var color = Color.FromArgb((byte)(rgb >> 24), (byte)(rgb >> 16), (byte)(rgb >> 8), (byte)rgb);
+                return new SolidColorBrush(color);
+            }
+        }
 
         public event Action<double, double>? WindowSizeChenged;
 
@@ -91,5 +103,8 @@ namespace gRpcurlUI.Service
                 throw new InvalidOperationException("window is null.");
             }
         }
+
+        [DllImport("Dwmapi.dll")]
+        private static extern void DwmGetColorizationColor([Out] out int pcrColorization, [Out] out bool pfOpaqueBlend);
     }
 }

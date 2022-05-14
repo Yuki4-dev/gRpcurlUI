@@ -20,7 +20,50 @@
 
             </StackPanel.Resources>
 
-            <TextBlock Text="EndPoint" />
+
+            <Grid>
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="30" />
+                </Grid.ColumnDefinitions>
+
+                <TextBlock Text="EndPoint" />
+
+                <ToggleButton
+                    x:Name="MoreToggleButton"
+                    Grid.Column="1"
+                    IsChecked="{Binding IsOpen, Mode=TwoWay, ElementName=MorePopup}"
+                    Style="{StaticResource IconButtonStyle}"
+                    Tag="{StaticResource More}" />
+
+                <Popup
+                    x:Name="MorePopup"
+                    Width="150"
+                    Placement="Top"
+                    PlacementTarget="{Binding ElementName=MoreToggleButton}"
+                    StaysOpen="False">
+
+                    <Border
+                        Background="{DynamicResource DefaultWindowBackground}"
+                        BorderBrush="{DynamicResource DefaulBorderBrush}"
+                        BorderThickness="1">
+
+                        <StackPanel>
+
+                            <Button
+                                Margin="4"
+                                Command="{Binding ReadProtoCommand}"
+                                Content="Read Proto File..."
+                                Style="{StaticResource DefaultButtonStyle}" />
+
+                        </StackPanel>
+                    </Border>
+
+                </Popup>
+
+            </Grid>
+
             <TextBox Text="{Binding EndPoint, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" />
 
             <TextBlock Text="Option" />

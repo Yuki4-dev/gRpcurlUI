@@ -16,13 +16,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="ViewModel\Dialog\**" />
-    <EmbeddedResource Remove="ViewModel\Dialog\**" />
-    <None Remove="ViewModel\Dialog\**" />
-    <Page Remove="ViewModel\Dialog\**" />
-  </ItemGroup>
-
-  <ItemGroup>
     <None Remove="app.manifest" />
   </ItemGroup>
 

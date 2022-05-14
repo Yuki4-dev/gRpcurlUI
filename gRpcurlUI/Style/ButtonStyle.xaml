@@ -28,7 +28,7 @@
                             VerticalAlignment="Center"
                             FontSize="{TemplateBinding FontSize}"
                             FontWeight="{TemplateBinding FontWeight}"
-                            Foreground="{StaticResource DefaultPageForeground}"
+                            Foreground="{DynamicResource DefaultPageForeground}"
                             Text="{TemplateBinding Content}" />
 
                     </Border>
@@ -39,7 +39,7 @@
 
         <Style.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="Background" Value="{StaticResource DefaultMouseOverBackground}" />
+                <Setter Property="Background" Value="{DynamicResource DefaultMouseOverBackground}" />
             </Trigger>
         </Style.Triggers>
 

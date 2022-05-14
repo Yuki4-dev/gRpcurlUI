@@ -20,18 +20,6 @@
         <system:Double x:Key="TopRowHeight">220</system:Double>
 
         <Style
-            x:Key="EditAreaTextBoxStyle"
-            BasedOn="{StaticResource DefaultTextBoxStyle}"
-            TargetType="TextBox">
-            <Setter Property="FontSize" Value="{DynamicResource EditTextBoxFontSize}" />
-            <Setter Property="BorderThickness" Value="0" />
-            <Setter Property="Height" Value="auto" />
-            <Setter Property="Width" Value="auto" />
-            <Setter Property="AcceptsReturn" Value="True" />
-            <Setter Property="AcceptsTab" Value="True" />
-        </Style>
-
-        <Style
             x:Key="ExecutePageProjectListBoxStyle"
             BasedOn="{StaticResource ProjectListBoxStyle}"
             TargetType="{x:Type ListBox}">
@@ -214,10 +202,9 @@
 
                     </controls:HeaderContent.Header>
 
-                    <TextBox
-                        IsReadOnly="false"
-                        Style="{StaticResource EditAreaTextBoxStyle}"
-                        Text="{Binding SelectedProject.SendContent, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                    <ContentControl Style="{StaticResource DefaultEditAreaContentControlStyle}">
+                        <TextBox Style="{StaticResource DefaultEditTextBoxStyle}" Text="{Binding SelectedProject.SendContent, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                    </ContentControl>
 
                 </controls:HeaderContent>
 
@@ -274,14 +261,12 @@
 
                     </controls:HeaderContent.Header>
 
-                    <Grid>
-
+                    <ContentControl Style="{StaticResource DefaultEditAreaContentControlStyle}">
                         <TextBox
-                            IsReadOnly="true"
-                            Style="{StaticResource EditAreaTextBoxStyle}"
-                            Text="{Binding StandardOutput, Mode=OneWay}" />
-
-                    </Grid>
+                            IsReadOnly="True"
+                            Style="{StaticResource DefaultEditTextBoxStyle}"
+                            Text="{Binding StandardOutput, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                    </ContentControl>
 
                 </controls:HeaderContent>
 
@@ -303,15 +288,16 @@
                                 </Button.ToolTip>
                             </Button>
 
-
                         </StackPanel>
 
                     </controls:HeaderContent.Header>
 
-                    <TextBox
-                        IsReadOnly="true"
-                        Style="{StaticResource EditAreaTextBoxStyle}"
-                        Text="{Binding StandardError, Mode=OneWay}" />
+                    <ContentControl Style="{StaticResource DefaultEditAreaContentControlStyle}">
+                        <TextBox
+                            IsReadOnly="True"
+                            Style="{StaticResource DefaultEditTextBoxStyle}"
+                            Text="{Binding StandardError, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                    </ContentControl>
 
                 </controls:HeaderContent>
 

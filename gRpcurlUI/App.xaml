@@ -21,6 +21,7 @@
                 <ResourceDictionary Source="Style/ButtonStyle.xaml" />
                 <ResourceDictionary Source="Style/ProjectListBoxStyle.xaml" />
                 <ResourceDictionary Source="Style/SolidColorBrushStyle.xaml" />
+                <ResourceDictionary Source="Style/ProtoImportPageStyle.xaml" />
             </ResourceDictionary.MergedDictionaries>
 
             <system:Double x:Key="DefaultTextBoxFontSize">16</system:Double>
@@ -58,8 +59,41 @@
                                 BorderBrush="{TemplateBinding BorderBrush}"
                                 BorderThickness="{TemplateBinding BorderThickness}">
 
-                                <ScrollViewer x:Name="PART_ContentHost" Margin="0" />
+                                <Decorator x:Name="PART_ContentHost" Margin="0" />
 
+                            </Border>
+
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
+            <Style
+                x:Key="DefaultEditTextBoxStyle"
+                BasedOn="{StaticResource DefaultTextBoxStyle}"
+                TargetType="TextBox">
+                <Setter Property="FontSize" Value="{DynamicResource EditTextBoxFontSize}" />
+                <Setter Property="BorderThickness" Value="0" />
+                <Setter Property="AcceptsReturn" Value="True" />
+                <Setter Property="AcceptsTab" Value="True" />
+            </Style>
+
+            <Style x:Key="DefaultEditAreaContentControlStyle" TargetType="{x:Type ContentControl}">
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type ContentControl}">
+
+                            <Border BorderBrush="{DynamicResource DefaulBorderBrush}" BorderThickness="1">
+
+                                <controls:CustomScrollViewer
+                                    HorizontalScrollBarVisibility="Visible"
+                                    TabBrush="{DynamicResource DefaulScrolBarTabBrush}"
+                                    TrackBrush="{DynamicResource DefaultWindowBackground}"
+                                    VerticalScrollBarVisibility="Visible">
+
+                                    <ContentPresenter />
+
+                                </controls:CustomScrollViewer>
                             </Border>
                         </ControlTemplate>
                     </Setter.Value>
@@ -100,7 +134,7 @@
                 <Setter Property="Background" Value="Transparent" />
                 <Style.Triggers>
                     <Trigger Property="IsMouseOver" Value="True">
-                        <Setter Property="Background" Value="{StaticResource DefaultSelectedBackground}" />
+                        <Setter Property="Background" Value="{DynamicResource DefaultSelectedBackground}" />
                     </Trigger>
                 </Style.Triggers>
             </Style>
@@ -118,7 +152,7 @@
                                     <RowDefinition Height="1" />
                                     <RowDefinition Height="*" />
                                 </Grid.RowDefinitions>
-                                <Border Grid.Row="1" Background="{StaticResource DefaulBorderBrush}" />
+                                <Border Grid.Row="1" Background="{DynamicResource DefaulBorderBrush}" />
                             </Grid>
                         </ControlTemplate>
                     </Setter.Value>
@@ -138,7 +172,7 @@
                                     <ColumnDefinition Width="1" />
                                     <ColumnDefinition Width="*" />
                                 </Grid.ColumnDefinitions>
-                                <Border Grid.Column="1" Background="{StaticResource DefaulBorderBrush}" />
+                                <Border Grid.Column="1" Background="{DynamicResource DefaulBorderBrush}" />
                             </Grid>
                         </ControlTemplate>
                     </Setter.Value>

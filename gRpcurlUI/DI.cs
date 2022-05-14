@@ -1,4 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.DependencyInjection;
+using gRpcurlUI.Core.Converter.Proto.Analyze;
+using gRpcurlUI.Core.Converter.Proto.Format;
 using gRpcurlUI.Core.Procces;
 using gRpcurlUI.Service;
 using gRpcurlUI.ViewModel;
@@ -18,6 +20,8 @@ namespace gRpcurlUI
         public static void Injection()
         {
             var sc = new ServiceCollection();
+            sc.AddSingleton<ProtoAnalyzeEntry>();
+            sc.AddSingleton<ProtoFormatEntry>();
             sc.AddSingleton<IWindowService, WindowService>();
             sc.AddSingleton<IProcessExecuter, ProcessExecuter>();
             sc.AddSingleton<IProjectDataService, ProjectDataService>();
