@@ -23,7 +23,6 @@ namespace gRpcurlUI
             sc.AddSingleton<ProtoAnalyzeEntry>();
             sc.AddSingleton<ProtoFormatEntry>();
             sc.AddSingleton<IWindowService, WindowService>();
-            sc.AddSingleton<IProcessExecuter, ProcessExecuter>();
             sc.AddSingleton<IProjectDataService, ProjectDataService>();
             sc.AddSingleton<SettingPageViewModel>();
             sc.AddSingleton<MainWindowViewModel>();

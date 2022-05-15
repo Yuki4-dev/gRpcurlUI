@@ -1,5 +1,4 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
-using gRpcurlUI.Core.Procces;
 using gRpcurlUI.Model.Curl;
 using gRpcurlUI.Model.Grpcurl;
 using gRpcurlUI.Service;
@@ -16,23 +15,21 @@ namespace gRpcurlUI.ViewModel
 
         private readonly IWindowService windowService;
 
-        public MainWindowViewModel(IWindowService windowService)
+        public MainWindowViewModel(IWindowService windowService, IProjectDataService projectDataService)
         {
             this.windowService = windowService;
 
-            var pe = DI.Get<IProcessExecuter>();
-            var pds = DI.Get<IProjectDataService>();
-            var viewModel = new TabContentPageViewModel(windowService, pe, pds)
-            {
-                ProjectContext = new CurlProjectContext()
-            };
-            TabContents.Add(viewModel);
-
-            var viewModel2 = new TabContentPageViewModel(windowService, pe, pds)
+            var grpc = new TabContentPageViewModel(windowService, projectDataService)
             {
                 ProjectContext = new GrpcurlProjectContext()
             };
-            TabContents.Add(viewModel2);
+            TabContents.Add(grpc);
+
+            var curl = new TabContentPageViewModel(windowService, projectDataService)
+            {
+                ProjectContext = new CurlProjectContext()
+            };
+            TabContents.Add(curl);
         }
     }
 }
