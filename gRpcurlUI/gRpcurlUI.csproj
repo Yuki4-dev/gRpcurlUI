@@ -21,7 +21,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="gRpcurlUI.ico" />
+    <Content Include="gRpcurlUI.ico">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
   <ItemGroup>
