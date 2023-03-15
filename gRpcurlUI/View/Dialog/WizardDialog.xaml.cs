@@ -1,5 +1,4 @@
-﻿using gRpcurlUI.Service;
-using gRpcurlUI.ViewModel.Dialog;
+﻿using gRpcurlUI.ViewModel.Dialog;
 using System;
 using System.Collections.Generic;
 using System.Windows;
@@ -107,7 +106,7 @@ namespace gRpcurlUI.View.Dialog
                 Width = 700,
                 Height = 700
             };
-            wizard.ShowDialog();
+            _ = wizard.ShowDialog();
         }
     }
 }

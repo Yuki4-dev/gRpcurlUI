@@ -232,7 +232,7 @@ namespace gRpcurlUI.ViewModel
         [RelayCommand]
         private async Task About()
         {
-            await windowService.ShowMessageDialogAsync("About...", "gRpcurlUI Ver 1.0.0" + "\r\n" + "Preview");
+            _ = await windowService.ShowMessageDialogAsync("About...", "gRpcurlUI Ver 1.0.0" + "\r\n" + "Preview");
         }
 
         [RelayCommand]
@@ -246,7 +246,7 @@ namespace gRpcurlUI.ViewModel
 
             try
             {
-                Process.Start(pi);
+                _ = Process.Start(pi);
             }
             catch { }
         }

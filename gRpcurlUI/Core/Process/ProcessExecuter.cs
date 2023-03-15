@@ -40,7 +40,7 @@ namespace gRpcurlUI.Core.Process
                 try
                 {
                     StandardOutputReceive?.Invoke(command.AppPath + " " + command.Arguments);
-                    process.Start();
+                    _ = process.Start();
                     process.BeginOutputReadLine();
                     process.BeginErrorReadLine();
                     process.WaitForExit();
@@ -57,7 +57,7 @@ namespace gRpcurlUI.Core.Process
                 {
                     Thread.Sleep(1);
                     Thread.Sleep(0);
-                    Thread.Yield();
+                    _ = Thread.Yield();
                 }
 
                 if (!pTask.IsCompleted)

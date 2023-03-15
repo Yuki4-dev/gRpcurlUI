@@ -82,7 +82,7 @@ namespace gRpcurlUI.Service
                 }
 
                 dialog.DataContext = dataContext;
-                dialog.ShowDialog();
+                _ = dialog.ShowDialog();
             });
         }
 

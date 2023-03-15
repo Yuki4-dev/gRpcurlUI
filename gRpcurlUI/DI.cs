@@ -19,12 +19,12 @@ namespace gRpcurlUI
         public static void Injection()
         {
             var sc = new ServiceCollection();
-            sc.AddSingleton<ProtoAnalyzeEntry>();
-            sc.AddSingleton<ProtoFormatEntry>();
-            sc.AddSingleton<IWindowService, WindowService>();
-            sc.AddSingleton<IProjectDataService, ProjectDataService>();
-            sc.AddSingleton<SettingPageViewModel>();
-            sc.AddSingleton<MainWindowViewModel>();
+            _ = sc.AddSingleton<ProtoAnalyzeEntry>();
+            _ = sc.AddSingleton<ProtoFormatEntry>();
+            _ = sc.AddSingleton<IWindowService, WindowService>();
+            _ = sc.AddSingleton<IProjectDataService, ProjectDataService>();
+            _ = sc.AddSingleton<SettingPageViewModel>();
+            _ = sc.AddSingleton<MainWindowViewModel>();
 
             Ioc.Default.ConfigureServices(sc.BuildServiceProvider());
         }

@@ -102,15 +102,15 @@ namespace gRpcurlUI.ViewModel.Proto
                 var analyzeResult = protoImportPageShareSetting.ProtoAnalyzeEntryResult;
 
                 var sb = new StringBuilder();
-                sb.AppendLine($"Package Name :  {analyzeResult.ProtoNameInformation.PackageNames[0]} .");
-                sb.AppendLine($"Service Name : {analyzeResult.ProtoNameInformation.ServiceNames[0]} .");
+                _ = sb.AppendLine($"Package Name :  {analyzeResult.ProtoNameInformation.PackageNames[0]} .");
+                _ = sb.AppendLine($"Service Name : {analyzeResult.ProtoNameInformation.ServiceNames[0]} .");
 
                 var indent = "    ";
                 var service = analyzeResult.ProtoServiceInformation;
-                sb.AppendLine($"Found {service.ProtoServiceMethods.Count()} Method.");
+                _ = sb.AppendLine($"Found {service.ProtoServiceMethods.Count()} Method.");
                 foreach (var method in service.ProtoServiceMethods)
                 {
-                    sb.AppendLine($"{indent}- {method.MethodName} ( Request : {method.Request.MessageName} / Response : {method.Response.MessageName} )");
+                    _ = sb.AppendLine($"{indent}- {method.MethodName} ( Request : {method.Request.MessageName} / Response : {method.Response.MessageName} )");
                 }
 
                 ProtoInformation = sb.ToString();

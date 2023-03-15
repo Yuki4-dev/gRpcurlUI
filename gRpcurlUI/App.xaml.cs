@@ -18,7 +18,7 @@ namespace gRpcurlUI
 
         private void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
         {
-            if(e.ExceptionObject is Exception ex)
+            if (e.ExceptionObject is Exception ex)
             {
                 ShowMessage(ex);
             }
@@ -33,7 +33,7 @@ namespace gRpcurlUI
         private void ShowMessage(Exception ex)
         {
             var window = DI.Get<IWindowService>();
-            window.ShowMessageDialogAsync("Error", ex.Message + Environment.NewLine + ex.StackTrace);
+            _ = window.ShowMessageDialogAsync("Error", ex.Message + Environment.NewLine + ex.StackTrace);
         }
     }
 }

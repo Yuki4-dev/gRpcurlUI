@@ -12,14 +12,9 @@ namespace gRpcurlUI.Model.Grpcurl
         {
             AppPath = appPath;
 
-            if (string.IsNullOrWhiteSpace(content))
-            {
-                Arguments = $"{option} {endPoint} {service}";
-            }
-            else
-            {
-                Arguments = $"{option} -d \"{Replace(content)}\" {endPoint} {service}";
-            }
+            Arguments = string.IsNullOrWhiteSpace(content)
+                ? $"{option} {endPoint} {service}"
+                : $"{option} -d \"{Replace(content)}\" {endPoint} {service}";
         }
 
         private static string Replace(string text)

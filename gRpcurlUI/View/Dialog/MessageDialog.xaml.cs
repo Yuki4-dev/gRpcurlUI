@@ -71,14 +71,14 @@ namespace gRpcurlUI.View.Dialog
                 WindowStartupLocation = WindowStartupLocation.CenterScreen
             };
             dialog.SetButton(button);
-            dialog.ShowDialog();
+            _ = dialog.ShowDialog();
             return dialog.result;
         }
 
         private void Root_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.Key == Key.C &&
-               (Keyboard.GetKeyStates(Key.LeftCtrl) & KeyStates.Down) == KeyStates.Down
+            if ((e.Key == Key.C &&
+               (Keyboard.GetKeyStates(Key.LeftCtrl) & KeyStates.Down) == KeyStates.Down)
                || (Keyboard.GetKeyStates(Key.RightCtrl) & KeyStates.Down) == KeyStates.Down)
             {
                 try

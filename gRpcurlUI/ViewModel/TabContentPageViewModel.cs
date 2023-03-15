@@ -10,7 +10,6 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Input;
 
 namespace gRpcurlUI.ViewModel
 {
@@ -68,7 +67,7 @@ namespace gRpcurlUI.ViewModel
             {
                 if (value != null)
                 {
-                    _StandardOutput.AppendLine(value);
+                    _ = _StandardOutput.AppendLine(value);
                     OnPropertyChanged(nameof(StandardOutput));
                 }
             }
@@ -82,7 +81,7 @@ namespace gRpcurlUI.ViewModel
             {
                 if (value != null)
                 {
-                    _StandardError.AppendLine(value);
+                    _ = _StandardError.AppendLine(value);
                     OnPropertyChanged(nameof(StandardError));
                 }
             }
@@ -137,7 +136,7 @@ namespace gRpcurlUI.ViewModel
                 }
                 catch (Exception ex)
                 {
-                    await windowService.ShowMessageDialogAsync("Error", ex.Message);
+                    _ = await windowService.ShowMessageDialogAsync("Error", ex.Message);
                 }
             }
         }
@@ -166,7 +165,7 @@ namespace gRpcurlUI.ViewModel
                 }
                 catch (Exception ex)
                 {
-                    await windowService.ShowMessageDialogAsync("Error", ex.Message);
+                    _ = await windowService.ShowMessageDialogAsync("Error", ex.Message);
                 }
             }
         }
@@ -214,7 +213,7 @@ namespace gRpcurlUI.ViewModel
         {
             if (SelectedProject is null)
             {
-                await windowService.ShowMessageDialogAsync("Error", "Project is Nothing.");
+                _ = await windowService.ShowMessageDialogAsync("Error", "Project is Nothing.");
                 return;
             }
 
@@ -240,7 +239,7 @@ namespace gRpcurlUI.ViewModel
             }
             catch (Exception ex)
             {
-                await windowService.ShowMessageDialogAsync("Error", ex.Message);
+                _ = await windowService.ShowMessageDialogAsync("Error", ex.Message);
             }
             finally
             {
@@ -270,7 +269,7 @@ namespace gRpcurlUI.ViewModel
 
             if (!SelectedProject.PrepareProject(out var message))
             {
-                windowService.ShowMessageDialogAsync("Error", message);
+                _ = windowService.ShowMessageDialogAsync("Error", message);
             }
         }
 
@@ -286,11 +285,11 @@ namespace gRpcurlUI.ViewModel
                     }
                     break;
                 case "2":
-                    _StandardOutput.Clear();
+                    _ = _StandardOutput.Clear();
                     OnPropertyChanged(nameof(StandardOutput));
                     break;
                 case "3":
-                    _StandardError.Clear();
+                    _ = _StandardError.Clear();
                     OnPropertyChanged(nameof(StandardError));
                     break;
             }

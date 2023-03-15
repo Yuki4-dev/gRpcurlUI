@@ -51,7 +51,7 @@ namespace gRpcurlUI.Core.Converter.Proto.Analyze
             var name = splitLine[1];
             if (name.EndsWith(";"))
             {
-                name = name.Substring(0, name.Length - 1);
+                name = name[..^1];
             }
 
             if (messageType == MESSAGE)

@@ -60,7 +60,7 @@ namespace gRpcurlUI.ViewModel.Proto
                 p.IsReadProtoButtonEnable = true;
             }
 
-            WeakReferenceMessenger.Default.Send(new AddGrpcProjectMessage(_Projects));
+            _ = WeakReferenceMessenger.Default.Send(new AddGrpcProjectMessage(_Projects));
         }
 
         public void Close()

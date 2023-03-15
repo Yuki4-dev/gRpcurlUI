@@ -16,7 +16,7 @@ namespace gRpcurlUI.Model.Curl
             {
                 if (!string.IsNullOrWhiteSpace(value))
                 {
-                    SetProperty(ref _AppPath, value);
+                    _ = SetProperty(ref _AppPath, value);
                 }
             }
         }
@@ -29,7 +29,7 @@ namespace gRpcurlUI.Model.Curl
             {
                 if (!string.IsNullOrWhiteSpace(value))
                 {
-                    SetProperty(ref _ProjectName, value);
+                    _ = SetProperty(ref _ProjectName, value);
                 }
             }
         }
@@ -42,7 +42,7 @@ namespace gRpcurlUI.Model.Curl
             {
                 if (!string.IsNullOrWhiteSpace(value))
                 {
-                    SetProperty(ref _EndPoint, value);
+                    _ = SetProperty(ref _EndPoint, value);
                 }
             }
         }
@@ -66,7 +66,7 @@ namespace gRpcurlUI.Model.Curl
             var sb = new StringBuilder();
             if (string.IsNullOrWhiteSpace(EndPoint))
             {
-                sb.AppendLine("EndPoint is Blank.");
+                _ = sb.AppendLine("EndPoint is Blank.");
             }
 
             if (!string.IsNullOrWhiteSpace(SendContent) && IsJsonContent)
@@ -77,7 +77,7 @@ namespace gRpcurlUI.Model.Curl
                 }
                 catch (Exception ex)
                 {
-                    sb.AppendLine(ex.Message);
+                    _ = sb.AppendLine(ex.Message);
                 }
             }
 

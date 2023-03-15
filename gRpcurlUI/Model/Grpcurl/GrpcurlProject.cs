@@ -24,7 +24,7 @@ namespace gRpcurlUI.Model.Grpcurl
             {
                 if (string.IsNullOrEmpty(value))
                 {
-                    SetProperty(ref _AppPath, value);
+                    _ = SetProperty(ref _AppPath, value);
                 }
             }
         }
@@ -37,7 +37,7 @@ namespace gRpcurlUI.Model.Grpcurl
             {
                 if (!string.IsNullOrWhiteSpace(value))
                 {
-                    SetProperty(ref _ProjectName, value);
+                    _ = SetProperty(ref _ProjectName, value);
                 }
             }
         }
@@ -50,7 +50,7 @@ namespace gRpcurlUI.Model.Grpcurl
             {
                 if (!string.IsNullOrWhiteSpace(value))
                 {
-                    SetProperty(ref _EndPoint, value);
+                    _ = SetProperty(ref _EndPoint, value);
                 }
             }
         }
@@ -77,12 +77,12 @@ namespace gRpcurlUI.Model.Grpcurl
             var sb = new StringBuilder();
             if (!File.Exists(AppPath))
             {
-                sb.AppendLine($"{AppPath} does Not Exists.");
+                _ = sb.AppendLine($"{AppPath} does Not Exists.");
             }
 
             if (string.IsNullOrWhiteSpace(EndPoint))
             {
-                sb.AppendLine("EndPoint is Blank.");
+                _ = sb.AppendLine("EndPoint is Blank.");
             }
 
             if (!string.IsNullOrWhiteSpace(SendContent))
@@ -93,7 +93,7 @@ namespace gRpcurlUI.Model.Grpcurl
                 }
                 catch (Exception ex)
                 {
-                    sb.AppendLine(ex.Message);
+                    _ = sb.AppendLine(ex.Message);
                 }
             }
 
