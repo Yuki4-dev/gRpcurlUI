@@ -29,11 +29,11 @@
             <ColumnDefinition Width="6*" />
         </Grid.ColumnDefinitions>
 
-        <Border BorderBrush="{DynamicResource DefaulBorderBrush}" BorderThickness="1">
+        <Border BorderBrush="{DynamicResource DefaultBorderBrush}" BorderThickness="1">
 
             <controls:CustomScrollViewer
                 HorizontalScrollBarVisibility="Visible"
-                TabBrush="{DynamicResource DefaulScrolBarTabBrush}"
+                TabBrush="{DynamicResource DefaultScrollBarTabBrush}"
                 VerticalScrollBarVisibility="Visible">
 
                 <ListBox
@@ -60,12 +60,12 @@
 
             <Border
                 Grid.Row="1"
-                BorderBrush="{DynamicResource DefaulBorderBrush}"
+                BorderBrush="{DynamicResource DefaultBorderBrush}"
                 BorderThickness="1">
 
                 <controls:CustomScrollViewer
                     HorizontalScrollBarVisibility="Visible"
-                    TabBrush="{DynamicResource DefaulScrolBarTabBrush}"
+                    TabBrush="{DynamicResource DefaultScrollBarTabBrush}"
                     VerticalScrollBarVisibility="Visible">
 
                     <TextBox

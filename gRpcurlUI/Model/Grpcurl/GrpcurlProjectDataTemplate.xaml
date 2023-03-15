@@ -46,7 +46,7 @@
 
                     <Border
                         Background="{DynamicResource DefaultWindowBackground}"
-                        BorderBrush="{DynamicResource DefaulBorderBrush}"
+                        BorderBrush="{DynamicResource DefaultBorderBrush}"
                         BorderThickness="1">
 
                         <StackPanel>

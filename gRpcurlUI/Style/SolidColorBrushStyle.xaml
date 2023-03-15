@@ -3,11 +3,11 @@
     <SolidColorBrush x:Key="DefaultWindowBackground">#303030</SolidColorBrush>
     <SolidColorBrush x:Key="DefaultPageForeground">LightGray</SolidColorBrush>
     <SolidColorBrush x:Key="DefaultPageBackground">Transparent</SolidColorBrush>
-    <SolidColorBrush x:Key="DefaulBorderBrush">Black</SolidColorBrush>
-    <SolidColorBrush x:Key="DefaulIconBrush">LightGray</SolidColorBrush>
-    <SolidColorBrush x:Key="DefaulEditAreaTextBoxBrush">#202020</SolidColorBrush>
+    <SolidColorBrush x:Key="DefaultBorderBrush">Black</SolidColorBrush>
+    <SolidColorBrush x:Key="DefaultIconBrush">LightGray</SolidColorBrush>
+    <SolidColorBrush x:Key="DefaultEditAreaTextBoxBrush">#202020</SolidColorBrush>
     <SolidColorBrush x:Key="DefaultTextBoxSelectBrush">DimGray</SolidColorBrush>
-    <SolidColorBrush x:Key="DefaulScrolBarTabBrush">DimGray</SolidColorBrush>
+    <SolidColorBrush x:Key="DefaultScrollBarTabBrush">DimGray</SolidColorBrush>
 
     <SolidColorBrush x:Key="DefaultMouseOverBackground">DimGray</SolidColorBrush>
     <SolidColorBrush x:Key="DefaultSelectedBackground">#404040</SolidColorBrush>

@@ -94,9 +94,9 @@ namespace gRpcurlUI.Core.Converter.Proto.Analyze
             return true;
         }
 
-        public ProtoNameInfomatin GetProtoNameInfomatin()
+        public ProtoNameInformation GetProtoNameInformation()
         {
-            return new ProtoNameInfomatin(packageNames.ToArray(), messageNames.ToArray(), enumNames.ToArray(), methodNames.ToArray(), serviceNames.ToArray());
+            return new ProtoNameInformation(packageNames.ToArray(), messageNames.ToArray(), enumNames.ToArray(), methodNames.ToArray(), serviceNames.ToArray());
         }
     }
 }

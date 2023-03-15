@@ -15,17 +15,17 @@ namespace gRpcurlUI.Core.Converter.Proto.Format
             this.defaultValue = defaultValue;
         }
 
-        public bool IsTarget(ProtoMessageMemberInfomation memberInfomation)
+        public bool IsTarget(ProtoMessageMemberInformation memberInformation)
         {
-            return memberInfomation.ModuleType == ProtoModuleType.TypePrimitive
-                && memberInfomation.TypeName == typeName;
+            return memberInformation.ModuleType == ProtoModuleType.TypePrimitive
+                && memberInformation.TypeName == typeName;
         }
 
-        public string GetValueFormat(ProtoMessageMemberInfomation memberInfomation)
+        public string GetValueFormat(ProtoMessageMemberInformation memberInformation)
         {
-            if (!IsTarget(memberInfomation))
+            if (!IsTarget(memberInformation))
             {
-                throw new InvalidOperationException($"{memberInfomation}");
+                throw new InvalidOperationException($"{memberInformation}");
             }
 
             return defaultValue;

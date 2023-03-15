@@ -2,7 +2,7 @@
 using CommunityToolkit.Mvvm.Input;
 using gRpcurlUI.Core.Converter.Proto.Analyze;
 using gRpcurlUI.Core.Converter.Proto.Format;
-using gRpcurlUI.Core.Procces;
+using gRpcurlUI.Core.Process;
 using gRpcurlUI.Service;
 using gRpcurlUI.View.Dialog;
 using gRpcurlUI.ViewModel.Dialog;
@@ -101,7 +101,7 @@ namespace gRpcurlUI.Model.Grpcurl
             return sb.Length == 0;
         }
 
-        public IProccesCommand CreateCommand()
+        public IProcessCommand CreateCommand()
         {
             string jsonContent = SendContent;
             if (!string.IsNullOrWhiteSpace(jsonContent))
@@ -134,7 +134,7 @@ namespace gRpcurlUI.Model.Grpcurl
             return JsonConvert.SerializeObject(parsedJson, format);
         }
 
-        [ICommand]
+        [RelayCommand]
         public static void ReadProto()
         {
             var setting = new ProtoImportPageShareSetting();

@@ -59,9 +59,9 @@
         <Border
             Height="1"
             VerticalAlignment="Bottom"
-            Background="{DynamicResource DefaulBorderBrush}" />
+            Background="{DynamicResource DefaultBorderBrush}" />
 
-        <controls:CustomScrollViewer Grid.Row="1" TabBrush="{DynamicResource DefaulScrolBarTabBrush}">
+        <controls:CustomScrollViewer Grid.Row="1" TabBrush="{DynamicResource DefaultScrollBarTabBrush}">
 
             <StackPanel Margin="4" HorizontalAlignment="Left">
 
@@ -126,7 +126,7 @@
             <Border
                 Height="1"
                 VerticalAlignment="Top"
-                Background="{DynamicResource DefaulBorderBrush}" />
+                Background="{DynamicResource DefaultBorderBrush}" />
 
             <StackPanel Margin="12" HorizontalAlignment="Right">
 

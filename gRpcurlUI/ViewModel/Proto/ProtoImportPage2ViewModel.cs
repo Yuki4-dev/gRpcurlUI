@@ -30,7 +30,7 @@ namespace gRpcurlUI.ViewModel.Proto
         public Visibility ProgressVisible => IsAnalyze ? Visibility.Visible : Visibility.Hidden;
 
         [ObservableProperty]
-        private string protoInfomation = string.Empty;
+        private string protoInformation = string.Empty;
 
         [ObservableProperty]
         private string protoErrorMessage = string.Empty;
@@ -80,13 +80,14 @@ namespace gRpcurlUI.ViewModel.Proto
             try
             {
                 var text = await File.ReadAllTextAsync(protoImportPageShareSetting.FilePath);
-                protoImportPageShareSetting.ProtoAnalyzeEntryResult = await protoAnalyzeEntry.AnalizeAllLineAsync(text.Split(Environment.NewLine));
-                SetProtoInfomation();
+                protoImportPageShareSetting.ProtoAnalyzeEntryResult = await protoAnalyzeEntry.AnalyzeAllLineAsync(GetTextAllLine(text));
+                SetProtoInformation();
+                canNext = true;
             }
             catch (Exception ex)
             {
-                canNext = false;
                 ProtoErrorMessage = $"Analyze Failed.{Environment.NewLine}{ex.Message}";
+                canNext = false;
             }
             finally
             {
@@ -94,29 +95,37 @@ namespace gRpcurlUI.ViewModel.Proto
             }
         }
 
-        private void SetProtoInfomation()
+        private void SetProtoInformation()
         {
             if (protoImportPageShareSetting.ProtoAnalyzeEntryResult != null)
             {
                 var analyzeResult = protoImportPageShareSetting.ProtoAnalyzeEntryResult;
 
                 var sb = new StringBuilder();
-                sb.AppendLine($"Package Name :  {analyzeResult.ProtoNameInfomatin.PackageNames[0]} .");
-                sb.AppendLine($"Service Name : {analyzeResult.ProtoNameInfomatin.ServiceNames[0]} .");
+                sb.AppendLine($"Package Name :  {analyzeResult.ProtoNameInformation.PackageNames[0]} .");
+                sb.AppendLine($"Service Name : {analyzeResult.ProtoNameInformation.ServiceNames[0]} .");
 
                 var indent = "    ";
-                var service = analyzeResult.ProtoServiceInfomation;
+                var service = analyzeResult.ProtoServiceInformation;
                 sb.AppendLine($"Found {service.ProtoServiceMethods.Count()} Method.");
                 foreach (var method in service.ProtoServiceMethods)
                 {
                     sb.AppendLine($"{indent}- {method.MethodName} ( Request : {method.Request.MessageName} / Response : {method.Response.MessageName} )");
                 }
 
-                ProtoInfomation = sb.ToString();
+                ProtoInformation = sb.ToString();
 
-                var err = protoImportPageShareSetting.ProtoAnalyzeEntryResult.ErrorInfomations;
+                var err = protoImportPageShareSetting.ProtoAnalyzeEntryResult.ErrorInformation;
                 ProtoErrorMessage = string.Join(Environment.NewLine, err.Select(e => $"{e.Message} ( Line : {e.Line} )"));
             }
+        }
+
+        private string[] GetTextAllLine(string text)
+        {
+            var replaced = text.Replace("\r\n", Environment.NewLine)
+                .Replace("\n", Environment.NewLine);
+
+            return replaced.Split(Environment.NewLine);
         }
     }
 }

@@ -7,7 +7,7 @@ namespace gRpcurlUI.Model
     {
         string ProjectType { get; }
 
-        string Verion { get; }
+        string Version { get; }
 
         IEnumerable<IProject> Projects { get; }
 

@@ -15,7 +15,7 @@ namespace gRpcurlUI.ViewModel.Proto
     {
         public Type PageType => typeof(ProtoImportPage1);
 
-        public string Filepath
+        public string FilePath
         {
             get => protoImportPageShareSetting.FilePath;
             set
@@ -45,13 +45,13 @@ namespace gRpcurlUI.ViewModel.Proto
 
         public bool CanNext()
         {
-            if (string.IsNullOrEmpty(Filepath))
+            if (string.IsNullOrEmpty(FilePath))
             {
                 ErrorMessage = "FilePath is Empty.";
                 return false;
             }
 
-            if (!File.Exists(Filepath))
+            if (!File.Exists(FilePath))
             {
                 ErrorMessage = "File Not Exists.";
                 return false;
@@ -81,7 +81,7 @@ namespace gRpcurlUI.ViewModel.Proto
             ErrorMessage = string.Empty;
         }
 
-        [ICommand]
+        [RelayCommand]
         private async Task OpenFile()
         {
             string fileName = string.Empty;
@@ -98,7 +98,7 @@ namespace gRpcurlUI.ViewModel.Proto
 
             if (result)
             {
-                Filepath = fileName;
+                FilePath = fileName;
             }
         }
     }

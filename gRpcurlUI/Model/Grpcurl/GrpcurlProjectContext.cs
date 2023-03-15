@@ -10,7 +10,7 @@ namespace gRpcurlUI.Model.Grpcurl
     public partial class GrpcurlProjectContext : ObservableObject, IProjectContext, IRecipient<AddGrpcProjectMessage>
     {
         [ObservableProperty]
-        private string verion;
+        private string version;
 
         [ObservableProperty]
         private string projectType;
@@ -20,7 +20,7 @@ namespace gRpcurlUI.Model.Grpcurl
 
         public GrpcurlProjectContext()
         {
-            verion = "1.0.0";
+            version = "1.0.0";
             projectType = "gRpcurl";
             WeakReferenceMessenger.Default.RegisterAll(this);
         }
@@ -46,9 +46,9 @@ namespace gRpcurlUI.Model.Grpcurl
         {
             if (other is GrpcurlProjectContext grpcurl)
             {
-                if (Verion != other.Verion)
+                if (Version != other.Version)
                 {
-                    throw new Exception($"Version Error. Export Version:{other.Verion} This Version:{Verion}");
+                    throw new Exception($"Version Error. Export Version:{other.Version} This Version:{Version}");
                 }
                 else if (ProjectType != other.ProjectType)
                 {

@@ -46,7 +46,7 @@
                                     Width="30"
                                     Height="20"
                                     Data="{StaticResource Check}"
-                                    Fill="{DynamicResource DefaulIconBrush}"
+                                    Fill="{DynamicResource DefaultIconBrush}"
                                     Stretch="Uniform" />
                             </Canvas>
 
@@ -71,9 +71,9 @@
     </Style>
 
     <Style x:Key="ProjectListBoxStyle" TargetType="{x:Type ListBox}">
-        <Setter Property="Background" Value="{DynamicResource DefaulEditAreaTextBoxBrush}" />
+        <Setter Property="Background" Value="{DynamicResource DefaultEditAreaTextBoxBrush}" />
         <Setter Property="BorderThickness" Value="1" />
-        <Setter Property="BorderBrush" Value="{DynamicResource DefaulBorderBrush}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource DefaultBorderBrush}" />
         <Setter Property="ItemContainerStyle" Value="{StaticResource ListBoxItemContainerStyle}" />
         <Setter Property="ItemTemplate">
             <Setter.Value>
@@ -92,9 +92,9 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ListBox}">
-                    <Grid Background="{DynamicResource DefaulEditAreaTextBoxBrush}">
+                    <Grid Background="{DynamicResource DefaultEditAreaTextBoxBrush}">
                         <Border BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
-                            <controls:CustomScrollViewer TabBrush="{DynamicResource DefaulScrolBarTabBrush}" TrackBrush="{DynamicResource DefaultWindowBackground}">
+                            <controls:CustomScrollViewer TabBrush="{DynamicResource DefaultScrollBarTabBrush}" TrackBrush="{DynamicResource DefaultWindowBackground}">
                                 <ItemsPresenter />
                             </controls:CustomScrollViewer>
                         </Border>

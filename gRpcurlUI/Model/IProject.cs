@@ -1,4 +1,4 @@
-﻿using gRpcurlUI.Core.Procces;
+﻿using gRpcurlUI.Core.Process;
 using System;
 using System.ComponentModel;
 
@@ -16,6 +16,6 @@ namespace gRpcurlUI.Model
 
         bool PrepareProject(out string message);
 
-        IProccesCommand CreateCommand();
+        IProcessCommand CreateCommand();
     }
 }

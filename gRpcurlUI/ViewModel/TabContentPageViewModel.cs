@@ -1,6 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using gRpcurlUI.Core.Procces;
+using gRpcurlUI.Core.Process;
 using gRpcurlUI.Model;
 using gRpcurlUI.Service;
 using Microsoft.Win32;
@@ -52,13 +52,13 @@ namespace gRpcurlUI.ViewModel
                 if (SetProperty(ref _IsSending, value))
                 {
                     OnPropertyChanged();
-                    OnPropertyChanged(nameof(SenddingProgressVisible));
+                    OnPropertyChanged(nameof(SendingProgressVisible));
                     OnPropertyChanged(nameof(IsNotSending));
                 }
             }
         }
         public bool IsNotSending => !IsSending;
-        public Visibility SenddingProgressVisible => IsSending ? Visibility.Visible : Visibility.Collapsed;
+        public Visibility SendingProgressVisible => IsSending ? Visibility.Visible : Visibility.Collapsed;
 
         private readonly StringBuilder _StandardOutput = new();
         public string StandardOutput
@@ -89,7 +89,7 @@ namespace gRpcurlUI.ViewModel
         }
 
         [ObservableProperty]
-        private bool clearRepsponse = true;
+        private bool clearResponse = true;
 
         [ObservableProperty]
         private IProject? selectedProject = null;
@@ -110,11 +110,11 @@ namespace gRpcurlUI.ViewModel
             this.windowService = windowService;
             this.projectDataService = projectDataService;
 
-            this.processExecuter.StanderdOutputRecieve += (data) => StandardOutput = data;
-            this.processExecuter.StanderdErrorRecieve += (data) => StandardError = data;
+            this.processExecuter.StandardOutputReceive += (data) => StandardOutput = data;
+            this.processExecuter.StandardErrorReceive += (data) => StandardError = data;
         }
 
-        [ICommand]
+        [RelayCommand]
         private async Task Export()
         {
             string fileName = "";
@@ -142,7 +142,7 @@ namespace gRpcurlUI.ViewModel
             }
         }
 
-        [ICommand]
+        [RelayCommand]
         private async Task Import()
         {
             string fileName = string.Empty;
@@ -171,7 +171,7 @@ namespace gRpcurlUI.ViewModel
             }
         }
 
-        [ICommand]
+        [RelayCommand]
         private async Task Remove()
         {
             if (!IsRemoveMode)
@@ -188,7 +188,7 @@ namespace gRpcurlUI.ViewModel
             var selectedProject = ProjectContext.Projects.Where(p => p.IsSelected).ToList();
             if (selectedProject.Count > 0)
             {
-                var result = await windowService.ShowMessageDialogAsync("Remove", $"{selectedProject.Count} Peoject Remove.", MessageBoxButton.YesNo);
+                var result = await windowService.ShowMessageDialogAsync("Remove", $"{selectedProject.Count} Project Remove.", MessageBoxButton.YesNo);
                 if (result == MessageBoxResult.Yes)
                 {
                     selectedProject.ForEach(p => ProjectContext.RemoveProject(p));
@@ -197,19 +197,19 @@ namespace gRpcurlUI.ViewModel
             IsRemoveMode = false;
         }
 
-        [ICommand]
+        [RelayCommand]
         private void Cancel()
         {
             IsRemoveMode = false;
         }
 
-        [ICommand]
+        [RelayCommand]
         private void Add()
         {
             ProjectContext?.AddProject();
         }
 
-        [ICommand]
+        [RelayCommand]
         private async void Send()
         {
             if (SelectedProject is null)
@@ -228,7 +228,7 @@ namespace gRpcurlUI.ViewModel
             }
 
             IsSending = true;
-            if (ClearRepsponse)
+            if (ClearResponse)
             {
                 TextBoxClear("2");
             }
@@ -236,7 +236,7 @@ namespace gRpcurlUI.ViewModel
             try
             {
                 tokenSource = new CancellationTokenSource();
-                await processExecuter.ExecuteAysnc(SelectedProject.CreateCommand(), tokenSource.Token);
+                await processExecuter.ExecuteAsync(SelectedProject.CreateCommand(), tokenSource.Token);
             }
             catch (Exception ex)
             {
@@ -250,17 +250,17 @@ namespace gRpcurlUI.ViewModel
             }
         }
 
-        [ICommand]
+        [RelayCommand]
         private async void SendCancel()
         {
-            var result = await windowService.ShowMessageDialogAsync("Send", "Cancel Sendding?", MessageBoxButton.YesNo);
+            var result = await windowService.ShowMessageDialogAsync("Send", "Cancel Sending?", MessageBoxButton.YesNo);
             if (result == MessageBoxResult.Yes)
             {
                 tokenSource?.Cancel();
             }
         }
 
-        [ICommand]
+        [RelayCommand]
         private void SendContentFormat()
         {
             if (SelectedProject is null)
@@ -274,7 +274,7 @@ namespace gRpcurlUI.ViewModel
             }
         }
 
-        [ICommand]
+        [RelayCommand]
         private void TextBoxClear(string type)
         {
             switch (type)

@@ -6,65 +6,65 @@ namespace gRpcurlUI.Core.Converter.Proto.Analyze
 {
     public class ProtoAnalyzeEntry
     {
-        public async Task<ProtoAnalyzeEntryResult> AnalizeAllLineAsync(string[] lines)
+        public async Task<ProtoAnalyzeEntryResult> AnalyzeAllLineAsync(string[] lines)
         {
             return await Task.Run(() =>
             {
-                var errors = new List<ErrorInfomation>();
+                var errors = new List<ErrorInformation>();
                 var nameScanner = new ProtoNameScanner();
                 for (var i = 0; i < lines.Length; i++)
                 {
                     if (!nameScanner.ReadLine(lines[i], out var error))
                     {
-                        errors.Add(new ErrorInfomation("Name", error, i + 1));
+                        errors.Add(new ErrorInformation("Name", error, i + 1));
                     }
                 }
 
-                var nameInfomation = nameScanner.GetProtoNameInfomatin();
-                var messageScanner = new ProtoMessageScanner(nameInfomation);
+                var nameInformation = nameScanner.GetProtoNameInformation();
+                var messageScanner = new ProtoMessageScanner(nameInformation);
                 for (var i = 0; i < lines.Length; i++)
                 {
                     if (!messageScanner.ReadLine(lines[i], out var error))
                     {
-                        errors.Add(new ErrorInfomation("Message", error, i + 1));
+                        errors.Add(new ErrorInformation("Message", error, i + 1));
                     }
                 }
 
-                var messageInfomations = messageScanner.GetProtoMessageInfomation();
-                var serviceScanner = new ProtoServiceScanner(messageInfomations);
+                var messageInformation = messageScanner.GetProtoMessageInformation();
+                var serviceScanner = new ProtoServiceScanner(messageInformation);
                 for (var i = 0; i < lines.Length; i++)
                 {
                     if (!serviceScanner.ReadLine(lines[i], out var error))
                     {
-                        errors.Add(new ErrorInfomation("Service", error, i + 1));
+                        errors.Add(new ErrorInformation("Service", error, i + 1));
                     }
                 }
 
-                return new ProtoAnalyzeEntryResult(serviceScanner.GetProtoServiceInfomation(), nameInfomation, messageInfomations, errors);
+                return new ProtoAnalyzeEntryResult(serviceScanner.GetProtoServiceInformation(), nameInformation, messageInformation, errors);
             });
         }
     }
 
     public class ProtoAnalyzeEntryResult
     {
-        public ProtoServiceInfomation ProtoServiceInfomation { get; }
+        public ProtoServiceInformation ProtoServiceInformation { get; }
 
-        public ProtoNameInfomatin ProtoNameInfomatin { get; }
+        public ProtoNameInformation ProtoNameInformation { get; }
 
-        public IEnumerable<ProtoMessageInfomation> ProtoMessageInfomations { get; }
+        public IEnumerable<ProtoMessageInformation> ProtoMessageInformation { get; }
 
-        public IEnumerable<ErrorInfomation> ErrorInfomations { get; }
+        public IEnumerable<ErrorInformation> ErrorInformation { get; }
 
-        public ProtoAnalyzeEntryResult(ProtoServiceInfomation protoServiceInfomation, ProtoNameInfomatin protoNameInfomatin, IEnumerable<ProtoMessageInfomation> protoMessageInfomation, IEnumerable<ErrorInfomation> errorInfomations)
+        public ProtoAnalyzeEntryResult(ProtoServiceInformation protoServiceInformation, ProtoNameInformation protoNameInformation, IEnumerable<ProtoMessageInformation> protoMessageInformation, IEnumerable<ErrorInformation> errorInformation)
         {
-            ProtoServiceInfomation = protoServiceInfomation;
-            ProtoNameInfomatin = protoNameInfomatin;
-            ProtoMessageInfomations = protoMessageInfomation;
-            ErrorInfomations = errorInfomations;
+            ProtoServiceInformation = protoServiceInformation;
+            ProtoNameInformation = protoNameInformation;
+            ProtoMessageInformation = protoMessageInformation;
+            ErrorInformation = errorInformation;
         }
     }
 
-    public class ErrorInfomation
+    public class ErrorInformation
     {
         public string TaskName { get; }
 
@@ -72,7 +72,7 @@ namespace gRpcurlUI.Core.Converter.Proto.Analyze
 
         public int Line { get; }
 
-        public ErrorInfomation(string taskName, string message, int line)
+        public ErrorInformation(string taskName, string message, int line)
         {
             TaskName = taskName;
             Message = message;

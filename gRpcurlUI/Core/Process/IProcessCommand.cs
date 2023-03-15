@@ -1,6 +1,6 @@
-﻿namespace gRpcurlUI.Core.Procces
+﻿namespace gRpcurlUI.Core.Process
 {
-    public interface IProccesCommand
+    public interface IProcessCommand
     {
         string AppPath { get; }
 

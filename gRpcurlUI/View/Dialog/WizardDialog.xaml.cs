@@ -16,15 +16,12 @@ namespace gRpcurlUI.View.Dialog
 
         private readonly IWizardDialogViewModel[] wizardDialogViewModels;
 
-        private readonly List<Page> pageChashes = new List<Page>();
+        private readonly List<Page> pageCashes = new();
 
         private WizardDialog(IWizardDialogViewModel[] wizardDialogViewModels)
         {
             this.wizardDialogViewModels = wizardDialogViewModels;
-
-            BorderBrush = DI.Get<IWindowService>().AccentBrush;
             InitializeComponent();
-
             Navigate(wizardDialogViewModels[currentIndex]);
         }
 
@@ -44,8 +41,8 @@ namespace gRpcurlUI.View.Dialog
                 throw new InvalidOperationException(nameof(currentIndex));
             }
 
-            var cuurentViewModel = wizardDialogViewModels[currentIndex];
-            if (cuurentViewModel.CanBack())
+            var currentViewModel = wizardDialogViewModels[currentIndex];
+            if (currentViewModel.CanBack())
             {
                 currentIndex--;
                 if (currentIndex == 0)
@@ -60,13 +57,12 @@ namespace gRpcurlUI.View.Dialog
 
         private void NextButton_Click(object sender, RoutedEventArgs e)
         {
-            var cuurentViewModel = wizardDialogViewModels[currentIndex];
+            var currentViewModel = wizardDialogViewModels[currentIndex];
             if (currentIndex < wizardDialogViewModels.Length - 1)
             {
-                if (cuurentViewModel.CanNext())
+                if (currentViewModel.CanNext())
                 {
-                    currentIndex++;
-                    Navigate(wizardDialogViewModels[currentIndex]);
+                    Navigate(wizardDialogViewModels[++currentIndex]);
                     BackButton.IsEnabled = true;
                     if (currentIndex == wizardDialogViewModels.Length - 1)
                     {
@@ -76,7 +72,7 @@ namespace gRpcurlUI.View.Dialog
             }
             else
             {
-                cuurentViewModel.Success();
+                currentViewModel.Success();
                 Close();
             }
         }
@@ -84,16 +80,16 @@ namespace gRpcurlUI.View.Dialog
         private void Navigate(IWizardDialogViewModel viewModel)
         {
             var pageType = viewModel.PageType;
-            var cashe = pageChashes.Find(p => p.GetType() == pageType);
-            if (cashe != null)
+            var cashed = pageCashes.Find(p => p.GetType() == pageType);
+            if (cashed != null)
             {
-                MainFrame.Navigate(cashe);
+                MainFrame.Navigate(cashed);
             }
             else
             {
                 var page = (Page?)Activator.CreateInstance(pageType) ?? throw new InvalidOperationException(nameof(viewModel));
                 page.DataContext = viewModel;
-                pageChashes.Add(page);
+                pageCashes.Add(page);
                 MainFrame.Navigate(page);
             }
 

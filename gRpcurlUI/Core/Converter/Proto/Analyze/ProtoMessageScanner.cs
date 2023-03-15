@@ -11,15 +11,15 @@ namespace gRpcurlUI.Core.Converter.Proto.Analyze
 
         private const string REPEARTED = "repeated";
 
-        private ProtoMessageInfomation? current;
+        private ProtoMessageInformation? current;
 
-        private readonly IList<ProtoMessageInfomation> protoMessageInfomations = new List<ProtoMessageInfomation>();
+        private readonly IList<ProtoMessageInformation> protoMessageInformation = new List<ProtoMessageInformation>();
 
-        private readonly ProtoNameInfomatin protoNameInfomatin;
+        private readonly ProtoNameInformation protoNameInformation;
 
-        public ProtoMessageScanner(ProtoNameInfomatin protoNameInfomatin)
+        public ProtoMessageScanner(ProtoNameInformation protoNameInformation)
         {
-            this.protoNameInfomatin = protoNameInfomatin;
+            this.protoNameInformation = protoNameInformation;
         }
 
         public bool ReadLine(string line, out string errorMessage)
@@ -38,8 +38,8 @@ namespace gRpcurlUI.Core.Converter.Proto.Analyze
                 var messageName = splitLine[1];
                 if (messageType == MESSAGE)
                 {
-                    current = new ProtoMessageInfomation(messageName);
-                    protoMessageInfomations.Add(current);
+                    current = new ProtoMessageInformation(messageName);
+                    protoMessageInformation.Add(current);
                     errorMessage = string.Empty;
                     return true;
                 }
@@ -57,9 +57,9 @@ namespace gRpcurlUI.Core.Converter.Proto.Analyze
             return false;
         }
 
-        public ProtoMessageInfomation[] GetProtoMessageInfomation()
+        public ProtoMessageInformation[] GetProtoMessageInformation()
         {
-            return protoMessageInfomations.ToArray();
+            return protoMessageInformation.ToArray();
         }
 
         private bool AddMember(string[] splitLine)
@@ -98,17 +98,17 @@ namespace gRpcurlUI.Core.Converter.Proto.Analyze
                 propertyName = splitLine[1];
             }
 
-            if (protoNameInfomatin.EnumNames.Contains(typeName))
+            if (protoNameInformation.EnumNames.Contains(typeName))
             {
-                current.AddMemberInfomation(ProtoMessageMemberInfomation.OfEnum(propertyName, typeName, isRepeated));
+                current.AddMemberInformation(ProtoMessageMemberInformation.OfEnum(propertyName, typeName, isRepeated));
             }
-            else if (protoNameInfomatin.MessageNames.Contains(typeName))
+            else if (protoNameInformation.MessageNames.Contains(typeName))
             {
-                current.AddMemberInfomation(ProtoMessageMemberInfomation.OfMessage(propertyName, typeName, isRepeated));
+                current.AddMemberInformation(ProtoMessageMemberInformation.OfMessage(propertyName, typeName, isRepeated));
             }
             else
             {
-                current.AddMemberInfomation(ProtoMessageMemberInfomation.OfUnKnown(propertyName, typeName, isRepeated));
+                current.AddMemberInformation(ProtoMessageMemberInformation.OfUnKnown(propertyName, typeName, isRepeated));
             }
 
             return true;

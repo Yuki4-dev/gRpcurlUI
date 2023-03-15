@@ -9,13 +9,13 @@ namespace gRpcurlUI.Model.Setting
         private const string KEY_WindowBackground = "DefaultWindowBackground";
         private const string KEY_PageBackground = "DefaultPageBackground";
         private const string KEY_PageForeground = "DefaultPageForeground";
-        private const string KEY_BorderBrush = "DefaulBorderBrush";
-        private const string KEY_IconBrush = "DefaulIconBrush";
-        private const string KEY_EditAreaTextBoxBrush = "DefaulEditAreaTextBoxBrush";
+        private const string KEY_BorderBrush = "DefaultBorderBrush";
+        private const string KEY_IconBrush = "DefaultIconBrush";
+        private const string KEY_EditAreaTextBoxBrush = "DefaultEditAreaTextBoxBrush";
         private const string KEY_TextBoxSelectBrush = "DefaultTextBoxSelectBrush";
         private const string KEY_MouseOverBackground = "DefaultMouseOverBackground";
         private const string KEY_SelectedBackground = "DefaultSelectedBackground";
-        private const string KEY_ScrolBarTabBrush = "DefaulScrolBarTabBrush";
+        private const string KEY_ScrollBarTabBrush = "DefaultScrollBarTabBrush";
 
         protected override IEnumerable<string> Keys => new string[]
         {
@@ -28,7 +28,7 @@ namespace gRpcurlUI.Model.Setting
             KEY_TextBoxSelectBrush,
             KEY_MouseOverBackground,
             KEY_SelectedBackground,
-            KEY_ScrolBarTabBrush
+            KEY_ScrollBarTabBrush
         };
 
         public Brush WindowBackground
@@ -85,10 +85,10 @@ namespace gRpcurlUI.Model.Setting
             set => SetResources(KEY_SelectedBackground, value);
         }
 
-        public Brush ScrolBarTabBrush
+        public Brush ScrollBarTabBrush
         {
-            get => (Brush)GetResources(KEY_ScrolBarTabBrush);
-            set => SetResources(KEY_ScrolBarTabBrush, value);
+            get => (Brush)GetResources(KEY_ScrollBarTabBrush);
+            set => SetResources(KEY_ScrollBarTabBrush, value);
         }
 
         public BrushSetting() : base() { }

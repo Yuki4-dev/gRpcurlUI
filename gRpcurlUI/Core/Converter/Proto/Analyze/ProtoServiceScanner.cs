@@ -12,13 +12,13 @@ namespace gRpcurlUI.Core.Converter.Proto.Analyze
 
         private string serviceName = string.Empty;
 
-        private readonly IList<ProtoServiceMethodInfomation> protoServiceMethods = new List<ProtoServiceMethodInfomation>();
+        private readonly IList<ProtoServiceMethodInformation> protoServiceMethods = new List<ProtoServiceMethodInformation>();
 
-        private readonly ProtoMessageInfomation[] protoMessageInfomations;
+        private readonly ProtoMessageInformation[] protoMessageInformation;
 
-        public ProtoServiceScanner(ProtoMessageInfomation[] protoMessageInfomations)
+        public ProtoServiceScanner(ProtoMessageInformation[] protoMessageInformation)
         {
-            this.protoMessageInfomations = protoMessageInfomations;
+            this.protoMessageInformation = protoMessageInformation;
         }
 
         public bool ReadLine(string line, out string errorMessage)
@@ -53,9 +53,9 @@ namespace gRpcurlUI.Core.Converter.Proto.Analyze
             return false;
         }
 
-        public ProtoServiceInfomation GetProtoServiceInfomation()
+        public ProtoServiceInformation GetProtoServiceInformation()
         {
-            return new ProtoServiceInfomation(serviceName, protoServiceMethods);
+            return new ProtoServiceInformation(serviceName, protoServiceMethods);
         }
 
         private bool AddMember(string[] splitLine)
@@ -66,21 +66,21 @@ namespace gRpcurlUI.Core.Converter.Proto.Analyze
             }
 
             var requestName = GetMessageName(splitLine[2]);
-            var requestModule = Array.Find(protoMessageInfomations, m => m.MessageName == requestName);
+            var requestModule = Array.Find(protoMessageInformation, m => m.MessageName == requestName);
             if (requestModule is null)
             {
                 return false;
             }
 
             var responseName = GetMessageName(splitLine[4]);
-            var responseModule = Array.Find(protoMessageInfomations, m => m.MessageName == responseName);
+            var responseModule = Array.Find(protoMessageInformation, m => m.MessageName == responseName);
             if (responseModule is null)
             {
                 return false;
             }
 
             var methodName = splitLine[1];
-            protoServiceMethods.Add(new ProtoServiceMethodInfomation(methodName, requestModule, responseModule));
+            protoServiceMethods.Add(new ProtoServiceMethodInformation(methodName, requestModule, responseModule));
             return true;
         }
 

@@ -1,8 +1,8 @@
-﻿using gRpcurlUI.Core.Procces;
+﻿using gRpcurlUI.Core.Process;
 
 namespace gRpcurlUI.Model.Grpcurl
 {
-    public class GrpcurlCommand : IProccesCommand
+    public class GrpcurlCommand : IProcessCommand
     {
         public string AppPath { get; }
 

@@ -4,17 +4,17 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace gRpcurlUI.Core.Procces
+namespace gRpcurlUI.Core.Process
 {
     public class ProcessExecuter : IProcessExecuter
     {
         public Encoding Encoding { get; set; } = Encoding.UTF8;
 
-        public event Action<string>? StanderdOutputRecieve;
+        public event Action<string>? StandardOutputReceive;
 
-        public event Action<string>? StanderdErrorRecieve;
+        public event Action<string>? StandardErrorReceive;
 
-        public async Task ExecuteAysnc(IProccesCommand command, CancellationToken token)
+        public async Task ExecuteAsync(IProcessCommand command, CancellationToken token)
         {
             var info = new ProcessStartInfo(command.AppPath, command.Arguments)
             {
@@ -26,20 +26,20 @@ namespace gRpcurlUI.Core.Procces
                 StandardOutputEncoding = Encoding
             };
 
-            var process = new Process
+            var process = new System.Diagnostics.Process
             {
                 StartInfo = info,
                 EnableRaisingEvents = true
             };
 
-            process.OutputDataReceived += (s, e) => StanderdOutputRecieve?.Invoke(e.Data ?? string.Empty);
-            process.ErrorDataReceived += (s, e) => StanderdErrorRecieve?.Invoke(e.Data ?? string.Empty);
+            process.OutputDataReceived += (s, e) => StandardOutputReceive?.Invoke(e.Data ?? string.Empty);
+            process.ErrorDataReceived += (s, e) => StandardErrorReceive?.Invoke(e.Data ?? string.Empty);
 
             var pTask = Task.Run(() =>
             {
                 try
                 {
-                    StanderdOutputRecieve?.Invoke(command.AppPath + " " + command.Arguments);
+                    StandardOutputReceive?.Invoke(command.AppPath + " " + command.Arguments);
                     process.Start();
                     process.BeginOutputReadLine();
                     process.BeginErrorReadLine();
@@ -64,7 +64,7 @@ namespace gRpcurlUI.Core.Procces
                 {
                     try
                     {
-                        StanderdOutputRecieve?.Invoke("Cancel.");
+                        StandardOutputReceive?.Invoke("Cancel.");
                         process.CancelOutputRead();
                         process.CancelErrorRead();
                         process.Kill();

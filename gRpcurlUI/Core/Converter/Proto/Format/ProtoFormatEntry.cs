@@ -6,20 +6,20 @@ namespace gRpcurlUI.Core.Converter.Proto.Format
 {
     public class ProtoFormatEntry
     {
-        public ProtoFormatResut Format(ProtoServiceMethodInfomation methodInfomation, ProtoMessageInfomation[] messageInfomations, ProtoFormatOption formatOption)
+        public ProtoFormatResult Format(ProtoServiceMethodInformation methodInformation, ProtoMessageInformation[] messageInformation, ProtoFormatOption formatOption)
         {
-            var requestFormat = Format(methodInfomation.Request, messageInfomations, formatOption);
-            var responseFormat = Format(methodInfomation.Response, messageInfomations, formatOption);
-            return new ProtoFormatResut(methodInfomation, requestFormat, responseFormat);
+            var requestFormat = Format(methodInformation.Request, messageInformation, formatOption);
+            var responseFormat = Format(methodInformation.Response, messageInformation, formatOption);
+            return new ProtoFormatResult(methodInformation, requestFormat, responseFormat);
         }
 
-        private IDictionary<string, object> Format(ProtoMessageInfomation messageInfomation, ProtoMessageInfomation[] messageInfomations, ProtoFormatOption formatOption)
+        private IDictionary<string, object> Format(ProtoMessageInformation messageInformation, ProtoMessageInformation[] messageInformations, ProtoFormatOption formatOption)
         {
             var enumFormatter = new EnumProtoValueFormatter();
             var primitiveFormatters = new List<PrimitiveProtoValueFormatter>();
 
             var formatValue = new Dictionary<string, object>();
-            foreach (var member in messageInfomation.MemberInfomations)
+            foreach (var member in messageInformation.MemberInformation)
             {
 
                 object value;
@@ -41,10 +41,10 @@ namespace gRpcurlUI.Core.Converter.Proto.Format
                 }
                 else if (member.ModuleType == ProtoModuleType.TypeMessage)
                 {
-                    var message = Array.Find(messageInfomations, m => m.MessageName == member.TypeName);
+                    var message = Array.Find(messageInformations, m => m.MessageName == member.TypeName);
                     if (message != null)
                     {
-                        value = Format(message, messageInfomations, formatOption);
+                        value = Format(message, messageInformations, formatOption);
                     }
                     else
                     {
@@ -70,17 +70,17 @@ namespace gRpcurlUI.Core.Converter.Proto.Format
         }
     }
 
-    public class ProtoFormatResut
+    public class ProtoFormatResult
     {
-        public ProtoServiceMethodInfomation MethodInfomation { get; }
+        public ProtoServiceMethodInformation MethodInformation { get; }
 
         public IDictionary<string, object> RequestFormat { get; }
 
         public IDictionary<string, object> ResponseFormat { get; }
 
-        public ProtoFormatResut(ProtoServiceMethodInfomation methodInfomation, IDictionary<string, object> request, IDictionary<string, object> response)
+        public ProtoFormatResult(ProtoServiceMethodInformation methodInformation, IDictionary<string, object> request, IDictionary<string, object> response)
         {
-            MethodInfomation = methodInfomation;
+            MethodInformation = methodInformation;
             RequestFormat = request;
             ResponseFormat = response;
         }

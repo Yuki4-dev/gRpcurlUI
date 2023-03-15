@@ -188,15 +188,15 @@ namespace gRpcurlUI.ViewModel
             }
         }
 
-        public string ScrolBarTabBrush
+        public string ScrollBarTabBrush
         {
-            get => brushSetting.ScrolBarTabBrush.ToString();
+            get => brushSetting.ScrollBarTabBrush.ToString();
             set
             {
                 if (TryColorParse(value, out var color))
                 {
                     IsResetEnable = true;
-                    brushSetting.ScrolBarTabBrush = new SolidColorBrush(color);
+                    brushSetting.ScrollBarTabBrush = new SolidColorBrush(color);
                     OnPropertyChanged();
                 }
             }
@@ -217,7 +217,7 @@ namespace gRpcurlUI.ViewModel
             this.brushSetting = brushSetting;
         }
 
-        [ICommand]
+        [RelayCommand]
         private void Reset()
         {
             IsResetEnable = false;
@@ -229,13 +229,13 @@ namespace gRpcurlUI.ViewModel
             }
         }
 
-        [ICommand]
+        [RelayCommand]
         private async Task About()
         {
             await windowService.ShowMessageDialogAsync("About...", "gRpcurlUI Ver 1.0.0" + "\r\n" + "Preview");
         }
 
-        [ICommand]
+        [RelayCommand]
         private void OpenSource()
         {
             var pi = new ProcessStartInfo()

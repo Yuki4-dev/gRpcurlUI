@@ -7,16 +7,16 @@ namespace gRpcurlUI.Core.Converter.Proto.Format
     {
         public static IProtoTypedValueFormatter Default { get; } = new UnKnownProtoValueFormatter();
 
-        public bool IsTarget(ProtoMessageMemberInfomation memberInfomation)
+        public bool IsTarget(ProtoMessageMemberInformation memberInformation)
         {
-            return memberInfomation.ModuleType == ProtoModuleType.TypeUnknown;
+            return memberInformation.ModuleType == ProtoModuleType.TypeUnknown;
         }
 
-        public string GetValueFormat(ProtoMessageMemberInfomation memberInfomation)
+        public string GetValueFormat(ProtoMessageMemberInformation memberInformation)
         {
-            if (!IsTarget(memberInfomation))
+            if (!IsTarget(memberInformation))
             {
-                throw new InvalidOperationException($"{memberInfomation}");
+                throw new InvalidOperationException($"{memberInformation}");
             }
 
             return string.Empty;

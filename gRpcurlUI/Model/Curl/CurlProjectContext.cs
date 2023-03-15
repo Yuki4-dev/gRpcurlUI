@@ -9,7 +9,7 @@ namespace gRpcurlUI.Model.Curl
     public partial class CurlProjectContext : ObservableObject, IProjectContext
     {
         [ObservableProperty]
-        private string verion;
+        private string version;
 
         [ObservableProperty]
         private string projectType;
@@ -19,7 +19,7 @@ namespace gRpcurlUI.Model.Curl
 
         public CurlProjectContext()
         {
-            verion = "1.0.0";
+            version = "1.0.0";
             projectType = "curl";
         }
 
@@ -44,9 +44,9 @@ namespace gRpcurlUI.Model.Curl
         {
             if (other is CurlProjectContext curl)
             {
-                if (Verion != other.Verion)
+                if (Version != other.Version)
                 {
-                    throw new Exception($"Version Error. Export Version:{other.Verion} This Version:{Verion}");
+                    throw new Exception($"Version Error. Export Version:{other.Version} This Version:{Version}");
                 }
                 else if (ProjectType != other.ProjectType)
                 {

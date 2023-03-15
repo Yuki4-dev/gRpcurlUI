@@ -76,16 +76,16 @@ namespace gRpcurlUI.ViewModel.Proto
             }
 
             _Projects.Clear();
-            var analyzeresult = protoImportPageShareSetting.ProtoAnalyzeEntryResult;
-            var packageName = analyzeresult.ProtoNameInfomatin.PackageNames[0];
-            var serviceName = analyzeresult.ProtoNameInfomatin.ServiceNames[0];
-            foreach (var protoMuduleInfo in analyzeresult.ProtoServiceInfomation.ProtoServiceMethods)
+            var analyzeResult = protoImportPageShareSetting.ProtoAnalyzeEntryResult;
+            var packageName = analyzeResult.ProtoNameInformation.PackageNames[0];
+            var serviceName = analyzeResult.ProtoNameInformation.ServiceNames[0];
+            foreach (var protoModuleInfo in analyzeResult.ProtoServiceInformation.ProtoServiceMethods)
             {
-                var formatResult = protoFormatEntry.Format(protoMuduleInfo, analyzeresult.ProtoMessageInfomations.ToArray(), new ProtoFormatOption());
+                var formatResult = protoFormatEntry.Format(protoModuleInfo, analyzeResult.ProtoMessageInformation.ToArray(), new ProtoFormatOption());
                 var project = new GrpcurlProject
                 {
-                    ProjectName = formatResult.MethodInfomation.MethodName,
-                    Service = packageName + "." + serviceName + "/" + formatResult.MethodInfomation.MethodName,
+                    ProjectName = formatResult.MethodInformation.MethodName,
+                    Service = packageName + "." + serviceName + "/" + formatResult.MethodInformation.MethodName,
                     SendContent = ToJson(formatResult.RequestFormat),
                     IsReadProtoButtonEnable = false
                 };

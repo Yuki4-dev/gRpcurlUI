@@ -19,16 +19,16 @@ namespace gRpcurlUI.Core.Converter.Proto.Format
             defaultIndex = index;
         }
 
-        public bool IsTarget(ProtoMessageMemberInfomation memberInfomation)
+        public bool IsTarget(ProtoMessageMemberInformation memberInformation)
         {
-            return memberInfomation.ModuleType == ProtoModuleType.TypeEnum;
+            return memberInformation.ModuleType == ProtoModuleType.TypeEnum;
         }
 
-        public string GetValueFormat(ProtoMessageMemberInfomation memberInfomation)
+        public string GetValueFormat(ProtoMessageMemberInformation memberInformation)
         {
-            if (!IsTarget(memberInfomation))
+            if (!IsTarget(memberInformation))
             {
-                throw new InvalidOperationException($"{memberInfomation}");
+                throw new InvalidOperationException($"{memberInformation}");
             }
 
             return defaultIndex.ToString();

@@ -39,7 +39,7 @@
             <TextBox
                 HorizontalAlignment="Stretch"
                 Style="{StaticResource DefaultTextBoxStyle}"
-                Text="{Binding Filepath, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                Text="{Binding FilePath, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 
             <Button
                 Grid.Column="1"

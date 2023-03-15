@@ -27,7 +27,7 @@
                         Margin="4,1,4,4"
                         HorizontalAlignment="Left"
                         Background="{DynamicResource DefaultSelectedBackground}"
-                        BorderBrush="{DynamicResource DefaulBorderBrush}"
+                        BorderBrush="{DynamicResource DefaultBorderBrush}"
                         BorderThickness="1">
 
                         <Grid>
@@ -65,7 +65,7 @@
 
                                 <Border
                                     Background="{DynamicResource DefaultWindowBackground}"
-                                    BorderBrush="{DynamicResource DefaulBorderBrush}"
+                                    BorderBrush="{DynamicResource DefaultBorderBrush}"
                                     BorderThickness="1">
 
                                     <TextBox

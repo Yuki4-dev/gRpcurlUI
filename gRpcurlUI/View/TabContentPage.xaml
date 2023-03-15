@@ -151,7 +151,7 @@
 
                 <controls:OperationInputArea Title="{Binding SelectedProject.ProjectName, Mode=TwoWay}" Content="{Binding SelectedProject, Mode=OneWay}" />
 
-                <Border Grid.Row="1" Background="{DynamicResource DefaulBorderBrush}" />
+                <Border Grid.Row="1" Background="{DynamicResource DefaultBorderBrush}" />
 
                 <controls:HeaderContent Title="Request" Grid.Row="2">
 
@@ -238,12 +238,12 @@
                                 VerticalAlignment="Center"
                                 IsIndeterminate="{Binding IsSending}"
                                 Style="{StaticResource DefaultProgressBarStyle}"
-                                Visibility="{Binding SenddingProgressVisible, Mode=OneWay}" />
+                                Visibility="{Binding SendingProgressVisible, Mode=OneWay}" />
 
                             <ToggleButton
                                 Height="30"
                                 Content="Clear"
-                                IsChecked="{Binding ClearRepsponse}"
+                                IsChecked="{Binding ClearResponse}"
                                 Style="{StaticResource CheckedToggleButtonStyle}" />
 
                             <Button

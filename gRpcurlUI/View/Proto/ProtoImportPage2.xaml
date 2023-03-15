@@ -7,7 +7,7 @@
     xmlns:local="clr-namespace:gRpcurlUI.View.Proto"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:viewModel="clr-namespace:gRpcurlUI.ViewModel.Proto"
-    Title="Proto Infomation"
+    Title="Proto Information"
     d:DataContext="{d:DesignInstance viewModel:ProtoImportPage2ViewModel}"
     d:DesignHeight="600"
     d:DesignWidth="600"
@@ -40,7 +40,7 @@
                 <TextBlock
                     HorizontalAlignment="Left"
                     Style="{StaticResource DefaultTextBlockStyle}"
-                    Text="Proto Infomation" />
+                    Text="Proto Information" />
 
                 <ProgressBar
                     Width="150"
@@ -57,7 +57,7 @@
                     BorderThickness="0"
                     IsReadOnly="True"
                     Style="{StaticResource DefaultTextBoxStyle}"
-                    Text="{Binding ProtoInfomation}" />
+                    Text="{Binding ProtoInformation}" />
             </ContentControl>
 
         </Grid>
@@ -72,7 +72,7 @@
             <TextBlock
                 HorizontalAlignment="Left"
                 Style="{StaticResource DefaultTextBlockStyle}"
-                Text="Error Infomation" />
+                Text="Error Information" />
 
             <ContentControl Grid.Row="1" Style="{StaticResource DefaultEditAreaContentControlStyle}">
                 <TextBox

@@ -19,7 +19,7 @@
 
     <TabControl
         Background="Transparent"
-        BorderBrush="{DynamicResource DefaulBorderBrush}"
+        BorderBrush="{DynamicResource DefaultBorderBrush}"
         BorderThickness="1,1,1,0"
         ItemsSource="{Binding TabContents}">
 
@@ -68,7 +68,7 @@
                 <Border
                     x:Name="TabBackBorder"
                     Width="120"
-                    BorderBrush="{DynamicResource DefaulBorderBrush}"
+                    BorderBrush="{DynamicResource DefaultBorderBrush}"
                     BorderThickness="0.5,1,0.5,0">
 
                     <TextBlock

@@ -1,6 +1,6 @@
 ﻿namespace gRpcurlUI.Core.Converter.Proto.Model
 {
-    public class ProtoNameInfomatin
+    public class ProtoNameInformation
     {
         public string[] PackageNames { get; set; }
 
@@ -12,7 +12,7 @@
 
         public string[] ServiceNames { get; }
 
-        public ProtoNameInfomatin(string[] packageNames, string[] messageNames, string[] enumNames, string[] methodNames, string[] serviceNames)
+        public ProtoNameInformation(string[] packageNames, string[] messageNames, string[] enumNames, string[] methodNames, string[] serviceNames)
         {
             PackageNames = packageNames;
             MessageNames = messageNames;

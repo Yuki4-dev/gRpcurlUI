@@ -1,5 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
-using gRpcurlUI.Core.Procces;
+using gRpcurlUI.Core.Process;
 using Newtonsoft.Json;
 using System;
 using System.Text;
@@ -85,7 +85,7 @@ namespace gRpcurlUI.Model.Curl
             return sb.Length == 0;
         }
 
-        public IProccesCommand CreateCommand()
+        public IProcessCommand CreateCommand()
         {
             string jsonContent = SendContent;
             if (!string.IsNullOrWhiteSpace(jsonContent) && IsJsonContent)

@@ -10,7 +10,6 @@
     Width="600"
     Height="450"
     Background="{DynamicResource DefaultWindowBackground}"
-    BorderThickness="1"
     Foreground="{DynamicResource DefaultPageForeground}"
     ResizeMode="NoResize"
     Style="{DynamicResource WizardDialogStyle}"
@@ -35,7 +34,7 @@
             x:Key="WizardButtonStyle"
             BasedOn="{StaticResource DefaultButtonStyle}"
             TargetType="{x:Type Button}">
-            <Setter Property="BorderBrush" Value="{DynamicResource DefaulBorderBrush}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource DefaultBorderBrush}" />
             <Setter Property="BorderThickness" Value="1" />
             <Setter Property="Width" Value="100" />
             <Setter Property="Margin" Value="4" />
@@ -43,76 +42,68 @@
 
     </Window.Resources>
 
-    <Border
-        HorizontalAlignment="Stretch"
-        VerticalAlignment="Stretch"
-        Background="Transparent"
-        BorderBrush="{Binding BorderBrush, ElementName=RootWindow}"
-        BorderThickness="{Binding BorderThickness, ElementName=RootWindow}"
-        CornerRadius="8">
 
-        <Grid>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="40" />
-                <RowDefinition Height="*" />
-                <RowDefinition Height="60" />
-            </Grid.RowDefinitions>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="60" />
+        </Grid.RowDefinitions>
 
-            <TextBlock
-                HorizontalAlignment="Center"
-                FontSize="22"
-                Style="{StaticResource DefaultTextBlockStyle}"
-                Text="{Binding Content.Title, ElementName=MainFrame}" />
+        <TextBlock
+            HorizontalAlignment="Center"
+            FontSize="22"
+            Style="{StaticResource DefaultTextBlockStyle}"
+            Text="{Binding Content.Title, ElementName=MainFrame}" />
 
-            <Button
-                x:Name="CloseButton"
-                Width="24"
-                Height="24"
-                Margin="4"
-                HorizontalAlignment="Right"
-                VerticalAlignment="Top"
-                Click="CloseButton_Click"
-                Style="{StaticResource IconButtonStyle}"
-                Tag="{StaticResource Close}"
-                WindowChrome.IsHitTestVisibleInChrome="True" />
+        <Button
+            x:Name="CloseButton"
+            Width="24"
+            Height="24"
+            Margin="4"
+            HorizontalAlignment="Right"
+            VerticalAlignment="Top"
+            Click="CloseButton_Click"
+            Style="{StaticResource IconButtonStyle}"
+            Tag="{StaticResource Close}"
+            WindowChrome.IsHitTestVisibleInChrome="True" />
 
-            <Grid Grid.Row="1">
+        <Grid Grid.Row="1">
 
-                <Frame
-                    x:Name="MainFrame"
-                    Grid.ColumnSpan="2"
-                    NavigationUIVisibility="Hidden" />
+            <Frame
+                x:Name="MainFrame"
+                Grid.ColumnSpan="2"
+                NavigationUIVisibility="Hidden" />
 
-                <Border
-                    Grid.ColumnSpan="2"
-                    Height="1"
-                    VerticalAlignment="Bottom"
-                    Background="{DynamicResource DefaulBorderBrush}" />
+            <Border
+                Grid.ColumnSpan="2"
+                Height="1"
+                VerticalAlignment="Bottom"
+                Background="{DynamicResource DefaultBorderBrush}" />
 
-            </Grid>
-
-            <StackPanel
-                Grid.Row="2"
-                Margin="8"
-                HorizontalAlignment="Right"
-                Orientation="Horizontal">
-
-                <Button
-                    x:Name="BackButton"
-                    Click="BackButton_Click"
-                    Content="Back"
-                    IsEnabled="False"
-                    Style="{StaticResource WizardButtonStyle}" />
-
-                <Button
-                    x:Name="NextButton"
-                    Click="NextButton_Click"
-                    Content="Next"
-                    Style="{StaticResource WizardButtonStyle}" />
-
-            </StackPanel>
         </Grid>
 
-    </Border>
+        <StackPanel
+            Grid.Row="2"
+            Margin="8"
+            HorizontalAlignment="Right"
+            Orientation="Horizontal">
+
+            <Button
+                x:Name="BackButton"
+                Click="BackButton_Click"
+                Content="Back"
+                IsEnabled="False"
+                Style="{StaticResource WizardButtonStyle}" />
+
+            <Button
+                x:Name="NextButton"
+                Click="NextButton_Click"
+                Content="Next"
+                Style="{StaticResource WizardButtonStyle}" />
+
+        </StackPanel>
+
+    </Grid>
 
 </Window>
