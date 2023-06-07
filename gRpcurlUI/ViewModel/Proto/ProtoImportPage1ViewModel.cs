@@ -1,6 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using gRpcurlUI.Service;
+using gRpcurlUI.Core.API;
 using gRpcurlUI.View.Proto;
 using gRpcurlUI.ViewModel.Dialog;
 using Microsoft.Win32;

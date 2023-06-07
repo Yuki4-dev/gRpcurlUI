@@ -1,8 +1,8 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using gRpcurlUI.Core.API;
 using gRpcurlUI.Core.Process;
 using gRpcurlUI.Model;
-using gRpcurlUI.Service;
 using Microsoft.Win32;
 using System;
 using System.Linq;
@@ -101,8 +101,6 @@ namespace gRpcurlUI.ViewModel
 
         private CancellationTokenSource? tokenSource;
 
-        public TabContentPageViewModel(IWindowService windowService, IProjectDataService projectDataService) : this(windowService, projectDataService, new ProcessExecuter()) { }
-
         public TabContentPageViewModel(IWindowService windowService, IProjectDataService projectDataService, IProcessExecuter processExecuter)
         {
             this.processExecuter = processExecuter;
@@ -121,7 +119,7 @@ namespace gRpcurlUI.ViewModel
                 (d) =>
                 {
                     d.Title = "Project Save";
-                    d.Filter = projectDataService.SaveFileter;
+                    d.Filter = projectDataService.SaveFilter;
                 },
                 (d) =>
                 {
@@ -149,7 +147,7 @@ namespace gRpcurlUI.ViewModel
                 (d) =>
                 {
                     d.Title = "Project Open";
-                    d.Filter = projectDataService.OpenFileter;
+                    d.Filter = projectDataService.OpenFilter;
                 },
                 (d) =>
                 {
@@ -160,7 +158,7 @@ namespace gRpcurlUI.ViewModel
             {
                 try
                 {
-                    var Context = (IProjectContext)projectDataService.Load(fileName, ProjectContext.GetType());
+                    var Context = projectDataService.Load(fileName, ProjectContext.GetType());
                     ProjectContext.Marge(Context);
                 }
                 catch (Exception ex)

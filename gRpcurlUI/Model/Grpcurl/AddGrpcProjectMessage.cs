@@ -6,7 +6,7 @@ namespace gRpcurlUI.Model.Grpcurl
     {
         public IEnumerable<GrpcurlProject> Projects { get; }
 
-        public AddGrpcProjectMessage(IEnumerable<GrpcurlProject> projects)
+        public AddGrpcProjectMessage(GrpcurlProject[] projects)
         {
             Projects = projects;
         }

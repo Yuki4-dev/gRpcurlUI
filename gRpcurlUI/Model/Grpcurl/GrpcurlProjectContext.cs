@@ -15,8 +15,8 @@ namespace gRpcurlUI.Model.Grpcurl
         [ObservableProperty]
         private string projectType;
 
-        private readonly ICollection<GrpcurlProject> projectsInternal = new ObservableCollection<GrpcurlProject>();
-        public IEnumerable<IProject> Projects => projectsInternal;
+        private readonly ICollection<GrpcurlProject> projects = new ObservableCollection<GrpcurlProject>();
+        public IEnumerable<IProject> Projects => projects;
 
         public GrpcurlProjectContext()
         {
@@ -27,7 +27,7 @@ namespace gRpcurlUI.Model.Grpcurl
 
         public bool RemoveProject(IProject project)
         {
-            return projectsInternal.Remove((GrpcurlProject)project);
+            return projects.Remove((GrpcurlProject)project);
         }
 
         public void AddProject(IProject? project = null)
@@ -39,7 +39,7 @@ namespace gRpcurlUI.Model.Grpcurl
                     ProjectName = "new GrpcProject"
                 };
             }
-            projectsInternal.Add((GrpcurlProject)project);
+            projects.Add((GrpcurlProject)project);
         }
 
         public void Marge(IProjectContext other)
@@ -59,9 +59,9 @@ namespace gRpcurlUI.Model.Grpcurl
                     throw new Exception($"Export Error. Project is Nothing.");
                 }
 
-                foreach (var p in grpcurl.projectsInternal)
+                foreach (var p in grpcurl.projects)
                 {
-                    projectsInternal.Add(p);
+                    projects.Add(p);
                 }
             }
             else
@@ -76,6 +76,25 @@ namespace gRpcurlUI.Model.Grpcurl
             {
                 AddProject(p);
             }
+        }
+
+        public object ToJsonObject()
+        {
+            return new GrpcProjectContextJson()
+            {
+                ProjectType = ProjectType,
+                Version = Version,
+                Projects = projects.Select(p => p.ToJsonObject())
+            };
+        }
+
+        private class GrpcProjectContextJson
+        {
+            public string ProjectType { get; set; } = string.Empty;
+
+            public string Version { get; set; } = string.Empty;
+
+            public IEnumerable<object> Projects { get; set; } = new List<object>();
         }
     }
 }

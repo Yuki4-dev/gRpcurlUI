@@ -1,4 +1,4 @@
-﻿using gRpcurlUI.Core.Converter.Proto.Analyze;
+﻿using gRpcurlUI.Core.Converter.Proto.Model;
 
 namespace gRpcurlUI.ViewModel.Proto
 {

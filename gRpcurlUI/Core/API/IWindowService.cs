@@ -5,7 +5,7 @@ using System.Windows;
 using System.Windows.Media;
 using System.Windows.Threading;
 
-namespace gRpcurlUI.Service
+namespace gRpcurlUI.Core.API
 {
     public interface IWindowService
     {

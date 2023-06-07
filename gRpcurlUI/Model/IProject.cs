@@ -17,5 +17,7 @@ namespace gRpcurlUI.Model
         bool PrepareProject(out string message);
 
         IProcessCommand CreateCommand();
+
+        object ToJsonObject();
     }
 }

@@ -18,8 +18,8 @@ namespace gRpcurlUI.ViewModel.Proto
     {
         public Type PageType => typeof(ProtoImportPage3);
 
-        private readonly ICollection<GrpcurlProject> _Projects = new ObservableCollection<GrpcurlProject>();
-        public IEnumerable<IProject> Projects => _Projects;
+        private readonly ICollection<GrpcurlProject> projects = new ObservableCollection<GrpcurlProject>();
+        public IEnumerable<IProject> Projects => projects;
 
         [ObservableProperty]
         private string errorMessage = string.Empty;
@@ -30,6 +30,8 @@ namespace gRpcurlUI.ViewModel.Proto
         private readonly ProtoImportPageShareSetting protoImportPageShareSetting;
 
         private readonly ProtoFormatEntry protoFormatEntry;
+
+        private bool canSuccess = false;
 
         public ProtoImportPage3ViewModel(ProtoImportPageShareSetting protoImportPageShareSetting, ProtoFormatEntry protoFormatEntry)
         {
@@ -49,18 +51,18 @@ namespace gRpcurlUI.ViewModel.Proto
 
         public bool CanSuccess()
         {
-            return true;
+            return canSuccess;
         }
 
         public void Success()
         {
-            foreach (var p in _Projects)
+            foreach (var p in projects)
             {
                 p.IsSelected = false;
                 p.IsReadProtoButtonEnable = true;
             }
 
-            _ = WeakReferenceMessenger.Default.Send(new AddGrpcProjectMessage(_Projects));
+            _ = WeakReferenceMessenger.Default.Send(new AddGrpcProjectMessage(projects.ToArray()));
         }
 
         public void Close()
@@ -72,10 +74,24 @@ namespace gRpcurlUI.ViewModel.Proto
         {
             if (protoImportPageShareSetting.ProtoAnalyzeEntryResult is null)
             {
-                throw new InvalidOperationException("");
+                throw new InvalidOperationException("ProtoAnalyzeEntryResult is null.");
             }
 
-            _Projects.Clear();
+            projects.Clear();
+            try
+            {
+                AddProjects();
+                canSuccess = true;
+            }
+            catch (Exception ex)
+            {
+                ErrorMessage = $"AppProject Failed.{Environment.NewLine}{ex.Message}";
+                canSuccess = false;
+            }
+        }
+
+        private void AddProjects()
+        {
             var analyzeResult = protoImportPageShareSetting.ProtoAnalyzeEntryResult;
             var packageName = analyzeResult.ProtoNameInformation.PackageNames[0];
             var serviceName = analyzeResult.ProtoNameInformation.ServiceNames[0];
@@ -90,7 +106,7 @@ namespace gRpcurlUI.ViewModel.Proto
                     IsReadProtoButtonEnable = false
                 };
 
-                _Projects.Add(project);
+                projects.Add(project);
             }
         }
 

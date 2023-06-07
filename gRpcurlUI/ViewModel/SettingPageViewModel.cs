@@ -1,7 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using gRpcurlUI.Core.API;
 using gRpcurlUI.Model.Setting;
-using gRpcurlUI.Service;
 using System.Diagnostics;
 using System.Threading.Tasks;
 using System.Windows.Media;

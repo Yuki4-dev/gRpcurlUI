@@ -15,17 +15,11 @@ namespace gRpcurlUI.ViewModel.Proto
     {
         public Type PageType => typeof(ProtoImportPage2);
 
-        private bool _IsAnalyze = false;
-        public bool IsAnalyze
+        [ObservableProperty]
+        private bool isAnalyze = false;
+        partial void OnIsAnalyzeChanged(bool value)
         {
-            get => _IsAnalyze;
-            set
-            {
-                if (SetProperty(ref _IsAnalyze, value))
-                {
-                    OnPropertyChanged(nameof(ProgressVisible));
-                }
-            }
+            OnPropertyChanged(nameof(ProgressVisible));
         }
         public Visibility ProgressVisible => IsAnalyze ? Visibility.Visible : Visibility.Hidden;
 

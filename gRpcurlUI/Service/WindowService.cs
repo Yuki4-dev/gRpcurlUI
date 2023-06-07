@@ -1,4 +1,5 @@
-﻿using gRpcurlUI.View.Dialog;
+﻿using gRpcurlUI.Core.API;
+using gRpcurlUI.View.Dialog;
 using Microsoft.Win32;
 using System;
 using System.Runtime.InteropServices;

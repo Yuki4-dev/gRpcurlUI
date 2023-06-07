@@ -82,20 +82,20 @@ namespace gRpcurlUI.View.Dialog
             var cashed = pageCashes.Find(p => p.GetType() == pageType);
             if (cashed != null)
             {
-                MainFrame.Navigate(cashed);
+                _ = MainFrame.Navigate(cashed);
             }
             else
             {
                 var page = (Page?)Activator.CreateInstance(pageType) ?? throw new InvalidOperationException(nameof(viewModel));
                 page.DataContext = viewModel;
                 pageCashes.Add(page);
-                MainFrame.Navigate(page);
+                _ = MainFrame.Navigate(page);
             }
 
             viewModel.Navigate();
             if (MainFrame.CanGoBack)
             {
-                MainFrame.RemoveBackEntry();
+                _ = MainFrame.RemoveBackEntry();
             }
         }
 

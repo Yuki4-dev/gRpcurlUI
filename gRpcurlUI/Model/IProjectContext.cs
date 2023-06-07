@@ -16,5 +16,7 @@ namespace gRpcurlUI.Model
         void AddProject(IProject? project = null);
 
         bool RemoveProject(IProject project);
+
+        object ToJsonObject();
     }
 }

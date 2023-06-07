@@ -8,44 +8,14 @@ namespace gRpcurlUI.Model.Curl
 {
     public partial class CurlProject : ObservableObject, IProject
     {
-        private string _AppPath = "curl";
-        public string AppPath
-        {
-            get => _AppPath;
-            set
-            {
-                if (!string.IsNullOrWhiteSpace(value))
-                {
-                    _ = SetProperty(ref _AppPath, value);
-                }
-            }
-        }
+        [ObservableProperty]
+        private string appPath = "curl";
 
-        private string _ProjectName = string.Empty;
-        public string ProjectName
-        {
-            get => _ProjectName;
-            set
-            {
-                if (!string.IsNullOrWhiteSpace(value))
-                {
-                    _ = SetProperty(ref _ProjectName, value);
-                }
-            }
-        }
+        [ObservableProperty]
+        private string projectName = string.Empty;
 
-        private string _EndPoint = string.Empty;
-        public string EndPoint
-        {
-            get => _EndPoint;
-            set
-            {
-                if (!string.IsNullOrWhiteSpace(value))
-                {
-                    _ = SetProperty(ref _EndPoint, value);
-                }
-            }
-        }
+        [ObservableProperty]
+        private string endPoint = string.Empty;
 
         [ObservableProperty]
         private bool isSelected = false;
@@ -104,10 +74,24 @@ namespace gRpcurlUI.Model.Curl
             return new CurlProject()
             {
                 AppPath = AppPath,
-                ProjectName = _ProjectName,
-                EndPoint = _EndPoint,
-                Option = option,
+                ProjectName = ProjectName,
+                EndPoint = EndPoint,
+                Option = Option,
                 IsJsonContent = isJsonContent,
+            };
+        }
+
+        public object ToJsonObject()
+        {
+            return new CurlProjectJson()
+            {
+                AppPath = AppPath,
+                ProjectName = ProjectName,
+                EndPoint = EndPoint,
+                Option = Option,
+                IsJsonContent = IsJsonContent,
+                IsSelected = IsSelected,
+                SendContent = SendContent,
             };
         }
 
@@ -115,6 +99,17 @@ namespace gRpcurlUI.Model.Curl
         {
             var parsedJson = JsonConvert.DeserializeObject(json);
             return JsonConvert.SerializeObject(parsedJson, format);
+        }
+
+        private class CurlProjectJson
+        {
+            public string AppPath { get; set; } = "curl";
+            public string ProjectName { get; set; } = string.Empty;
+            public string EndPoint { get; set; } = string.Empty;
+            public bool IsSelected { get; set; } = false;
+            public string Option { get; set; } = string.Empty;
+            public bool IsJsonContent { get; set; } = false;
+            public string SendContent { get; set; } = string.Empty;
         }
     }
 }

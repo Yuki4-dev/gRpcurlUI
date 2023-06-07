@@ -44,39 +44,4 @@ namespace gRpcurlUI.Core.Converter.Proto.Analyze
             });
         }
     }
-
-    public class ProtoAnalyzeEntryResult
-    {
-        public ProtoServiceInformation ProtoServiceInformation { get; }
-
-        public ProtoNameInformation ProtoNameInformation { get; }
-
-        public IEnumerable<ProtoMessageInformation> ProtoMessageInformation { get; }
-
-        public IEnumerable<ErrorInformation> ErrorInformation { get; }
-
-        public ProtoAnalyzeEntryResult(ProtoServiceInformation protoServiceInformation, ProtoNameInformation protoNameInformation, IEnumerable<ProtoMessageInformation> protoMessageInformation, IEnumerable<ErrorInformation> errorInformation)
-        {
-            ProtoServiceInformation = protoServiceInformation;
-            ProtoNameInformation = protoNameInformation;
-            ProtoMessageInformation = protoMessageInformation;
-            ErrorInformation = errorInformation;
-        }
-    }
-
-    public class ErrorInformation
-    {
-        public string TaskName { get; }
-
-        public string Message { get; }
-
-        public int Line { get; }
-
-        public ErrorInformation(string taskName, string message, int line)
-        {
-            TaskName = taskName;
-            Message = message;
-            Line = line;
-        }
-    }
 }

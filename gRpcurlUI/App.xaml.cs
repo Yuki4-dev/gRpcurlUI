@@ -1,4 +1,4 @@
-﻿using gRpcurlUI.Service;
+﻿using gRpcurlUI.Core.API;
 using System;
 using System.Windows;
 

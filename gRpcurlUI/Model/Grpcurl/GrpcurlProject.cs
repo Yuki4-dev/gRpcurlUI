@@ -1,9 +1,9 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using gRpcurlUI.Core.API;
 using gRpcurlUI.Core.Converter.Proto.Analyze;
 using gRpcurlUI.Core.Converter.Proto.Format;
 using gRpcurlUI.Core.Process;
-using gRpcurlUI.Service;
 using gRpcurlUI.View.Dialog;
 using gRpcurlUI.ViewModel.Dialog;
 using gRpcurlUI.ViewModel.Proto;
@@ -16,44 +16,14 @@ namespace gRpcurlUI.Model.Grpcurl
 {
     public partial class GrpcurlProject : ObservableObject, IProject
     {
-        private string _AppPath = "grpcurl.exe";
-        public string AppPath
-        {
-            get => _AppPath;
-            set
-            {
-                if (string.IsNullOrEmpty(value))
-                {
-                    _ = SetProperty(ref _AppPath, value);
-                }
-            }
-        }
+        [ObservableProperty]
+        private string appPath = "grpcurl.exe";
 
-        private string _ProjectName = string.Empty;
-        public string ProjectName
-        {
-            get => _ProjectName;
-            set
-            {
-                if (!string.IsNullOrWhiteSpace(value))
-                {
-                    _ = SetProperty(ref _ProjectName, value);
-                }
-            }
-        }
+        [ObservableProperty]
+        private string projectName = string.Empty;
 
-        private string _EndPoint = string.Empty;
-        public string EndPoint
-        {
-            get => _EndPoint;
-            set
-            {
-                if (!string.IsNullOrWhiteSpace(value))
-                {
-                    _ = SetProperty(ref _EndPoint, value);
-                }
-            }
-        }
+        [ObservableProperty]
+        private string endPoint = string.Empty;
 
         [ObservableProperty]
         private bool isSelected = false;
@@ -119,19 +89,13 @@ namespace gRpcurlUI.Model.Grpcurl
         {
             return new GrpcurlProject()
             {
-                AppPath = _AppPath,
-                ProjectName = _ProjectName,
-                EndPoint = _EndPoint,
-                Option = option,
-                Service = service,
-                SendContent = sendContent
+                AppPath = AppPath,
+                ProjectName = ProjectName,
+                EndPoint = EndPoint,
+                Option = Option,
+                Service = Service,
+                SendContent = SendContent
             };
-        }
-
-        private static string FormatJson(string json, Formatting format = Formatting.None)
-        {
-            var parsedJson = JsonConvert.DeserializeObject(json);
-            return JsonConvert.SerializeObject(parsedJson, format);
         }
 
         [RelayCommand]
@@ -144,6 +108,37 @@ namespace gRpcurlUI.Model.Grpcurl
                 new ProtoImportPage2ViewModel(setting, DI.Get<ProtoAnalyzeEntry>()),
                 new ProtoImportPage3ViewModel(setting, DI.Get<ProtoFormatEntry>()),
             });
+        }
+
+        public object ToJsonObject()
+        {
+            return new GrpcProjectJson()
+            {
+                AppPath = AppPath,
+                ProjectName = ProjectName,
+                EndPoint = EndPoint,
+                IsSelected = IsSelected,
+                Option = Option,
+                SendContent = SendContent,
+                Service = Service,
+            };
+        }
+
+        private static string FormatJson(string json, Formatting format = Formatting.None)
+        {
+            var parsedJson = JsonConvert.DeserializeObject(json);
+            return JsonConvert.SerializeObject(parsedJson, format);
+        }
+
+        private class GrpcProjectJson
+        {
+            public string AppPath { get; set; } = "grpcurl.exe";
+            public string ProjectName { get; set; } = string.Empty;
+            public string EndPoint { get; set; } = string.Empty;
+            public bool IsSelected { get; set; } = false;
+            public string Option { get; set; } = string.Empty;
+            public string SendContent { get; set; } = string.Empty;
+            public string Service { get; set; } = string.Empty;
         }
     }
 }

@@ -1,6 +1,8 @@
 ﻿using CommunityToolkit.Mvvm.DependencyInjection;
+using gRpcurlUI.Core.API;
 using gRpcurlUI.Core.Converter.Proto.Analyze;
 using gRpcurlUI.Core.Converter.Proto.Format;
+using gRpcurlUI.Core.Process;
 using gRpcurlUI.Service;
 using gRpcurlUI.ViewModel;
 using Microsoft.Extensions.DependencyInjection;
@@ -21,8 +23,14 @@ namespace gRpcurlUI
             var sc = new ServiceCollection();
             _ = sc.AddSingleton<ProtoAnalyzeEntry>();
             _ = sc.AddSingleton<ProtoFormatEntry>();
+            _ = sc.AddSingleton<IProcessExecuter, ProcessExecuter>();
+
+            // API
             _ = sc.AddSingleton<IWindowService, WindowService>();
             _ = sc.AddSingleton<IProjectDataService, ProjectDataService>();
+            _ = sc.AddSingleton<IProjectContextProvider, ProjectContextProvider>();
+
+            // ViewModels
             _ = sc.AddSingleton<SettingPageViewModel>();
             _ = sc.AddSingleton<MainWindowViewModel>();
 
