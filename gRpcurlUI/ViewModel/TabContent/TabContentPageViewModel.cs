@@ -177,11 +177,7 @@ namespace gRpcurlUI.ViewModel.TabContent
             }
 
             responseAreaViewModel.IsSending = true;
-            if (responseAreaViewModel.ClearResponse)
-            {
-                WeakReferenceMessenger.Default.Send(new ClearTextBoxMessage(ClearTextBoxType.Response));
-            }
-
+            WeakReferenceMessenger.Default.Send(new ClearTextBoxMessage(ClearTextBoxType.Process));
             try
             {
                 tokenSource = new CancellationTokenSource();

@@ -79,7 +79,8 @@ namespace gRpcurlUI.ViewModel.TabContent
 
         public void Receive(ClearTextBoxMessage message)
         {
-            if(message.ClearTextType == ClearTextBoxType.Response)
+            if (message.ClearTextType == ClearTextBoxType.Response
+                || (ClearResponse && message.ClearTextType == ClearTextBoxType.Process))
             {
                 standardOutputBuffer.Clear();
             }

@@ -20,6 +20,7 @@ namespace gRpcurlUI.Model.TabContent
     {
         Request,
         Response,
-        Error
+        Error,
+        Process,
     }
 }
