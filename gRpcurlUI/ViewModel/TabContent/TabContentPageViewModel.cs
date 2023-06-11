@@ -21,6 +21,9 @@ namespace gRpcurlUI.ViewModel.TabContent
         private IProject? selectedProject = null;
 
         [ObservableProperty]
+        private TabContentRequestAreaViewModel requestAreaViewModel;
+
+        [ObservableProperty]
         private TabContentResponseAreaViewModel responseAreaViewModel;
 
         [ObservableProperty]
@@ -52,8 +55,9 @@ namespace gRpcurlUI.ViewModel.TabContent
         {
             this.windowService = windowService;
             this.projectDataService = projectDataService;
-
             this.processExecuter = processExecuter;
+
+            requestAreaViewModel = new TabContentRequestAreaViewModel(processExecuter, windowService);
             errorAreaViewModel = new TabContentErrorAreaViewModel(processExecuter);
             responseAreaViewModel = new TabContentResponseAreaViewModel(processExecuter, windowService);
         }
@@ -177,7 +181,6 @@ namespace gRpcurlUI.ViewModel.TabContent
             }
 
             responseAreaViewModel.IsSending = true;
-            WeakReferenceMessenger.Default.Send(new ClearTextBoxMessage(ClearTextBoxType.Process));
             try
             {
                 tokenSource = new CancellationTokenSource();
@@ -216,20 +219,6 @@ namespace gRpcurlUI.ViewModel.TabContent
             if (!SelectedProject.PrepareProject(out var message))
             {
                 _ = windowService.ShowMessageDialogAsync("Error", message);
-            }
-        }
-
-        [RelayCommand]
-        private void TextBoxClear(string type)
-        {
-            switch (type)
-            {
-                case "1":
-                    if (SelectedProject != null)
-                    {
-                        SelectedProject.SendContent = "";
-                    }
-                    break;
             }
         }
     }

@@ -12,7 +12,7 @@ using System.Windows;
 namespace gRpcurlUI.ViewModel.TabContent
 {
     [ObservableObject]
-    public partial class TabContentResponseAreaViewModel : ITextAreaViewModel
+    public partial class TabContentResponseAreaViewModel : ITextAreaViewModel, IRecipient<ProcessExecutionStatusMessage>
     {
         [ObservableProperty]
         private bool clearResponse = true;
@@ -79,10 +79,25 @@ namespace gRpcurlUI.ViewModel.TabContent
 
         public void Receive(ClearTextBoxMessage message)
         {
-            if (message.ClearTextType == ClearTextBoxType.Response
-                || (ClearResponse && message.ClearTextType == ClearTextBoxType.Process))
+            if (message.ClearTextType == ClearTextBoxType.Response)
             {
                 standardOutputBuffer.Clear();
+            }
+        }
+
+        public void Receive(ProcessExecutionStatusMessage message)
+        {
+            if (message.ExecutionStatus == ProcessExecutionStatus.PreProcess)
+            {
+                if (ClearResponse)
+                {
+                    standardOutputBuffer.Clear();
+                }
+                IsSending = true;
+            }
+            else if (message.ExecutionStatus == ProcessExecutionStatus.PostProcess)
+            {
+                IsSending = false;
             }
         }
 

@@ -56,11 +56,11 @@
                     <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
 
-                <controls:OperationInputArea Title="{Binding SelectedProject.ProjectName, Mode=TwoWay}" Content="{Binding SelectedProject, Mode=OneWay}" />
+                <controls:OperationInputArea Title="{Binding RequestAreaViewModel.SelectedProject.ProjectName, Mode=TwoWay}" Content="{Binding RequestAreaViewModel.SelectedProject, Mode=OneWay}" />
 
                 <Border Grid.Row="1" Background="{DynamicResource DefaultBorderBrush}" />
 
-                <tabcontent:TabContentRequestArea Grid.Row="2" DataContext="{Binding}" />
+                <tabcontent:TabContentRequestArea Grid.Row="2" DataContext="{Binding RequestAreaViewModel}" />
 
             </Grid>
 

@@ -107,7 +107,7 @@
 
         <ListBox
             ItemsSource="{Binding ProjectContext.Projects, Mode=OneWay}"
-            SelectedValue="{Binding SelectedProject, Mode=TwoWay}"
+            SelectedValue="{Binding RequestAreaViewModel.SelectedProject, Mode=TwoWay}"
             Style="{StaticResource ExecutePageProjectListBoxStyle}" />
 
     </controls:HeaderContent>

@@ -21,6 +21,5 @@ namespace gRpcurlUI.Model.TabContent
         Request,
         Response,
         Error,
-        Process,
     }
 }
