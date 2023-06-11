@@ -168,12 +168,6 @@ namespace gRpcurlUI.ViewModel
         private void Add()
         {
             ProjectContext?.AddProject();
-            var sb = new StringBuilder();
-            for (int i = 0; i < 2000; i++)
-            {
-                _ = sb.Append(i.ToString());
-            }
-            AddStandardOutputBuffer(sb.ToString() + "a");
         }
 
         [RelayCommand]

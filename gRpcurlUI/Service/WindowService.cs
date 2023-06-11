@@ -44,9 +44,8 @@ namespace gRpcurlUI.Service
         {
             ThrowIfWindowNull();
 
-            if (window.WindowState != WindowState.Maximized
-                && window.Height != double.NaN
-                && window.Width != double.NaN)
+            if (window!.WindowState != WindowState.Maximized
+                && !double.IsNaN(window.Height) && !double.IsNaN(window.Width))
             {
                 WindowSizeChanged?.Invoke(window.Height, window.Width);
             }
@@ -99,7 +98,15 @@ namespace gRpcurlUI.Service
             });
         }
 
-        private FileDialog GetDialog(FileDialogType dialogType)
+        private void ThrowIfWindowNull()
+        {
+            if (window is null)
+            {
+                throw new InvalidOperationException("window is null.");
+            }
+        }
+
+        private static FileDialog GetDialog(FileDialogType dialogType)
         {
             if (dialogType == FileDialogType.Open)
             {
@@ -111,14 +118,6 @@ namespace gRpcurlUI.Service
             }
 
             throw new InvalidOperationException($"Invalid Type {dialogType}");
-        }
-
-        private void ThrowIfWindowNull()
-        {
-            if (window is null)
-            {
-                throw new InvalidOperationException("window is null.");
-            }
         }
 
         [DllImport("Dwmapi.dll")]

@@ -35,13 +35,10 @@ namespace gRpcurlUI.Model.Grpcurl
 
         public void AddProject(IProject? project = null)
         {
-            if (project == null)
-            {
-                project = new GrpcurlProject()
+            project ??= new GrpcurlProject()
                 {
                     ProjectName = "new GrpcProject"
                 };
-            }
             projects.Add((GrpcurlProject)project);
         }
 
@@ -57,7 +54,7 @@ namespace gRpcurlUI.Model.Grpcurl
                 {
                     throw new Exception($"ProjectType Error. Export ProjectType:{other.ProjectType} This ProjectType:{ProjectType}");
                 }
-                else if (other.Projects == null || other.Projects.Count() == 0)
+                else if (other.Projects == null || !other.Projects.Any())
                 {
                     throw new Exception($"Export Error. Project is Nothing.");
                 }
