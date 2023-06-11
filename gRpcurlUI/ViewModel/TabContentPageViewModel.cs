@@ -3,7 +3,7 @@ using CommunityToolkit.Mvvm.Input;
 using gRpcurlUI.Core.API;
 using gRpcurlUI.Core.Process;
 using gRpcurlUI.Model;
-using Microsoft.Win32;
+using gRpcurlUI.Model.TabContent;
 using System;
 using System.Linq;
 using System.Text;
@@ -16,82 +16,41 @@ namespace gRpcurlUI.ViewModel
     [ObservableObject]
     public partial class TabContentPageViewModel
     {
-        private IProjectContext? _ProjectContext;
-        public IProjectContext? ProjectContext
-        {
-            get => _ProjectContext;
-            set
-            {
-                if (SetProperty(ref _ProjectContext, value))
-                {
-                    SelectedProject = null;
-                }
-            }
-        }
-
-        private bool _IsRemoveMode = false;
-        public bool IsRemoveMode
-        {
-            get => _IsRemoveMode;
-            set
-            {
-                if (SetProperty(ref _IsRemoveMode, value))
-                {
-                    SelectedProject = null;
-                }
-            }
-        }
-
-        private bool _IsSending = false;
-        public bool IsSending
-        {
-            get => _IsSending;
-            set
-            {
-                if (SetProperty(ref _IsSending, value))
-                {
-                    OnPropertyChanged();
-                    OnPropertyChanged(nameof(SendingProgressVisible));
-                    OnPropertyChanged(nameof(IsNotSending));
-                }
-            }
-        }
-        public bool IsNotSending => !IsSending;
-        public Visibility SendingProgressVisible => IsSending ? Visibility.Visible : Visibility.Collapsed;
-
-        private readonly StringBuilder _StandardOutput = new();
-        public string StandardOutput
-        {
-            get => _StandardOutput.ToString();
-            set
-            {
-                if (value != null)
-                {
-                    _ = _StandardOutput.AppendLine(value);
-                    OnPropertyChanged(nameof(StandardOutput));
-                }
-            }
-        }
-
-        private readonly StringBuilder _StandardError = new();
-        public string StandardError
-        {
-            get => _StandardError.ToString();
-            set
-            {
-                if (value != null)
-                {
-                    _ = _StandardError.AppendLine(value);
-                    OnPropertyChanged(nameof(StandardError));
-                }
-            }
-        }
-
         [ObservableProperty]
         private bool clearResponse = true;
 
         [ObservableProperty]
         private IProject? selectedProject = null;
+
+        [ObservableProperty]
+        private IProjectContext? projectContext;
+        partial void OnProjectContextChanging(IProjectContext? value)
+        {
+            SelectedProject = null;
+        }
+
+        [ObservableProperty]
+        private bool isRemoveMode = false;
+        partial void OnIsRemoveModeChanged(bool value)
+        {
+            SelectedProject = null;
+        }
+
+        [ObservableProperty]
+        private bool isSending = false;
+        partial void OnIsSendingChanged(bool value)
+        {
+            OnPropertyChanged(nameof(SendingProgressVisible));
+            OnPropertyChanged(nameof(IsNotSending));
+        }
+        public bool IsNotSending => !IsSending;
+        public Visibility SendingProgressVisible => IsSending ? Visibility.Visible : Visibility.Collapsed;
+
+        private readonly TextControlDisplayBuffer standardOutputBuffer = new();
+        public string StandardOutput => standardOutputBuffer.DisplayText;
+
+        private readonly TextControlDisplayBuffer standardErrorBuffer = new();
+        public string StandardError => standardErrorBuffer.DisplayText;
 
         private readonly IWindowService windowService;
 
@@ -107,15 +66,16 @@ namespace gRpcurlUI.ViewModel
             this.windowService = windowService;
             this.projectDataService = projectDataService;
 
-            this.processExecuter.StandardOutputReceive += (data) => StandardOutput = data;
-            this.processExecuter.StandardErrorReceive += (data) => StandardError = data;
+            this.processExecuter.StandardOutputReceive += (data) => AddStandardOutputBuffer(data);
+            this.processExecuter.StandardErrorReceive += (data) => AddStandardErrorBuffer(data);
         }
 
         [RelayCommand]
         private async Task Export()
         {
             string fileName = "";
-            var result = await windowService.ShowCommonDialogAsync<SaveFileDialog>(
+            var result = await windowService.ShowFileDialogAsync(
+                FileDialogType.Save,
                 (d) =>
                 {
                     d.Title = "Project Save";
@@ -130,7 +90,7 @@ namespace gRpcurlUI.ViewModel
             {
                 try
                 {
-                    projectDataService.Save(ProjectContext, fileName);
+                    projectDataService.Save(ProjectContext!, fileName);
                 }
                 catch (Exception ex)
                 {
@@ -143,7 +103,8 @@ namespace gRpcurlUI.ViewModel
         private async Task Import()
         {
             string fileName = string.Empty;
-            var result = await windowService.ShowCommonDialogAsync<OpenFileDialog>(
+            var result = await windowService.ShowFileDialogAsync(
+                FileDialogType.Open,
                 (d) =>
                 {
                     d.Title = "Project Open";
@@ -158,8 +119,11 @@ namespace gRpcurlUI.ViewModel
             {
                 try
                 {
-                    var Context = projectDataService.Load(fileName, ProjectContext.GetType());
-                    ProjectContext.Marge(Context);
+                    var contextJson = projectDataService.Load(fileName, ProjectContext!.JsonType);
+                    if (contextJson != null)
+                    {
+                        ProjectContext.Marge(ProjectContextFactory.CreateFromJson(ProjectContext.GetType(), contextJson));
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -204,6 +168,12 @@ namespace gRpcurlUI.ViewModel
         private void Add()
         {
             ProjectContext?.AddProject();
+            var sb = new StringBuilder();
+            for (int i = 0; i < 2000; i++)
+            {
+                _ = sb.Append(i.ToString());
+            }
+            AddStandardOutputBuffer(sb.ToString() + "a");
         }
 
         [RelayCommand]
@@ -283,14 +253,26 @@ namespace gRpcurlUI.ViewModel
                     }
                     break;
                 case "2":
-                    _ = _StandardOutput.Clear();
+                    standardOutputBuffer.Clear();
                     OnPropertyChanged(nameof(StandardOutput));
                     break;
                 case "3":
-                    _ = _StandardError.Clear();
+                    standardErrorBuffer.Clear();
                     OnPropertyChanged(nameof(StandardError));
                     break;
             }
+        }
+
+        private void AddStandardOutputBuffer(string text)
+        {
+            standardOutputBuffer.AddText(text);
+            OnPropertyChanged(nameof(StandardOutput));
+        }
+
+        private void AddStandardErrorBuffer(string text)
+        {
+            standardErrorBuffer.AddText(text);
+            OnPropertyChanged(nameof(StandardError));
         }
     }
 }

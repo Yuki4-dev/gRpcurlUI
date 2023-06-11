@@ -4,11 +4,14 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using static gRpcurlUI.Model.Grpcurl.GrpcurlProject;
 
 namespace gRpcurlUI.Model.Grpcurl
 {
     public partial class GrpcurlProjectContext : ObservableObject, IProjectContext, IRecipient<AddGrpcProjectMessage>
     {
+        public Type JsonType => typeof(GrpcProjectContextJson);
+
         [ObservableProperty]
         private string version;
 
@@ -84,8 +87,32 @@ namespace gRpcurlUI.Model.Grpcurl
             {
                 ProjectType = ProjectType,
                 Version = Version,
-                Projects = projects.Select(p => p.ToJsonObject())
+                Projects = projects.Select(p => (GrpcProjectJson)p.ToJsonObject())
             };
+        }
+
+        public void LoadJsonObject(object jsonObject)
+        {
+            if (jsonObject is not GrpcProjectContextJson grpcContext)
+            {
+                throw new Exception("Json is not GrpcProjectContext.");
+            }
+
+            ProjectType = grpcContext.ProjectType;
+            Version = grpcContext.Version;
+
+            var grpcProjects = grpcContext.Projects.Select(json =>
+            {
+                var grpcProject = new GrpcurlProject();
+                grpcProject.LoadJsonObject(json);
+                return grpcProject;
+            });
+
+            projects.Clear();
+            foreach (var grpcProject in grpcProjects)
+            {
+                projects.Add(grpcProject);
+            }
         }
 
         private class GrpcProjectContextJson
@@ -94,7 +121,7 @@ namespace gRpcurlUI.Model.Grpcurl
 
             public string Version { get; set; } = string.Empty;
 
-            public IEnumerable<object> Projects { get; set; } = new List<object>();
+            public IEnumerable<GrpcProjectJson> Projects { get; set; } = new List<GrpcProjectJson>();
         }
     }
 }

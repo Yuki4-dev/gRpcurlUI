@@ -1,4 +1,4 @@
-﻿using gRpcurlUI.Model;
+﻿using gRpcurlUI.Core.Model;
 using System;
 
 namespace gRpcurlUI.Core.API
@@ -9,8 +9,8 @@ namespace gRpcurlUI.Core.API
 
         string SaveFilter { get; }
 
-        void Save(IProjectContext content, string path);
+        void Save(IJsonObject content, string path);
 
-        IProjectContext? Load(string path, Type type);
+        object Load(string path, Type type);
     }
 }

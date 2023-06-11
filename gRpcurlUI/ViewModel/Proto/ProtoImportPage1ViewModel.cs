@@ -3,7 +3,6 @@ using CommunityToolkit.Mvvm.Input;
 using gRpcurlUI.Core.API;
 using gRpcurlUI.View.Proto;
 using gRpcurlUI.ViewModel.Dialog;
-using Microsoft.Win32;
 using System;
 using System.IO;
 using System.Threading.Tasks;
@@ -85,7 +84,8 @@ namespace gRpcurlUI.ViewModel.Proto
         private async Task OpenFile()
         {
             string fileName = string.Empty;
-            var result = await windowService.ShowCommonDialogAsync<OpenFileDialog>(
+            var result = await windowService.ShowFileDialogAsync(
+                FileDialogType.Open,
                 (d) =>
                 {
                     d.Title = "Project Open";

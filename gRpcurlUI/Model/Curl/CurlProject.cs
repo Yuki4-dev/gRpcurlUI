@@ -8,6 +8,8 @@ namespace gRpcurlUI.Model.Curl
 {
     public partial class CurlProject : ObservableObject, IProject
     {
+        public Type JsonType => typeof(CurlProjectJson);
+
         [ObservableProperty]
         private string appPath = "curl";
 
@@ -95,13 +97,29 @@ namespace gRpcurlUI.Model.Curl
             };
         }
 
+        public void LoadJsonObject(object jsonObject)
+        {
+            if (jsonObject is not CurlProjectJson curlProject)
+            {
+                throw new Exception("Json is not CurlProject.");
+            }
+
+            AppPath = curlProject.AppPath;
+            ProjectName = curlProject.ProjectName;
+            EndPoint = curlProject.EndPoint;
+            Option = curlProject.Option;
+            IsJsonContent = curlProject.IsJsonContent;
+            IsSelected = curlProject.IsSelected;
+            SendContent = curlProject.SendContent;
+        }
+
         private static string FormatJson(string json, Formatting format = Formatting.None)
         {
             var parsedJson = JsonConvert.DeserializeObject(json);
             return JsonConvert.SerializeObject(parsedJson, format);
         }
 
-        private class CurlProjectJson
+        internal class CurlProjectJson
         {
             public string AppPath { get; set; } = "curl";
             public string ProjectName { get; set; } = string.Empty;

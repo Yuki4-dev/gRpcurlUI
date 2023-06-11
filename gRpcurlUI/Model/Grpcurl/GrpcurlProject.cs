@@ -16,6 +16,8 @@ namespace gRpcurlUI.Model.Grpcurl
 {
     public partial class GrpcurlProject : ObservableObject, IProject
     {
+        public Type JsonType => typeof(GrpcProjectJson);
+
         [ObservableProperty]
         private string appPath = "grpcurl.exe";
 
@@ -124,13 +126,29 @@ namespace gRpcurlUI.Model.Grpcurl
             };
         }
 
+        public void LoadJsonObject(object jsonObject)
+        {
+            if (jsonObject is not GrpcProjectJson grpcProject)
+            {
+                throw new Exception("Json is not GrpcProject.");
+            }
+
+            AppPath = grpcProject.AppPath;
+            ProjectName = grpcProject.ProjectName;
+            EndPoint = grpcProject.EndPoint;
+            IsSelected = grpcProject.IsSelected;
+            Option = grpcProject.Option;
+            SendContent = grpcProject.SendContent;
+            Service = grpcProject.Service;
+        }
+
         private static string FormatJson(string json, Formatting format = Formatting.None)
         {
             var parsedJson = JsonConvert.DeserializeObject(json);
             return JsonConvert.SerializeObject(parsedJson, format);
         }
 
-        private class GrpcProjectJson
+        internal class GrpcProjectJson
         {
             public string AppPath { get; set; } = "grpcurl.exe";
             public string ProjectName { get; set; } = string.Empty;

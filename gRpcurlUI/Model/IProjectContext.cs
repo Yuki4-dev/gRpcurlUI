@@ -1,9 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using gRpcurlUI.Core.Model;
+using System.Collections.Generic;
 using System.ComponentModel;
 
 namespace gRpcurlUI.Model
 {
-    public interface IProjectContext : INotifyPropertyChanged, INotifyPropertyChanging
+    public interface IProjectContext : IJsonObject, INotifyPropertyChanged, INotifyPropertyChanging
     {
         string ProjectType { get; }
 
@@ -16,7 +17,5 @@ namespace gRpcurlUI.Model
         void AddProject(IProject? project = null);
 
         bool RemoveProject(IProject project);
-
-        object ToJsonObject();
     }
 }

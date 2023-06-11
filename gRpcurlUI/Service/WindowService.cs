@@ -1,4 +1,5 @@
 ﻿using gRpcurlUI.Core.API;
+using gRpcurlUI.Core.Model;
 using gRpcurlUI.View.Dialog;
 using Microsoft.Win32;
 using System;
@@ -26,7 +27,7 @@ namespace gRpcurlUI.Service
             }
         }
 
-        public event Action<double, double>? WindowSizeChenged;
+        public event Action<double, double>? WindowSizeChanged;
 
         public void SetBaseWindow(Window window)
         {
@@ -47,25 +48,26 @@ namespace gRpcurlUI.Service
                 && window.Height != double.NaN
                 && window.Width != double.NaN)
             {
-                WindowSizeChenged?.Invoke(window.Height, window.Width);
+                WindowSizeChanged?.Invoke(window.Height, window.Width);
             }
         }
 
-        public async Task<bool> ShowCommonDialogAsync<T>(Action<T> pre, Action<T> post) where T : CommonDialog
+        public async Task<bool> ShowFileDialogAsync(FileDialogType dialogType, Action<IFileDialog> pre, Action<IFileDialog> post)
         {
             ThrowIfWindowNull();
 
-            return await Dispatcher.InvokeAsync(() =>
+            var dialog = GetDialog(dialogType);
+            if (dialog is null)
             {
-                var dialog = (T?)Activator.CreateInstance(typeof(T));
-                if (dialog is null)
-                {
-                    throw new InvalidOperationException("dialog is null.");
-                }
+                throw new InvalidOperationException("dialog is null.");
+            }
 
-                pre.Invoke(dialog);
+            return await Dispatcher!.InvokeAsync(() =>
+            {
+                var wrapper = new FileDialogWrapper(dialog);
+                pre.Invoke(wrapper);
                 var result = dialog.ShowDialog();
-                post.Invoke(dialog);
+                post.Invoke(wrapper);
                 return result ?? false;
             });
         }
@@ -74,7 +76,7 @@ namespace gRpcurlUI.Service
         {
             ThrowIfWindowNull();
 
-            await Dispatcher.InvokeAsync(() =>
+            await Dispatcher!.InvokeAsync(() =>
             {
                 var dialog = (Window?)Activator.CreateInstance(dialogType);
                 if (dialog is null)
@@ -91,10 +93,24 @@ namespace gRpcurlUI.Service
         {
             ThrowIfWindowNull();
 
-            return await Dispatcher.InvokeAsync(() =>
+            return await Dispatcher!.InvokeAsync(() =>
             {
                 return MessageDialog.Show(title, message, button);
             });
+        }
+
+        private FileDialog GetDialog(FileDialogType dialogType)
+        {
+            if (dialogType == FileDialogType.Open)
+            {
+                return Activator.CreateInstance<OpenFileDialog>();
+            }
+            else if (dialogType == FileDialogType.Save)
+            {
+                return Activator.CreateInstance<SaveFileDialog>();
+            }
+
+            throw new InvalidOperationException($"Invalid Type {dialogType}");
         }
 
         private void ThrowIfWindowNull()
@@ -107,5 +123,19 @@ namespace gRpcurlUI.Service
 
         [DllImport("Dwmapi.dll")]
         private static extern void DwmGetColorizationColor([Out] out int pcrColorization, [Out] out bool pfOpaqueBlend);
+
+        private class FileDialogWrapper : IFileDialog
+        {
+            public string Title { get => fileDialog.Title; set => fileDialog.Title = value; }
+            public string Filter { get => fileDialog.Filter; set => fileDialog.Filter = value; }
+            public string FileName { get => fileDialog.FileName; set => fileDialog.FileName = value; }
+
+            private readonly FileDialog fileDialog;
+
+            public FileDialogWrapper(FileDialog fileDialog)
+            {
+                this.fileDialog = fileDialog;
+            }
+        }
     }
 }

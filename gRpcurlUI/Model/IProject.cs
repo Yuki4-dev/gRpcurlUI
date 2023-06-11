@@ -1,10 +1,11 @@
-﻿using gRpcurlUI.Core.Process;
+﻿using gRpcurlUI.Core.Model;
+using gRpcurlUI.Core.Process;
 using System;
 using System.ComponentModel;
 
 namespace gRpcurlUI.Model
 {
-    public interface IProject : ICloneable, INotifyPropertyChanged, INotifyPropertyChanging
+    public interface IProject : ICloneable, IJsonObject, INotifyPropertyChanged, INotifyPropertyChanging
     {
         bool IsSelected { get; set; }
 
@@ -17,7 +18,5 @@ namespace gRpcurlUI.Model
         bool PrepareProject(out string message);
 
         IProcessCommand CreateCommand();
-
-        object ToJsonObject();
     }
 }

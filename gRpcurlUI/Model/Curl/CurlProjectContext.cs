@@ -3,11 +3,14 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using static gRpcurlUI.Model.Curl.CurlProject;
 
 namespace gRpcurlUI.Model.Curl
 {
     public partial class CurlProjectContext : ObservableObject, IProjectContext
     {
+        public Type JsonType => typeof(CurlProjectContextJson);
+
         [ObservableProperty]
         private string version;
 
@@ -74,9 +77,35 @@ namespace gRpcurlUI.Model.Curl
             {
                 ProjectType = ProjectType,
                 Version = Version,
-                Projects = projects.Select(p => p.ToJsonObject())
+                Projects = projects.Select(p => (CurlProjectJson)p.ToJsonObject())
             };
         }
+
+        public void LoadJsonObject(object jsonObject)
+        {
+            if (jsonObject is not CurlProjectContextJson curlContext)
+            {
+                throw new Exception("Json is not CurlProjectContext.");
+            }
+
+            ProjectType = curlContext.ProjectType;
+            Version = curlContext.Version;
+
+            var curlProjects = curlContext.Projects.Select(json =>
+            {
+                var curlProject = new CurlProject();
+                curlProject.LoadJsonObject(json);
+                return curlProject;
+            });
+
+
+            projects.Clear();
+            foreach (var curlProject in curlProjects)
+            {
+                projects.Add(curlProject);
+            }
+        }
+
 
         private class CurlProjectContextJson
         {
@@ -84,7 +113,7 @@ namespace gRpcurlUI.Model.Curl
 
             public string Version { get; set; } = string.Empty;
 
-            public IEnumerable<object> Projects { get; set; } = new List<object>();
+            public IEnumerable<CurlProjectJson> Projects { get; set; } = new List<CurlProjectJson>();
         }
     }
 }

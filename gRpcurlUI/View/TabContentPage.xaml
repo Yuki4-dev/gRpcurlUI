@@ -265,7 +265,7 @@
                         <TextBox
                             IsReadOnly="True"
                             Style="{StaticResource DefaultEditTextBoxStyle}"
-                            Text="{Binding StandardOutput, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                            Text="{Binding StandardOutput, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
                     </ContentControl>
 
                 </controls:HeaderContent>
@@ -296,7 +296,7 @@
                         <TextBox
                             IsReadOnly="True"
                             Style="{StaticResource DefaultEditTextBoxStyle}"
-                            Text="{Binding StandardError, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                            Text="{Binding StandardError, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
                     </ContentControl>
 
                 </controls:HeaderContent>

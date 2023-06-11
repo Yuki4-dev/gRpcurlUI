@@ -1,4 +1,4 @@
-﻿using Microsoft.Win32;
+﻿using gRpcurlUI.Core.Model;
 using System;
 using System.Threading.Tasks;
 using System.Windows;
@@ -13,7 +13,7 @@ namespace gRpcurlUI.Core.API
 
         Brush AccentBrush { get; }
 
-        event Action<double, double>? WindowSizeChenged;
+        event Action<double, double>? WindowSizeChanged;
 
         void SetBaseWindow(Window window);
 
@@ -21,6 +21,12 @@ namespace gRpcurlUI.Core.API
 
         Task<MessageBoxResult> ShowMessageDialogAsync(string title, string message, MessageBoxButton button = MessageBoxButton.OK);
 
-        Task<bool> ShowCommonDialogAsync<T>(Action<T> pre, Action<T> post) where T : CommonDialog;
+        Task<bool> ShowFileDialogAsync(FileDialogType dialogType, Action<IFileDialog> pre, Action<IFileDialog> post);
+    }
+
+    public enum FileDialogType
+    {
+        Open,
+        Save,
     }
 }

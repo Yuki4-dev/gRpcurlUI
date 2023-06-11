@@ -1,5 +1,5 @@
 ﻿using gRpcurlUI.Core.API;
-using gRpcurlUI.Model;
+using gRpcurlUI.Core.Model;
 using Newtonsoft.Json;
 using System;
 using System.IO;
@@ -12,13 +12,13 @@ namespace gRpcurlUI.Service
 
         public string SaveFilter => "json(*.json)|*.json";
 
-        public IProjectContext? Load(string path, Type type)
+        public object Load(string path, Type type)
         {
             var json = File.ReadAllText(path);
-            return (IProjectContext?)JsonConvert.DeserializeObject(json, type);
+            return JsonConvert.DeserializeObject(json, type)!;
         }
 
-        public void Save(IProjectContext context, string path)
+        public void Save(IJsonObject context, string path)
         {
             var json = JsonConvert.SerializeObject(context.ToJsonObject(), Formatting.Indented);
             File.WriteAllText(path, json);

@@ -14,7 +14,7 @@ namespace gRpcurlUI.View
         public TabContentPage()
         {
             windowService = DI.Get<IWindowService>();
-            windowService.WindowSizeChenged += WindowService_WindowSizeChenged;
+            windowService.WindowSizeChanged += WindowService_WindowSizeChenged;
 
             InitializeComponent();
         }
