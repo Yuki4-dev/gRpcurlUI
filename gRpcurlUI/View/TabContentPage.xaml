@@ -248,6 +248,26 @@
 
                             <Button
                                 HorizontalAlignment="Right"
+                                Command="{Binding StandardOutputCopyCommand}"
+                                Style="{StaticResource IconButtonStyle}"
+                                Tag="{StaticResource Copy}">
+                                <Button.ToolTip>
+                                    <ToolTip Content="Copy Text" Style="{StaticResource DefaultToolTipStyle}" />
+                                </Button.ToolTip>
+                            </Button>
+
+                            <Popup IsOpen="{Binding IsStandardOutputCopied}" Placement="Bottom">
+                                <Grid Background="{DynamicResource DefaultWindowBackground}">
+
+                                    <TextBlock
+                                        FontSize="24"
+                                        Style="{StaticResource DefaultTextBlockStyle}"
+                                        Text="Copied!" />
+                                </Grid>
+                            </Popup>
+
+                            <Button
+                                HorizontalAlignment="Right"
                                 Command="{Binding TextBoxClearCommand}"
                                 CommandParameter="2"
                                 Style="{StaticResource IconButtonStyle}"
@@ -261,13 +281,23 @@
 
                     </controls:HeaderContent.Header>
 
-                    <ContentControl Style="{StaticResource DefaultEditAreaContentControlStyle}">
-                        <TextBox
-                            IsReadOnly="True"
-                            Style="{StaticResource DefaultEditTextBoxStyle}"
-                            Text="{Binding StandardOutput, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
-                    </ContentControl>
+                    <Border
+                        Background="Transparent"
+                        BorderBrush="{DynamicResource DefaultCationColor}"
+                        BorderThickness="{Binding StandardOutputThick, Mode=OneWay}">
 
+                        <Border.ToolTip>
+                            <ToolTip Content="Over Text Buffer." Style="{StaticResource DefaultToolTipStyle}" />
+                        </Border.ToolTip>
+
+                        <ContentControl Style="{StaticResource DefaultEditAreaContentControlStyle}">
+
+                            <TextBox
+                                IsReadOnly="True"
+                                Style="{StaticResource DefaultEditTextBoxStyle}"
+                                Text="{Binding StandardOutput, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
+                        </ContentControl>
+                    </Border>
                 </controls:HeaderContent>
 
                 <GridSplitter Grid.Row="1" Style="{StaticResource HorizontalGridSplitterStyle}" />
@@ -292,13 +322,25 @@
 
                     </controls:HeaderContent.Header>
 
-                    <ContentControl Style="{StaticResource DefaultEditAreaContentControlStyle}">
-                        <TextBox
-                            IsReadOnly="True"
-                            Style="{StaticResource DefaultEditTextBoxStyle}"
-                            Text="{Binding StandardError, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
-                    </ContentControl>
+                    <Border
+                        Background="Transparent"
+                        BorderBrush="{DynamicResource DefaultCationColor}"
+                        BorderThickness="{Binding StandardErrorThick, Mode=OneWay}">
 
+                        <Border.ToolTip>
+                            <ToolTip Content="Over Text Buffer." Style="{StaticResource DefaultToolTipStyle}" />
+                        </Border.ToolTip>
+
+
+                        <ContentControl Style="{StaticResource DefaultEditAreaContentControlStyle}">
+
+                            <TextBox
+                                IsReadOnly="True"
+                                Style="{StaticResource DefaultEditTextBoxStyle}"
+                                Text="{Binding StandardError, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
+
+                        </ContentControl>
+                    </Border>
                 </controls:HeaderContent>
 
             </Grid>

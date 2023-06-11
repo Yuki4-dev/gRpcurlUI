@@ -23,6 +23,9 @@ namespace gRpcurlUI.ViewModel
         private IProject? selectedProject = null;
 
         [ObservableProperty]
+        private bool isStandardOutputCopied = false;
+
+        [ObservableProperty]
         private IProjectContext? projectContext;
         partial void OnProjectContextChanging(IProjectContext? value)
         {
@@ -48,9 +51,11 @@ namespace gRpcurlUI.ViewModel
 
         private readonly TextControlDisplayBuffer standardOutputBuffer = new();
         public string StandardOutput => standardOutputBuffer.DisplayText;
+        public int StandardOutputThick => standardOutputBuffer.IsOverDisplay ? 3 : 0;
 
         private readonly TextControlDisplayBuffer standardErrorBuffer = new();
         public string StandardError => standardErrorBuffer.DisplayText;
+        public int StandardErrorThick => standardOutputBuffer.IsOverDisplay ? 3 : 0;
 
         private readonly IWindowService windowService;
 
@@ -257,16 +262,37 @@ namespace gRpcurlUI.ViewModel
             }
         }
 
+        [RelayCommand]
+        private async void StandardOutputCopy()
+        {
+            try
+            {
+                Clipboard.SetText(standardOutputBuffer.GetRowText());
+                IsStandardOutputCopied = true;
+                await Task.Delay(1000);
+            }
+            catch(Exception ex)
+            {
+                _ = windowService.ShowMessageDialogAsync("Error", ex.Message);
+            }
+            finally
+            {
+                IsStandardOutputCopied = false;
+            }
+        }
+
         private void AddStandardOutputBuffer(string text)
         {
-            standardOutputBuffer.AddText(text);
+            standardOutputBuffer.AddText(text + Environment.NewLine);
             OnPropertyChanged(nameof(StandardOutput));
+            OnPropertyChanged(nameof(StandardOutputThick));
         }
 
         private void AddStandardErrorBuffer(string text)
         {
-            standardErrorBuffer.AddText(text);
+            standardErrorBuffer.AddText(text + Environment.NewLine);
             OnPropertyChanged(nameof(StandardError));
+            OnPropertyChanged(nameof(StandardErrorThick));
         }
     }
 }

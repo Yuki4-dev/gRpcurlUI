@@ -58,8 +58,7 @@
                                 BorderBrush="{TemplateBinding BorderBrush}"
                                 BorderThickness="{TemplateBinding BorderThickness}">
 
-                                <Decorator x:Name="PART_ContentHost" Margin="0" />
-
+                                <ScrollViewer x:Name="PART_ContentHost" />
                             </Border>
 
                         </ControlTemplate>

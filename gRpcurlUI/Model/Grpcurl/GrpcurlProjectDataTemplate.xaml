@@ -14,9 +14,7 @@
                     <Setter Property="Margin" Value="4" />
                 </Style>
 
-                <Style BasedOn="{StaticResource DefaultTextBoxStyle}" TargetType="TextBox">
-                    <Setter Property="HorizontalAlignment" Value="Stretch" />
-                </Style>
+                <Style BasedOn="{StaticResource DefaultTextBoxStyle}" TargetType="TextBox" />
 
             </StackPanel.Resources>
 
