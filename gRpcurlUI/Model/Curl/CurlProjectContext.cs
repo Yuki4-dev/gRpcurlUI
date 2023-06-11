@@ -34,9 +34,9 @@ namespace gRpcurlUI.Model.Curl
         public void AddProject(IProject? project = null)
         {
             project ??= new CurlProject()
-            {
-                ProjectName = "new CurlProject"
-            };
+                {
+                    ProjectName = "new CurlProject"
+                };
             projects.Add((CurlProject)project);
         }
 

@@ -8,7 +8,7 @@ using System;
 namespace gRpcurlUI.ViewModel.TabContent
 {
     [ObservableObject]
-    public partial class TabContentErrorAreaViewModel : ITextAreaViewModel
+    public partial class TabContentErrorAreaViewModel: ITextAreaViewModel
     {
         public TextControlDisplayBuffer standardErrorBuffer = new();
         public string StandardError => standardErrorBuffer.DisplayText;
@@ -36,7 +36,7 @@ namespace gRpcurlUI.ViewModel.TabContent
 
         public void Receive(ClearTextBoxMessage message)
         {
-            if (message.ClearTextType == ClearTextBoxType.Error)
+            if(message.ClearTextType == ClearTextBoxType.Error)
             {
                 standardErrorBuffer.Clear();
             }
