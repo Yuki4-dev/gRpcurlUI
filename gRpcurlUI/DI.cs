@@ -5,6 +5,7 @@ using gRpcurlUI.Core.Converter.Proto.Format;
 using gRpcurlUI.Core.Process;
 using gRpcurlUI.Service;
 using gRpcurlUI.ViewModel;
+using gRpcurlUI.ViewModel.Setting;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 
@@ -23,7 +24,7 @@ namespace gRpcurlUI
             var sc = new ServiceCollection();
             _ = sc.AddSingleton<ProtoAnalyzeEntry>();
             _ = sc.AddSingleton<ProtoFormatEntry>();
-            _ = sc.AddSingleton<IProcessExecuter, ProcessExecuter>();
+            _ = sc.AddSingleton<ProcessExecuterFactory>();
 
             // API
             _ = sc.AddSingleton<IWindowService, WindowService>();

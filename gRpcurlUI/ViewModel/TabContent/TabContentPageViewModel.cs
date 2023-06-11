@@ -3,27 +3,25 @@ using CommunityToolkit.Mvvm.Input;
 using gRpcurlUI.Core.API;
 using gRpcurlUI.Core.Process;
 using gRpcurlUI.Model;
-using gRpcurlUI.Model.TabContent;
 using System;
 using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 
-namespace gRpcurlUI.ViewModel
+namespace gRpcurlUI.ViewModel.TabContent
 {
     [ObservableObject]
     public partial class TabContentPageViewModel
     {
         [ObservableProperty]
-        private bool clearResponse = true;
-
-        [ObservableProperty]
         private IProject? selectedProject = null;
 
         [ObservableProperty]
-        private bool isStandardOutputCopied = false;
+        private TabContentResponseAreaViewModel responseAreaViewModel;
+
+        [ObservableProperty]
+        private TabContentErrorAreaViewModel errorAreaViewModel;
 
         [ObservableProperty]
         private IProjectContext? projectContext;
@@ -39,24 +37,6 @@ namespace gRpcurlUI.ViewModel
             SelectedProject = null;
         }
 
-        [ObservableProperty]
-        private bool isSending = false;
-        partial void OnIsSendingChanged(bool value)
-        {
-            OnPropertyChanged(nameof(SendingProgressVisible));
-            OnPropertyChanged(nameof(IsNotSending));
-        }
-        public bool IsNotSending => !IsSending;
-        public Visibility SendingProgressVisible => IsSending ? Visibility.Visible : Visibility.Collapsed;
-
-        private readonly TextControlDisplayBuffer standardOutputBuffer = new();
-        public string StandardOutput => standardOutputBuffer.DisplayText;
-        public int StandardOutputThick => standardOutputBuffer.IsOverDisplay ? 3 : 0;
-
-        private readonly TextControlDisplayBuffer standardErrorBuffer = new();
-        public string StandardError => standardErrorBuffer.DisplayText;
-        public int StandardErrorThick => standardOutputBuffer.IsOverDisplay ? 3 : 0;
-
         private readonly IWindowService windowService;
 
         protected readonly IProcessExecuter processExecuter;
@@ -67,12 +47,12 @@ namespace gRpcurlUI.ViewModel
 
         public TabContentPageViewModel(IWindowService windowService, IProjectDataService projectDataService, IProcessExecuter processExecuter)
         {
-            this.processExecuter = processExecuter;
             this.windowService = windowService;
             this.projectDataService = projectDataService;
 
-            this.processExecuter.StandardOutputReceive += (data) => AddStandardOutputBuffer(data);
-            this.processExecuter.StandardErrorReceive += (data) => AddStandardErrorBuffer(data);
+            this.processExecuter = processExecuter;
+            errorAreaViewModel = new TabContentErrorAreaViewModel(processExecuter);
+            responseAreaViewModel = new TabContentResponseAreaViewModel(processExecuter, windowService);
         }
 
         [RelayCommand]
@@ -193,10 +173,10 @@ namespace gRpcurlUI.ViewModel
                 }
             }
 
-            IsSending = true;
-            if (ClearResponse)
+            responseAreaViewModel.IsSending = true;
+            if (responseAreaViewModel.ClearResponse)
             {
-                TextBoxClear("2");
+                //
             }
 
             try
@@ -212,7 +192,7 @@ namespace gRpcurlUI.ViewModel
             {
                 tokenSource?.Dispose();
                 tokenSource = null;
-                IsSending = false;
+                responseAreaViewModel.IsSending = false;
             }
         }
 
@@ -251,48 +231,7 @@ namespace gRpcurlUI.ViewModel
                         SelectedProject.SendContent = "";
                     }
                     break;
-                case "2":
-                    standardOutputBuffer.Clear();
-                    OnPropertyChanged(nameof(StandardOutput));
-                    break;
-                case "3":
-                    standardErrorBuffer.Clear();
-                    OnPropertyChanged(nameof(StandardError));
-                    break;
             }
-        }
-
-        [RelayCommand]
-        private async void StandardOutputCopy()
-        {
-            try
-            {
-                Clipboard.SetText(standardOutputBuffer.GetRowText());
-                IsStandardOutputCopied = true;
-                await Task.Delay(1000);
-            }
-            catch(Exception ex)
-            {
-                _ = windowService.ShowMessageDialogAsync("Error", ex.Message);
-            }
-            finally
-            {
-                IsStandardOutputCopied = false;
-            }
-        }
-
-        private void AddStandardOutputBuffer(string text)
-        {
-            standardOutputBuffer.AddText(text + Environment.NewLine);
-            OnPropertyChanged(nameof(StandardOutput));
-            OnPropertyChanged(nameof(StandardOutputThick));
-        }
-
-        private void AddStandardErrorBuffer(string text)
-        {
-            standardErrorBuffer.AddText(text + Environment.NewLine);
-            OnPropertyChanged(nameof(StandardError));
-            OnPropertyChanged(nameof(StandardErrorThick));
         }
     }
 }

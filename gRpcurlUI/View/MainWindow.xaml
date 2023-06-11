@@ -6,6 +6,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:gRpcurlUI.View"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:tabContent="clr-namespace:gRpcurlUI.ViewModel.TabContent"
     xmlns:viewmodel="clr-namespace:gRpcurlUI.ViewModel"
     Title="gRpcurUI"
     Width="1100"
@@ -63,7 +64,7 @@
         </TabControl.ItemContainerStyle>
 
         <TabControl.ItemTemplate>
-            <DataTemplate DataType="{x:Type viewmodel:TabContentPageViewModel}">
+            <DataTemplate DataType="{x:Type tabContent:TabContentPageViewModel}">
 
                 <Border
                     x:Name="TabBackBorder"
@@ -89,7 +90,7 @@
         </TabControl.ItemTemplate>
 
         <TabControl.ContentTemplate>
-            <DataTemplate DataType="{x:Type viewmodel:TabContentPageViewModel}">
+            <DataTemplate DataType="{x:Type tabContent:TabContentPageViewModel}">
                 <local:TabContentPage DataContext="{Binding}" />
             </DataTemplate>
         </TabControl.ContentTemplate>

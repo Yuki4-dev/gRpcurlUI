@@ -1,0 +1,86 @@
+﻿<UserControl
+    x:Class="gRpcurlUI.Component.TabContent.TabContentResponseArea"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="clr-namespace:gRpcurlUI.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:gRpcurlUI.Component.TabContent"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:viewModel="clr-namespace:gRpcurlUI.ViewModel.TabContent"
+    d:DataContext="{d:DesignInstance viewModel:TabContentResponseAreaViewModel}"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    mc:Ignorable="d">
+
+    <controls:HeaderContent Title="Response">
+
+        <controls:HeaderContent.Header>
+
+            <StackPanel Style="{StaticResource OparetionAreaStackPanelStyle}">
+
+                <ProgressBar
+                    Width="160"
+                    Height="8"
+                    Margin="4"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    IsIndeterminate="{Binding IsSending}"
+                    Style="{StaticResource DefaultProgressBarStyle}"
+                    Visibility="{Binding SendingProgressVisible, Mode=OneWay}" />
+
+                <ToggleButton
+                    Height="30"
+                    Content="Clear"
+                    IsChecked="{Binding ClearResponse}"
+                    Style="{StaticResource CheckedToggleButtonStyle}" />
+
+                <Button
+                    HorizontalAlignment="Right"
+                    Command="{Binding StandardOutputCopyCommand}"
+                    Style="{StaticResource IconButtonStyle}"
+                    Tag="{StaticResource Copy}">
+                    <Button.ToolTip>
+                        <ToolTip Content="Copy Text" Style="{StaticResource DefaultToolTipStyle}" />
+                    </Button.ToolTip>
+                </Button>
+
+                <Popup IsOpen="{Binding IsStandardOutputCopied}" Placement="Bottom">
+                    <Grid Background="{DynamicResource DefaultWindowBackground}">
+
+                        <TextBlock
+                            FontSize="24"
+                            Style="{StaticResource DefaultTextBlockStyle}"
+                            Text="Copied!" />
+                    </Grid>
+                </Popup>
+
+                <Button
+                    HorizontalAlignment="Right"
+                    Command="{Binding TextBoxClearCommand}"
+                    Style="{StaticResource IconButtonStyle}"
+                    Tag="{StaticResource Clear}">
+                    <Button.ToolTip>
+                        <ToolTip Content="Clear Text" Style="{StaticResource DefaultToolTipStyle}" />
+                    </Button.ToolTip>
+                </Button>
+
+            </StackPanel>
+
+        </controls:HeaderContent.Header>
+
+        <Border
+            Background="Transparent"
+            BorderBrush="{DynamicResource DefaultCationColor}"
+            BorderThickness="{Binding StandardOutputThick, Mode=OneWay}">
+
+            <ContentControl Style="{StaticResource DefaultEditAreaContentControlStyle}">
+
+                <TextBox
+                    IsReadOnly="True"
+                    Style="{StaticResource DefaultEditTextBoxStyle}"
+                    Text="{Binding StandardOutput, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
+            </ContentControl>
+        </Border>
+    </controls:HeaderContent>
+
+</UserControl>

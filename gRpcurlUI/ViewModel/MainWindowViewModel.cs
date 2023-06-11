@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using gRpcurlUI.Core.API;
 using gRpcurlUI.Core.Process;
+using gRpcurlUI.ViewModel.TabContent;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
@@ -14,14 +15,14 @@ namespace gRpcurlUI.ViewModel
 
         private readonly IWindowService windowService;
 
-        public MainWindowViewModel(IWindowService windowService, IProjectContextProvider projectContextProvider, IProjectDataService projectDataService, IProcessExecuter processExecuter)
+        public MainWindowViewModel(IWindowService windowService, IProjectContextProvider projectContextProvider, IProjectDataService projectDataService, ProcessExecuterFactory processExecuterFactory)
         {
             this.windowService = windowService;
 
             var contexts = projectContextProvider.GetProjectContexts();
             foreach (var context in contexts)
             {
-                var viewModel = new TabContentPageViewModel(windowService, projectDataService, processExecuter)
+                var viewModel = new TabContentPageViewModel(windowService, projectDataService, processExecuterFactory.Create())
                 {
                     ProjectContext = context
                 };

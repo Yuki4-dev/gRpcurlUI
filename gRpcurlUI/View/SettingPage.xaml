@@ -5,7 +5,7 @@
     xmlns:controls="clr-namespace:gRpcurlUI.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:viewmodel="clr-namespace:gRpcurlUI.ViewModel"
+    xmlns:viewmodel="clr-namespace:gRpcurlUI.ViewModel.Setting"
     Margin="4"
     d:DataContext="{d:DesignInstance viewmodel:SettingPageViewModel}"
     d:DesignHeight="450"

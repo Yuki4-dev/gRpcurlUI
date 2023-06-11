@@ -6,7 +6,7 @@ using System.Diagnostics;
 using System.Threading.Tasks;
 using System.Windows.Media;
 
-namespace gRpcurlUI.ViewModel
+namespace gRpcurlUI.ViewModel.Setting
 {
     [ObservableObject]
     public partial class SettingPageViewModel
