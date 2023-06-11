@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.Messaging;
 using gRpcurlUI.Core.API;
 using gRpcurlUI.Core.Process;
 using gRpcurlUI.Model;
@@ -178,7 +179,7 @@ namespace gRpcurlUI.ViewModel.TabContent
             responseAreaViewModel.IsSending = true;
             if (responseAreaViewModel.ClearResponse)
             {
-                //
+                WeakReferenceMessenger.Default.Send(new ClearTextBoxMessage(ClearTextBoxType.Response));
             }
 
             try
