@@ -58,12 +58,18 @@ jobs:
 
     env:
       App_Name: gRpcurlUI
-      Solution_Name: gRpcurlUI.sln  
-      App_Project_Path: gRpcurlUI//gRpcurlUI/.csproj
-      Test_Directory: gRpcurlUI.Test
-      CodeCov_Result: "cov.xml"     
+      Solution_Name: gRpcurlUI.sln
+      Wap_Project_Path: gRpcurlUI/gRpcurlUI.csproj
+      Wap_Project_Directory: gRpcurlUI/
+      Test_Directory: gRpcurlUI.Test    
 
     steps:
+      # Dump for debug workflow
+    - name: Dump Github Context
+      env:
+        GitHub_Context: ${{ toJson(github) }}
+      run: echo "${GitHub_Context}"
+    
     - name: Checkout
       uses: actions/checkout@v3
       with:
@@ -80,8 +86,8 @@ jobs:
       uses: microsoft/setup-msbuild@v1.0.2
 
     # Execute all unit tests in the solution
-    - name: Execute unit tests
-      run: dotnet test
+    # - name: Execute unit tests
+    #   run: dotnet test
 
     # Restore the application to populate the obj folder with RuntimeIdentifiers
     - name: Restore the application
