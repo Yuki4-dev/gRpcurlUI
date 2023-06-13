@@ -24,7 +24,7 @@
                     Margin="4"
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center"
-                    IsIndeterminate="{Binding IsSending}"
+                    IsIndeterminate="false"
                     Style="{StaticResource DefaultProgressBarStyle}"
                     Visibility="{Binding SendingProgressVisible, Mode=OneWay}" />
 
@@ -35,7 +35,6 @@
                     Style="{StaticResource CheckedToggleButtonStyle}" />
 
                 <Button
-                    HorizontalAlignment="Right"
                     Command="{Binding StandardOutputCopyCommand}"
                     Style="{StaticResource IconButtonStyle}"
                     Tag="{StaticResource Copy}">
@@ -55,7 +54,6 @@
                 </Popup>
 
                 <Button
-                    HorizontalAlignment="Right"
                     Command="{Binding TextBoxClearCommand}"
                     Style="{StaticResource IconButtonStyle}"
                     Tag="{StaticResource Clear}">

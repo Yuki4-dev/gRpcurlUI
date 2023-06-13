@@ -5,7 +5,6 @@ using gRpcurlUI.Core.API;
 using gRpcurlUI.Core.Process;
 using gRpcurlUI.Model;
 using gRpcurlUI.Model.TabContent;
-using gRpcurlUI.Service;
 using System;
 using System.Threading;
 using System.Windows;
@@ -18,6 +17,14 @@ namespace gRpcurlUI.ViewModel.TabContent
         [ObservableProperty]
         private IProject? selectedProject = null;
 
+        [ObservableProperty]
+        private bool isSending = false;
+        public bool IsNotSending => !IsSending;
+        partial void OnIsSendingChanged(bool value)
+        {
+            OnPropertyChanged(nameof(IsNotSending));
+        }
+  
         private readonly IWindowService windowService;
 
         protected readonly IProcessExecuter processExecuter;
@@ -72,7 +79,8 @@ namespace gRpcurlUI.ViewModel.TabContent
                 }
             }
 
-            WeakReferenceMessenger.Default.Send(new ProcessExecutionStatusMessage(ProcessExecutionStatus.PreProcess));
+            IsSending = true;
+            _ = WeakReferenceMessenger.Default.Send(new ProcessExecutionStatusMessage(ProcessExecutionStatus.PreProcess));
             try
             {
                 tokenSource = new CancellationTokenSource();
@@ -81,13 +89,14 @@ namespace gRpcurlUI.ViewModel.TabContent
             catch (Exception ex)
             {
                 _ = await windowService.ShowMessageDialogAsync("Error", ex.Message);
-                WeakReferenceMessenger.Default.Send(new ProcessExecutionStatusMessage(ProcessExecutionStatus.Error));
+                _ = WeakReferenceMessenger.Default.Send(new ProcessExecutionStatusMessage(ProcessExecutionStatus.Error));
             }
             finally
             {
                 tokenSource?.Dispose();
                 tokenSource = null;
-                WeakReferenceMessenger.Default.Send(new ProcessExecutionStatusMessage(ProcessExecutionStatus.PostProcess));
+                IsSending = false;
+                _ = WeakReferenceMessenger.Default.Send(new ProcessExecutionStatusMessage(ProcessExecutionStatus.Done));
             }
         }
 
@@ -98,6 +107,7 @@ namespace gRpcurlUI.ViewModel.TabContent
             if (result == MessageBoxResult.Yes)
             {
                 tokenSource?.Cancel();
+                _ = WeakReferenceMessenger.Default.Send(new ProcessExecutionStatusMessage(ProcessExecutionStatus.Cancel));
             }
         }
 

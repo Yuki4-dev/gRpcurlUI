@@ -4,7 +4,6 @@ using CommunityToolkit.Mvvm.Messaging;
 using gRpcurlUI.Core.API;
 using gRpcurlUI.Core.Process;
 using gRpcurlUI.Model.TabContent;
-using gRpcurlUI.Service;
 using System;
 using System.Threading.Tasks;
 using System.Windows;
@@ -22,13 +21,11 @@ namespace gRpcurlUI.ViewModel.TabContent
 
         [ObservableProperty]
         private bool isSending = false;
+        public Visibility SendingProgressVisible => IsSending ? Visibility.Visible : Visibility.Collapsed;
         partial void OnIsSendingChanged(bool value)
         {
             OnPropertyChanged(nameof(SendingProgressVisible));
-            OnPropertyChanged(nameof(IsNotSending));
         }
-        public bool IsNotSending => !IsSending;
-        public Visibility SendingProgressVisible => IsSending ? Visibility.Visible : Visibility.Collapsed;
 
         private readonly TextControlDisplayBuffer standardOutputBuffer = new();
         public string StandardOutput => standardOutputBuffer.DisplayText;
@@ -91,11 +88,11 @@ namespace gRpcurlUI.ViewModel.TabContent
             {
                 if (ClearResponse)
                 {
-                    standardOutputBuffer.Clear();
+                    TextBoxClear();
                 }
                 IsSending = true;
             }
-            else if (message.ExecutionStatus == ProcessExecutionStatus.PostProcess)
+            else
             {
                 IsSending = false;
             }

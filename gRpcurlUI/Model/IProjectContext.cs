@@ -14,7 +14,9 @@ namespace gRpcurlUI.Model
 
         void Marge(IProjectContext other);
 
-        void AddProject(IProject? project = null);
+        void NewProject();
+
+        void AddProject(IProject project);
 
         bool RemoveProject(IProject project);
     }

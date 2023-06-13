@@ -1,13 +1,10 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using CommunityToolkit.Mvvm.Messaging;
 using gRpcurlUI.Core.API;
 using gRpcurlUI.Core.Process;
 using gRpcurlUI.Model;
-using gRpcurlUI.Model.TabContent;
 using System;
 using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
@@ -17,15 +14,6 @@ namespace gRpcurlUI.ViewModel.TabContent
     [ObservableObject]
     public partial class TabContentPageViewModel
     {
-        [ObservableProperty]
-        private TabContentRequestAreaViewModel requestAreaViewModel;
-
-        [ObservableProperty]
-        private TabContentResponseAreaViewModel responseAreaViewModel;
-
-        [ObservableProperty]
-        private TabContentErrorAreaViewModel errorAreaViewModel;
-
         [ObservableProperty]
         private IProjectContext? projectContext;
         partial void OnProjectContextChanging(IProjectContext? value)
@@ -40,13 +28,22 @@ namespace gRpcurlUI.ViewModel.TabContent
             requestAreaViewModel.SelectedProject = null;
         }
 
+        [ObservableProperty]
+        private TabContentRequestAreaViewModel requestAreaViewModel;
+
+        [ObservableProperty]
+        private TabContentResponseAreaViewModel responseAreaViewModel;
+
+        [ObservableProperty]
+        private TabContentErrorAreaViewModel errorAreaViewModel;
+
         private readonly IWindowService windowService;
 
         protected readonly IProcessExecuter processExecuter;
 
         private readonly IProjectDataService projectDataService;
 
-        private CancellationTokenSource? tokenSource;
+        private CancellationTokenSource? tokenSource = null;
 
         public TabContentPageViewModel(IWindowService windowService, IProjectDataService projectDataService, IProcessExecuter processExecuter)
         {
@@ -156,17 +153,7 @@ namespace gRpcurlUI.ViewModel.TabContent
         [RelayCommand]
         private void Add()
         {
-            ProjectContext?.AddProject();
-        }
-
-        [RelayCommand]
-        private async void SendCancel()
-        {
-            var result = await windowService.ShowMessageDialogAsync("Send", "Cancel Sending?", MessageBoxButton.YesNo);
-            if (result == MessageBoxResult.Yes)
-            {
-                tokenSource?.Cancel();
-            }
+            ProjectContext?.NewProject();
         }
     }
 }

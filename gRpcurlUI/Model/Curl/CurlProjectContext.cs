@@ -31,12 +31,17 @@ namespace gRpcurlUI.Model.Curl
             return projects.Remove((CurlProject)project);
         }
 
-        public void AddProject(IProject? project = null)
+        public void NewProject()
         {
-            project ??= new CurlProject()
-                {
-                    ProjectName = "new CurlProject"
-                };
+            var project = new CurlProject()
+            {
+                ProjectName = "new CurlProject"
+            };
+            AddProject(project);
+        }
+
+        public void AddProject(IProject project)
+        {
             projects.Add((CurlProject)project);
         }
 

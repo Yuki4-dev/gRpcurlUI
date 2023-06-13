@@ -18,7 +18,7 @@ namespace gRpcurlUI.Model.Grpcurl
         [ObservableProperty]
         private string projectType;
 
-        private readonly ICollection<GrpcurlProject> projects = new ObservableCollection<GrpcurlProject>();
+        private readonly ObservableCollection<GrpcurlProject> projects = new();
         public IEnumerable<IProject> Projects => projects;
 
         public GrpcurlProjectContext()
@@ -33,12 +33,17 @@ namespace gRpcurlUI.Model.Grpcurl
             return projects.Remove((GrpcurlProject)project);
         }
 
-        public void AddProject(IProject? project = null)
+        public void NewProject()
         {
-            project ??= new GrpcurlProject()
-                {
-                    ProjectName = "new GrpcProject"
-                };
+            var project = new GrpcurlProject()
+            {
+                ProjectName = "new GrpcProject"
+            };
+            AddProject(project);
+        }
+
+        public void AddProject(IProject project)
+        {
             projects.Add((GrpcurlProject)project);
         }
 

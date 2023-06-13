@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace gRpcurlUI.Model.TabContent
+﻿namespace gRpcurlUI.Model.TabContent
 {
     public class ProcessExecutionStatusMessage
     {
@@ -20,7 +14,8 @@ namespace gRpcurlUI.Model.TabContent
     {
         Init,
         PreProcess,
-        PostProcess,
+        Done,
+        Cancel,
         Error,
     }
 }
