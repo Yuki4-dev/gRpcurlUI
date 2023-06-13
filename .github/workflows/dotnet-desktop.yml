@@ -20,8 +20,9 @@ jobs:
 
     env:
       App_Name: gRpcurlUI
+      Appx_Bundle: AppPackages
       Solution_Name: gRpcurlUI.sln
-      Wap_Project_Path: gRpcurlUI\gRpcurlUI.csproj
+      Wap_Project_Path: gRpcurlUI
       Wap_Project_Directory: gRpcurlUI
       Test_Directory: gRpcurlUI.Test    
 
