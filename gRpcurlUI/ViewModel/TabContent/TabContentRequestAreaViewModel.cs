@@ -32,7 +32,7 @@ namespace gRpcurlUI.ViewModel.TabContent
         }
 
         [RelayCommand]
-        private void TextBoxClear()
+        public void TextBoxClear()
         {
             if (SelectedProject != null)
             {

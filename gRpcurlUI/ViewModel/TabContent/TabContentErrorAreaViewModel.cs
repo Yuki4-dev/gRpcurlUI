@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
+using gRpcurlUI.Core.API;
 using gRpcurlUI.Core.Process;
 using gRpcurlUI.Model.TabContent;
 using System;
@@ -14,8 +15,11 @@ namespace gRpcurlUI.ViewModel.TabContent
         public string StandardError => standardErrorBuffer.DisplayText;
         public int StandardErrorThick => standardErrorBuffer.IsOverDisplay ? 3 : 0;
 
-        public TabContentErrorAreaViewModel(IProcessExecuter processExecuter)
+        private readonly IWindowService windowService;
+
+        public TabContentErrorAreaViewModel(IProcessExecuter processExecuter, IWindowService windowService)
         {
+            this.windowService = windowService;
             processExecuter.StandardErrorReceive += ProcessExecuter_StandardErrorReceive;
             WeakReferenceMessenger.Default.RegisterAll(this);
         }
@@ -28,17 +32,18 @@ namespace gRpcurlUI.ViewModel.TabContent
         }
 
         [RelayCommand]
-        private void TextBoxClear()
+        public void TextBoxClear()
         {
             standardErrorBuffer.Clear();
             OnPropertyChanged(nameof(StandardError));
+            OnPropertyChanged(nameof(StandardErrorThick));
         }
 
         public void Receive(ClearTextBoxMessage message)
         {
             if(message.ClearTextType == ClearTextBoxType.Error)
             {
-                standardErrorBuffer.Clear();
+                TextBoxClear();
             }
         }
 

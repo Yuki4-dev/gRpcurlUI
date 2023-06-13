@@ -51,7 +51,7 @@ namespace gRpcurlUI.ViewModel.TabContent
         }
 
         [RelayCommand]
-        private void TextBoxClear()
+        public void TextBoxClear()
         {
             standardOutputBuffer.Clear();
             OnPropertyChanged(nameof(StandardOutput));
@@ -81,7 +81,7 @@ namespace gRpcurlUI.ViewModel.TabContent
         {
             if (message.ClearTextType == ClearTextBoxType.Response)
             {
-                standardOutputBuffer.Clear();
+                TextBoxClear();
             }
         }
 

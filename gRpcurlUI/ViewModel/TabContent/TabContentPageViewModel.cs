@@ -18,9 +18,6 @@ namespace gRpcurlUI.ViewModel.TabContent
     public partial class TabContentPageViewModel
     {
         [ObservableProperty]
-        private IProject? selectedProject = null;
-
-        [ObservableProperty]
         private TabContentRequestAreaViewModel requestAreaViewModel;
 
         [ObservableProperty]
@@ -33,14 +30,14 @@ namespace gRpcurlUI.ViewModel.TabContent
         private IProjectContext? projectContext;
         partial void OnProjectContextChanging(IProjectContext? value)
         {
-            SelectedProject = null;
+            requestAreaViewModel.SelectedProject = null;
         }
 
         [ObservableProperty]
         private bool isRemoveMode = false;
         partial void OnIsRemoveModeChanged(bool value)
         {
-            SelectedProject = null;
+            requestAreaViewModel.SelectedProject = null;
         }
 
         private readonly IWindowService windowService;
@@ -58,7 +55,7 @@ namespace gRpcurlUI.ViewModel.TabContent
             this.processExecuter = processExecuter;
 
             requestAreaViewModel = new TabContentRequestAreaViewModel(processExecuter, windowService);
-            errorAreaViewModel = new TabContentErrorAreaViewModel(processExecuter);
+            errorAreaViewModel = new TabContentErrorAreaViewModel(processExecuter, windowService);
             responseAreaViewModel = new TabContentResponseAreaViewModel(processExecuter, windowService);
         }
 
@@ -111,10 +108,10 @@ namespace gRpcurlUI.ViewModel.TabContent
             {
                 try
                 {
-                    var contextJson = projectDataService.Load(fileName, ProjectContext!.JsonType);
-                    if (contextJson != null)
+                    var loadCtx = (IProjectContext)projectDataService.Load(fileName, ProjectContext!.GetType());
+                    if (loadCtx != null)
                     {
-                        ProjectContext.Marge(ProjectContextFactory.CreateFromJson(ProjectContext.GetType(), contextJson));
+                        ProjectContext.Marge(loadCtx);
                     }
                 }
                 catch (Exception ex)
@@ -163,62 +160,12 @@ namespace gRpcurlUI.ViewModel.TabContent
         }
 
         [RelayCommand]
-        private async void Send()
-        {
-            if (SelectedProject is null)
-            {
-                _ = await windowService.ShowMessageDialogAsync("Error", "Project is Nothing.");
-                return;
-            }
-
-            if (!SelectedProject.PrepareProject(out var message))
-            {
-                var result = await windowService.ShowMessageDialogAsync("Send", "continue?\r\n" + message, MessageBoxButton.YesNo);
-                if (result != MessageBoxResult.Yes)
-                {
-                    return;
-                }
-            }
-
-            responseAreaViewModel.IsSending = true;
-            try
-            {
-                tokenSource = new CancellationTokenSource();
-                await processExecuter.ExecuteAsync(SelectedProject.CreateCommand(), tokenSource.Token);
-            }
-            catch (Exception ex)
-            {
-                _ = await windowService.ShowMessageDialogAsync("Error", ex.Message);
-            }
-            finally
-            {
-                tokenSource?.Dispose();
-                tokenSource = null;
-                responseAreaViewModel.IsSending = false;
-            }
-        }
-
-        [RelayCommand]
         private async void SendCancel()
         {
             var result = await windowService.ShowMessageDialogAsync("Send", "Cancel Sending?", MessageBoxButton.YesNo);
             if (result == MessageBoxResult.Yes)
             {
                 tokenSource?.Cancel();
-            }
-        }
-
-        [RelayCommand]
-        private void SendContentFormat()
-        {
-            if (SelectedProject is null)
-            {
-                return;
-            }
-
-            if (!SelectedProject.PrepareProject(out var message))
-            {
-                _ = windowService.ShowMessageDialogAsync("Error", message);
             }
         }
     }

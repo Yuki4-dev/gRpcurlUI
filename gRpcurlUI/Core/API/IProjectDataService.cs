@@ -11,6 +11,6 @@ namespace gRpcurlUI.Core.API
 
         void Save(IJsonObject content, string path);
 
-        object Load(string path, Type type);
+        IJsonObject Load(string path, Type contentType);
     }
 }

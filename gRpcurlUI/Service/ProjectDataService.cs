@@ -12,10 +12,23 @@ namespace gRpcurlUI.Service
 
         public string SaveFilter => "json(*.json)|*.json";
 
-        public object Load(string path, Type type)
+        public IJsonObject Load(string path, Type contentType)
         {
+            if (contentType.IsSubclassOf(typeof(IJsonObject)))
+            {
+                throw new Exception($"{nameof(contentType)} is Not {typeof(IJsonObject).FullName}.");
+            }
+
             var json = File.ReadAllText(path);
-            return JsonConvert.DeserializeObject(json, type)!;
+            if (json == null || string.IsNullOrWhiteSpace(json))
+            {
+                throw new Exception($"{path} is Empty.");
+            }
+
+            var context = (IJsonObject?)Activator.CreateInstance(contentType);
+            var jsonObj = JsonConvert.DeserializeObject(json, context!.JsonType)!;
+            context.LoadJsonObject(jsonObj);
+            return context;
         }
 
         public void Save(IJsonObject context, string path)
