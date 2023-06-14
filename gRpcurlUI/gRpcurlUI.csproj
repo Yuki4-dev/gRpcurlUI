@@ -3,10 +3,8 @@
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
     <TargetFramework>net6.0-windows</TargetFramework>
-    <!--
     <PublishSingleFile>true</PublishSingleFile>
     <RuntimeIdentifier>win10-x64</RuntimeIdentifier>
-    -->
     <UseWPF>true</UseWPF>
     <Platforms>AnyCPU;x64</Platforms>
     <AssetTargetFallback>uap10.0.19041</AssetTargetFallback>
