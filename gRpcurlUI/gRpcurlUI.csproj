@@ -13,17 +13,11 @@
     <StartupObject></StartupObject>
     <ApplicationManifest>app.manifest</ApplicationManifest>
     <Nullable>enable</Nullable>
-    <ApplicationIcon>gRpcurlUI.ico</ApplicationIcon>
+    <ApplicationIcon>icon.ico</ApplicationIcon>
   </PropertyGroup>
 
   <ItemGroup>
     <None Remove="app.manifest" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Content Include="gRpcurlUI.ico">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
   </ItemGroup>
 
   <ItemGroup>
