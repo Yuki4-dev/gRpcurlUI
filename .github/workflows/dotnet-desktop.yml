@@ -22,7 +22,7 @@ jobs:
       App_Name: gRpcurlUI
       Appx_Bundle: AppPackages
       Solution_Name: gRpcurlUI.sln
-      Wap_Project_Path: gRpcurlUI.Package/gRpcurlUI.Package.wapproj
+      Wap_Project_Path: gRpcurlUI.Package\gRpcurlUI.Package.wapproj
       Wap_Project_Directory: gRpcurlUI.Package
       Test_Directory: gRpcurlUI.Test    
 
@@ -70,7 +70,7 @@ jobs:
       run: msbuild $env:Wap_Project_Path /p:Configuration=$env:Configuration /p:UapAppxPackageBuildMode=$env:Appx_Package_Build_Mode /p:AppxBundle=$env:Appx_Bundle /p:PackageCertificateKeyFile=GitHubActionsWorkflow.pfx /p:PackageCertificatePassword=${{ secrets.Pfx_Key }}
       env:
         Appx_Bundle: Always
-        Appx_Bundle_Platforms: x86|x64
+        Appx_Bundle_Platforms: x64
         Appx_Package_Build_Mode: StoreUpload
         Configuration: ${{ matrix.configuration }}
 
