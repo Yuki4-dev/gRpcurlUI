@@ -22,8 +22,8 @@ jobs:
       App_Name: gRpcurlUI
       Appx_Bundle: AppPackages
       Solution_Name: gRpcurlUI.sln
-      Wap_Project_Path: gRpcurlUI
-      Wap_Project_Directory: gRpcurlUI
+      Wap_Project_Path: gRpcurlUI.Package/gRpcurlUI.Package.wapproj
+      Wap_Project_Directory: gRpcurlUI.Package
       Test_Directory: gRpcurlUI.Test    
 
     steps:
