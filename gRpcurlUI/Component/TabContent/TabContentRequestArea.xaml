@@ -18,9 +18,15 @@
 
             <StackPanel Style="{StaticResource OparetionAreaStackPanelStyle}">
 
+                <TextBlock
+                    VerticalAlignment="Center"
+                    Style="{StaticResource DefaultTextBlockStyle}"
+                    Text="{Binding ExecutionTimer.DisplayTime, Mode=OneWay}"
+                    Visibility="{Binding ExecutionTimer.IsShow, Mode=OneWay, Converter={StaticResource Boolean2VisibilityConverter}}" />
+
                 <Button
                     Command="{Binding SendCommand}"
-                    IsEnabled="{Binding IsNotSending}"
+                    IsEnabled="{Binding IsSending, Mode=OneWay, Converter={StaticResource BooleanBackConverter}}"
                     Style="{StaticResource IconButtonStyle}"
                     Tag="{StaticResource Send}">
                     <Button.ToolTip>

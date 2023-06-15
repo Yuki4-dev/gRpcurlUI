@@ -3,7 +3,7 @@ using System.Globalization;
 using System.Windows;
 using System.Windows.Data;
 
-namespace gRpcurlUI.Style
+namespace gRpcurlUI.Converters
 {
     public class IconSizeConverter : IValueConverter
     {

@@ -21,11 +21,6 @@ namespace gRpcurlUI.ViewModel.TabContent
 
         [ObservableProperty]
         private bool isSending = false;
-        public Visibility SendingProgressVisible => IsSending ? Visibility.Visible : Visibility.Collapsed;
-        partial void OnIsSendingChanged(bool value)
-        {
-            OnPropertyChanged(nameof(SendingProgressVisible));
-        }
 
         private readonly TextControlDisplayBuffer standardOutputBuffer = new();
         public string StandardOutput => standardOutputBuffer.DisplayText;

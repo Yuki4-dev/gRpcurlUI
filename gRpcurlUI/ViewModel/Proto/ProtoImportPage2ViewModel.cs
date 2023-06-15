@@ -17,11 +17,6 @@ namespace gRpcurlUI.ViewModel.Proto
 
         [ObservableProperty]
         private bool isAnalyze = false;
-        partial void OnIsAnalyzeChanged(bool value)
-        {
-            OnPropertyChanged(nameof(ProgressVisible));
-        }
-        public Visibility ProgressVisible => IsAnalyze ? Visibility.Visible : Visibility.Hidden;
 
         [ObservableProperty]
         private string protoInformation = string.Empty;

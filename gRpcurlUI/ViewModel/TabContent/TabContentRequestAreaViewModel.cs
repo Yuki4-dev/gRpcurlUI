@@ -19,12 +19,10 @@ namespace gRpcurlUI.ViewModel.TabContent
 
         [ObservableProperty]
         private bool isSending = false;
-        public bool IsNotSending => !IsSending;
-        partial void OnIsSendingChanged(bool value)
-        {
-            OnPropertyChanged(nameof(IsNotSending));
-        }
-  
+
+        [ObservableProperty]
+        private DisplayTimer executionTimer = new();
+
         private readonly IWindowService windowService;
 
         protected readonly IProcessExecuter processExecuter;
@@ -84,10 +82,13 @@ namespace gRpcurlUI.ViewModel.TabContent
             try
             {
                 tokenSource = new CancellationTokenSource();
+                ExecutionTimer.Start();
                 await processExecuter.ExecuteAsync(SelectedProject.CreateCommand(), tokenSource.Token);
+                ExecutionTimer.Stop();
             }
             catch (Exception ex)
             {
+                ExecutionTimer.Stop();
                 _ = await windowService.ShowMessageDialogAsync("Error", ex.Message);
                 _ = WeakReferenceMessenger.Default.Send(new ProcessExecutionStatusMessage(ProcessExecutionStatus.Error));
             }

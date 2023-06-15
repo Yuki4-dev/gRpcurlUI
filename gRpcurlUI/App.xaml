@@ -3,6 +3,7 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:controls="clr-namespace:gRpcurlUI.Controls"
+    xmlns:conv="clr-namespace:gRpcurlUI.Converters"
     xmlns:curlmodel="clr-namespace:gRpcurlUI.Model.Curl"
     xmlns:grpcurlmodel="clr-namespace:gRpcurlUI.Model.Grpcurl"
     xmlns:local="clr-namespace:gRpcurlUI"
@@ -22,6 +23,10 @@
                 <ResourceDictionary Source="Style/ProjectListBoxStyle.xaml" />
                 <ResourceDictionary Source="Style/SolidColorBrushStyle.xaml" />
             </ResourceDictionary.MergedDictionaries>
+
+            <conv:IconSizeConverter x:Key="IconConverter" />
+            <conv:Boolean2VisibilityConverter x:Key="Boolean2VisibilityConverter" />
+            <conv:BooleanBackConverter x:Key="BooleanBackConverter" />
 
             <system:Double x:Key="DefaultTextBoxFontSize">16</system:Double>
             <system:Double x:Key="EditTextBoxFontSize">14</system:Double>

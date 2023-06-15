@@ -3,6 +3,7 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:controls="clr-namespace:gRpcurlUI.Controls"
+    xmlns:conv="clr-namespace:gRpcurlUI.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:gRpcurlUI.Component.TabContent"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -26,7 +27,7 @@
                     VerticalAlignment="Center"
                     IsIndeterminate="false"
                     Style="{StaticResource DefaultProgressBarStyle}"
-                    Visibility="{Binding SendingProgressVisible, Mode=OneWay}" />
+                    Visibility="{Binding IsSending, Mode=OneWay, Converter={StaticResource Boolean2VisibilityConverter}}" />
 
                 <ToggleButton
                     Height="30"
