@@ -21,16 +21,17 @@ namespace gRpcurlUI.View.Dialog
         {
             this.wizardDialogViewModels = wizardDialogViewModels;
             InitializeComponent();
+
+            Closed += WizardDialog_Closed;
             Navigate(wizardDialogViewModels[currentIndex]);
         }
 
-        private void CloseButton_Click(object sender, RoutedEventArgs e)
+        private void WizardDialog_Closed(object? sender, EventArgs e)
         {
             foreach (var viewModel in wizardDialogViewModels)
             {
                 viewModel.Close();
             }
-            Close();
         }
 
         private void BackButton_Click(object sender, RoutedEventArgs e)

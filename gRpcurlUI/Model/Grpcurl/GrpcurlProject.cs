@@ -6,7 +6,7 @@ using gRpcurlUI.Core.Converter.Proto.Format;
 using gRpcurlUI.Core.Process;
 using gRpcurlUI.View.Dialog;
 using gRpcurlUI.ViewModel.Dialog;
-using gRpcurlUI.ViewModel.Proto;
+using gRpcurlUI.ViewModel.Dialog.Proto;
 using Newtonsoft.Json;
 using System;
 using System.IO;

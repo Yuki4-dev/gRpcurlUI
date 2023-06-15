@@ -1,11 +1,21 @@
-﻿using System.Collections;
+﻿using gRpcurlUI.Core.Model;
+using System.Collections;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Windows.Media;
 
 namespace gRpcurlUI.Model.Setting
 {
-    public class BrushSetting : ResourceSetting
+    public class BrushSetting : ResourceSetting, ISettingGroup
     {
+        public string Name => nameof(FontSetting);
+
+        private readonly ObservableCollection<ISettingRow> settingRows = new();
+        public ICollection<ISettingRow> SettingRows => settingRows;
+
         private const string KEY_WindowBackground = "DefaultWindowBackground";
         private const string KEY_PageBackground = "DefaultPageBackground";
         private const string KEY_PageForeground = "DefaultPageForeground";
@@ -31,68 +41,67 @@ namespace gRpcurlUI.Model.Setting
             KEY_ScrollBarTabBrush
         };
 
-        public Brush WindowBackground
+        public BrushSetting() : base() 
         {
-            get => (Brush)GetResources(KEY_WindowBackground);
-            set => SetResources(KEY_WindowBackground, value);
+            SetSettingRows();
         }
 
-        public Brush PageBackground
+        public BrushSetting(IDictionary resources) : base(resources) 
         {
-            get => (Brush)GetResources(KEY_PageBackground);
-            set => SetResources(KEY_PageBackground, value);
+            SetSettingRows();
         }
 
-        public Brush PageForeground
+        private void SetSettingRows()
         {
-            get => (Brush)GetResources(KEY_PageForeground);
-            set => SetResources(KEY_PageForeground, value);
+            Keys.ToList().ForEach(k =>
+            {
+                settingRows.Add(new ResourceSettingRow(this, k, k, BrushConverter.Default));
+            });
         }
 
-        public Brush BorderBrush
+        public event PropertyChangedEventHandler? PropertyChanged;
+
+        protected void OnPropertyChanged([CallerMemberName] string name = "")
         {
-            get => (Brush)GetResources(KEY_BorderBrush);
-            set => SetResources(KEY_BorderBrush, value);
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
         }
 
-        public Brush IconBrush
+        private class BrushConverter : ISettingValueConverter
         {
-            get => (Brush)GetResources(KEY_IconBrush);
-            set => SetResources(KEY_IconBrush, value);
+            public static readonly BrushConverter Default = new();
+
+            public bool Convert(object value, out object newValue)
+            {
+                if (value is string str && TryColorParse(str, out var color))
+                {
+                    newValue = new SolidColorBrush(color);
+                    return true;
+                }
+
+#pragma warning disable CS8625 // null リテラルを null 非許容参照型に変換できません。
+                newValue = null;
+#pragma warning restore CS8625 // null リテラルを null 非許容参照型に変換できません。
+                return false;
+            }
+
+            private static bool TryColorParse(string text, out Color color)
+            {
+                if (string.IsNullOrWhiteSpace(text))
+                {
+                    color = new Color();
+                    return false;
+                }
+                try
+                {
+                    color = (Color)ColorConverter.ConvertFromString(text);
+                    return true;
+                }
+                catch
+                {
+                    color = new Color();
+                    return false;
+                }
+            }
         }
-
-        public Brush EditAreaTextBoxBrush
-        {
-            get => (Brush)GetResources(KEY_EditAreaTextBoxBrush);
-            set => SetResources(KEY_EditAreaTextBoxBrush, value);
-        }
-
-        public Brush TextBoxSelectBrush
-        {
-            get => (Brush)GetResources(KEY_TextBoxSelectBrush);
-            set => SetResources(KEY_TextBoxSelectBrush, value);
-        }
-
-        public Brush MouseOverBackground
-        {
-            get => (Brush)GetResources(KEY_MouseOverBackground);
-            set => SetResources(KEY_MouseOverBackground, value);
-        }
-
-        public Brush SelectedBackground
-        {
-            get => (Brush)GetResources(KEY_SelectedBackground);
-            set => SetResources(KEY_SelectedBackground, value);
-        }
-
-        public Brush ScrollBarTabBrush
-        {
-            get => (Brush)GetResources(KEY_ScrollBarTabBrush);
-            set => SetResources(KEY_ScrollBarTabBrush, value);
-        }
-
-        public BrushSetting() : base() { }
-
-        public BrushSetting(IDictionary resources) : base(resources) { }
     }
 }

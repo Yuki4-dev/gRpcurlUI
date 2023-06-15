@@ -1,0 +1,112 @@
+﻿<Page
+    x:Class="gRpcurlUI.View.Pages.ProjectTabPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:gRpcurlUI.View.Pages"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:tabContent="clr-namespace:gRpcurlUI.ViewModel.Pages.TabContent"
+    xmlns:tabcontent="clr-namespace:gRpcurlUI.Component.TabContent"
+    xmlns:view="clr-namespace:gRpcurlUI.View"
+    xmlns:viewmodel="clr-namespace:gRpcurlUI.ViewModel.Pages"
+    Title="ProjectTabPage"
+    d:DataContext="{d:DesignInstance viewmodel:ProjectTabPageViewModel}"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    Background="{DynamicResource DefaultWindowBackground}"
+    FontFamily="{DynamicResource DefaultFontFamily}"
+    mc:Ignorable="d">
+
+    <Grid>
+
+        <TabControl
+            Background="Transparent"
+            BorderBrush="{DynamicResource DefaultBorderBrush}"
+            BorderThickness="1,1,1,0"
+            ItemsSource="{Binding TabContents}">
+
+            <TabControl.ItemContainerStyle>
+                <Style TargetType="{x:Type TabItem}">
+                    <Setter Property="Margin" Value="0" />
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="{x:Type TabItem}">
+
+                                <Grid x:Name="PanelGrid" Margin="4">
+
+                                    <ContentPresenter
+                                        x:Name="ContentSite"
+                                        Margin="0"
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center"
+                                        ContentSource="Header" />
+
+                                    <Border
+                                        x:Name="TabUnderBorder"
+                                        Margin="4,0,4,0"
+                                        VerticalAlignment="Bottom"
+                                        BorderBrush="{DynamicResource DefaultPageForeground}"
+                                        BorderThickness="1.2"
+                                        Visibility="Hidden" />
+
+                                </Grid>
+
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsSelected" Value="True">
+                                        <!--<Setter TargetName="PanelGrid" Property="Background" Value="{DynamicResource DefaultSelectedBackground}" />-->
+                                        <Setter TargetName="TabUnderBorder" Property="Visibility" Value="Visible" />
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </TabControl.ItemContainerStyle>
+
+            <TabControl.ItemTemplate>
+                <DataTemplate DataType="{x:Type tabContent:TabContentPageViewModel}">
+
+                    <Border
+                        x:Name="TabBackBorder"
+                        Width="120"
+                        BorderThickness="0">
+
+                        <TextBlock
+                            Margin="4"
+                            HorizontalAlignment="Center"
+                            FontSize="18"
+                            Style="{StaticResource DefaultTextBlockStyle}"
+                            Text="{Binding ProjectContext.ProjectType}" />
+
+                    </Border>
+
+                    <DataTemplate.Triggers>
+                        <Trigger SourceName="TabBackBorder" Property="IsMouseOver" Value="True">
+                            <Setter TargetName="TabBackBorder" Property="Background" Value="{DynamicResource DefaultMouseOverBackground}" />
+                        </Trigger>
+                    </DataTemplate.Triggers>
+
+                </DataTemplate>
+            </TabControl.ItemTemplate>
+
+            <TabControl.ContentTemplate>
+                <DataTemplate DataType="{x:Type tabContent:TabContentPageViewModel}">
+                    <tabcontent:TabContentPage DataContext="{Binding}" />
+                </DataTemplate>
+            </TabControl.ContentTemplate>
+
+        </TabControl>
+
+        <Button
+            Width="32"
+            Height="32"
+            Margin="4"
+            HorizontalAlignment="Right"
+            VerticalAlignment="Top"
+            Command="{Binding SettingCommand}"
+            Style="{StaticResource IconButtonStyle}"
+            Tag="{StaticResource Setting}" />
+
+    </Grid>
+</Page>

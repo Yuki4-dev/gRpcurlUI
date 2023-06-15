@@ -6,7 +6,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:gRpcurlUI.Component.TabContent"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:viewModel="clr-namespace:gRpcurlUI.ViewModel.TabContent"
+    xmlns:viewModel="clr-namespace:gRpcurlUI.ViewModel.Pages.TabContent"
     d:DataContext="{d:DesignInstance viewModel:TabContentRequestAreaViewModel}"
     d:DesignHeight="450"
     d:DesignWidth="800"

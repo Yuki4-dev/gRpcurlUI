@@ -6,7 +6,6 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:gRpcurlUI.View"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:tabContent="clr-namespace:gRpcurlUI.ViewModel.TabContent"
     xmlns:viewmodel="clr-namespace:gRpcurlUI.ViewModel"
     Title="gRpcurUI"
     Width="1100"
@@ -16,85 +15,12 @@
     d:DataContext="{d:DesignInstance viewmodel:MainWindowViewModel}"
     Background="{DynamicResource DefaultWindowBackground}"
     FontFamily="{DynamicResource DefaultFontFamily}"
+    Loaded="Window_Loaded"
     mc:Ignorable="d">
 
-    <TabControl
-        Background="Transparent"
-        BorderBrush="{DynamicResource DefaultBorderBrush}"
-        BorderThickness="1,1,1,0"
-        ItemsSource="{Binding TabContents}">
+    <Grid>
 
-        <TabControl.ItemContainerStyle>
-            <Style TargetType="{x:Type TabItem}">
-                <Setter Property="Margin" Value="0" />
-                <Setter Property="Template">
-                    <Setter.Value>
-                        <ControlTemplate TargetType="{x:Type TabItem}">
+        <Frame x:Name="MainFrame" />
 
-                            <Grid x:Name="PanelGrid">
-
-                                <ContentPresenter
-                                    x:Name="ContentSite"
-                                    Margin="0"
-                                    HorizontalAlignment="Center"
-                                    VerticalAlignment="Center"
-                                    ContentSource="Header" />
-
-                                <Border
-                                    x:Name="TabUnderBorder"
-                                    Margin="4,0,4,0"
-                                    VerticalAlignment="Bottom"
-                                    BorderBrush="{DynamicResource DefaultPageForeground}"
-                                    BorderThickness="1.2"
-                                    Visibility="Hidden" />
-
-                            </Grid>
-
-                            <ControlTemplate.Triggers>
-                                <Trigger Property="IsSelected" Value="True">
-                                    <Setter TargetName="PanelGrid" Property="Background" Value="{DynamicResource DefaultSelectedBackground}" />
-                                    <Setter TargetName="TabUnderBorder" Property="Visibility" Value="Visible" />
-                                </Trigger>
-                            </ControlTemplate.Triggers>
-
-                        </ControlTemplate>
-                    </Setter.Value>
-                </Setter>
-            </Style>
-        </TabControl.ItemContainerStyle>
-
-        <TabControl.ItemTemplate>
-            <DataTemplate DataType="{x:Type tabContent:TabContentPageViewModel}">
-
-                <Border
-                    x:Name="TabBackBorder"
-                    Width="120"
-                    BorderBrush="{DynamicResource DefaultBorderBrush}"
-                    BorderThickness="0.5,1,0.5,0">
-
-                    <TextBlock
-                        Margin="4"
-                        FontSize="18"
-                        Style="{StaticResource DefaultTextBlockStyle}"
-                        Text="{Binding ProjectContext.ProjectType}" />
-
-                </Border>
-
-                <DataTemplate.Triggers>
-                    <Trigger SourceName="TabBackBorder" Property="IsMouseOver" Value="True">
-                        <Setter TargetName="TabBackBorder" Property="Background" Value="{DynamicResource DefaultMouseOverBackground}" />
-                    </Trigger>
-                </DataTemplate.Triggers>
-
-            </DataTemplate>
-        </TabControl.ItemTemplate>
-
-        <TabControl.ContentTemplate>
-            <DataTemplate DataType="{x:Type tabContent:TabContentPageViewModel}">
-                <local:TabContentPage DataContext="{Binding}" />
-            </DataTemplate>
-        </TabControl.ContentTemplate>
-
-    </TabControl>
-
+    </Grid>
 </Window>

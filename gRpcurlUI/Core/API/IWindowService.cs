@@ -17,7 +17,9 @@ namespace gRpcurlUI.Core.API
 
         void SetBaseWindow(Window window);
 
-        Task ShowDialogAsync(Type dialogType, object dataContext);
+        Task ShowWindowAsync(Type windowType);
+
+        Task NavigatePageAsync(NavigatePageType pageType);
 
         Task<MessageBoxResult> ShowMessageDialogAsync(string title, string message, MessageBoxButton button = MessageBoxButton.OK);
 
@@ -28,5 +30,17 @@ namespace gRpcurlUI.Core.API
     {
         Open,
         Save,
+    }
+
+    public enum NavigatePageType
+    {
+        Back,
+        ProjectTab,
+        Setting,
+    }
+
+    public interface INavigationWindow
+    {
+        bool Navigate(NavigatePageType navigatePageType);
     }
 }

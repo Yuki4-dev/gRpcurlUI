@@ -1,13 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
-using System.Windows;
 
 namespace gRpcurlUI.Model.TabContent
 {
@@ -20,7 +14,7 @@ namespace gRpcurlUI.Model.TabContent
         [ObservableProperty]
         private string displayTime = "0";
 
-        private Stopwatch stopwatch = new ();
+        private readonly Stopwatch stopwatch = new ();
 
         public DisplayTimer()
         {

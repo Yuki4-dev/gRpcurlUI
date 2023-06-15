@@ -4,8 +4,10 @@ using gRpcurlUI.Core.Converter.Proto.Analyze;
 using gRpcurlUI.Core.Converter.Proto.Format;
 using gRpcurlUI.Core.Process;
 using gRpcurlUI.Service;
+using gRpcurlUI.View.Pages;
 using gRpcurlUI.ViewModel;
-using gRpcurlUI.ViewModel.Setting;
+using gRpcurlUI.ViewModel.Pages;
+using gRpcurlUI.ViewModel.Pages.TabContent;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 
@@ -31,9 +33,14 @@ namespace gRpcurlUI
             _ = sc.AddSingleton<IProjectDataService, ProjectDataService>();
             _ = sc.AddSingleton<IProjectContextProvider, ProjectContextProvider>();
 
+            // Views
+            _ = sc.AddSingleton<ProjectTabPage>();
+            _ = sc.AddSingleton<SettingPage>();
+
             // ViewModels
-            _ = sc.AddSingleton<SettingPageViewModel>();
             _ = sc.AddSingleton<MainWindowViewModel>();
+            _ = sc.AddSingleton<SettingPageViewModel>();
+            _ = sc.AddSingleton<ProjectTabPageViewModel>();
 
             Ioc.Default.ConfigureServices(sc.BuildServiceProvider());
         }

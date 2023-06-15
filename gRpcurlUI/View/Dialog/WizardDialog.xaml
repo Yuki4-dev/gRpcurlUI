@@ -12,24 +12,9 @@
     Background="{DynamicResource DefaultWindowBackground}"
     Foreground="{DynamicResource DefaultPageForeground}"
     ResizeMode="NoResize"
-    Style="{DynamicResource WizardDialogStyle}"
     mc:Ignorable="d">
 
     <Window.Resources>
-        <Style x:Key="WizardDialogStyle" TargetType="{x:Type Window}">
-            <Setter Property="SnapsToDevicePixels" Value="True" />
-            <Setter Property="UseLayoutRounding" Value="True" />
-            <Setter Property="WindowChrome.WindowChrome">
-                <Setter.Value>
-                    <WindowChrome
-                        CaptionHeight="36"
-                        GlassFrameThickness="0"
-                        ResizeBorderThickness="20"
-                        UseAeroCaptionButtons="False" />
-                </Setter.Value>
-            </Setter>
-        </Style>
-
         <Style
             x:Key="WizardButtonStyle"
             BasedOn="{StaticResource DefaultButtonStyle}"
@@ -55,18 +40,6 @@
             FontSize="22"
             Style="{StaticResource DefaultTextBlockStyle}"
             Text="{Binding Content.Title, ElementName=MainFrame}" />
-
-        <Button
-            x:Name="CloseButton"
-            Width="24"
-            Height="24"
-            Margin="4"
-            HorizontalAlignment="Right"
-            VerticalAlignment="Top"
-            Click="CloseButton_Click"
-            Style="{StaticResource IconButtonStyle}"
-            Tag="{StaticResource Close}"
-            WindowChrome.IsHitTestVisibleInChrome="True" />
 
         <Grid Grid.Row="1">
 

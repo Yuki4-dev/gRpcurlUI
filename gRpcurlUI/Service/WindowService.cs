@@ -6,6 +6,7 @@ using System;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Threading;
 
@@ -71,20 +72,30 @@ namespace gRpcurlUI.Service
             });
         }
 
-        public async Task ShowDialogAsync(Type dialogType, object dataContext)
+        public async Task ShowWindowAsync(Type windowType)
         {
             ThrowIfWindowNull();
 
             await Dispatcher!.InvokeAsync(() =>
             {
-                var dialog = (Window?)Activator.CreateInstance(dialogType);
+                var dialog = (Window?)Activator.CreateInstance(windowType);
                 if (dialog is null)
                 {
                     throw new InvalidOperationException("dialog is null.");
                 }
 
-                dialog.DataContext = dataContext;
                 _ = dialog.ShowDialog();
+            });
+        }
+
+        public async Task NavigatePageAsync(NavigatePageType pageType)
+        {
+            await Dispatcher!.InvokeAsync(() =>
+            {
+                if (window is INavigationWindow navigationWindow)
+                {
+                    navigationWindow.Navigate(pageType);
+                }
             });
         }
 

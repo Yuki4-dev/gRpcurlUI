@@ -1,0 +1,61 @@
+﻿<Page
+    x:Class="gRpcurlUI.View.Dialog.Proto.ProtoImportPage1"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="clr-namespace:gRpcurlUI.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:gRpcurlUI.View.Dialog.Proto"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:viewModel="clr-namespace:gRpcurlUI.ViewModel.Dialog.Proto"
+    Title="OpenProto"
+    d:DataContext="{d:DesignInstance viewModel:ProtoImportPage1ViewModel}"
+    d:DesignHeight="600"
+    d:DesignWidth="600"
+    Style="{DynamicResource ProtoImportPageStyle}"
+    mc:Ignorable="d">
+
+    <Page.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/View/Dialog/Proto/ProtoImportPageStyle.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Page.Resources>
+
+    <StackPanel HorizontalAlignment="Stretch">
+
+        <TextBlock
+            HorizontalAlignment="Left"
+            Style="{StaticResource DefaultTextBlockStyle}"
+            Text="File Path" />
+
+        <Grid>
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="9.5*" />
+                <ColumnDefinition Width="0.5*" />
+            </Grid.ColumnDefinitions>
+
+            <TextBox
+                HorizontalAlignment="Stretch"
+                Style="{StaticResource DefaultTextBoxStyle}"
+                Text="{Binding FilePath, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+
+            <Button
+                Grid.Column="1"
+                Command="{Binding OpenFileCommand}"
+                Style="{StaticResource IconButtonStyle}"
+                Tag="{StaticResource Search}" />
+
+        </Grid>
+
+        <TextBlock
+            HorizontalAlignment="Left"
+            FontSize="12"
+            Foreground="Red"
+            Style="{StaticResource DefaultTextBlockStyle}"
+            Text="{Binding ErrorMessage, Mode=OneWay}" />
+
+    </StackPanel>
+
+</Page>
