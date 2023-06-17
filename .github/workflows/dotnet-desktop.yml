@@ -23,6 +23,8 @@ jobs:
       App_Name: gRpcurlUI
       Appx_Bundle: AppPackages
       Solution_Name: gRpcurlUI.sln
+      Project_Path: gRpcurlUI\gRpcurlUI.csproj
+      Project_Directory: gRpcurlUI
       Wap_Project_Path: gRpcurlUI.Package\gRpcurlUI.Package.wapproj
       Wap_Project_Directory: gRpcurlUI.Package
       Test_Directory: gRpcurlUI.Test    
@@ -65,6 +67,15 @@ jobs:
         $pfx_cert_byte = [System.Convert]::FromBase64String("${{ secrets.Base64_Encoded_Pfx }}")
         $certificatePath = Join-Path -Path $env:Wap_Project_Directory -ChildPath GitHubActionsWorkflow.pfx
         [IO.File]::WriteAllBytes("$certificatePath", $pfx_cert_byte)
+    
+    - name: Build exe
+      run: msbuild $env:Project_Path -p:OutDir=out/ /t:build /p:Platform=$env:TargetPlatform /p:Configuration=$env:Configuration
+      
+    - name: Upload artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: Build exe
+        path: ${{ env.Project_Directory }}\out
 
     # Create the app package by building and packaging the Windows Application Packaging project
     - name: Create the app package
