@@ -69,13 +69,7 @@ jobs:
         [IO.File]::WriteAllBytes("$certificatePath", $pfx_cert_byte)
     
     - name: Build exe
-      run: msbuild $env:Project_Path -p:OutDir=out/ /t:build /p:Platform=$env:TargetPlatform /p:Configuration=$env:Configuration
-      
-    - name: Upload artifact
-      uses: actions/upload-artifact@v3
-      with:
-        name: Build exe
-        path: ${{ env.Project_Directory }}\out
+      run: msbuild $env:Project_Path /t:build /p:PublishSingleFile=true /p:OutDir=out/ /p:Platform=$env:TargetPlatform /p:Configuration=$env:Configuration
 
     # Create the app package by building and packaging the Windows Application Packaging project
     - name: Create the app package
@@ -90,6 +84,12 @@ jobs:
     # Remove the pfx
     - name: Remove the pfx
       run: Remove-Item -path $env:Wap_Project_Directory\GitHubActionsWorkflow.pfx
+      
+    - name: Upload artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: Build exe - ${{ matrix.targetplatform }}
+        path: ${{ env.Project_Directory }}\out
 
     # Upload the MSIX package: https://github.com/marketplace/actions/upload-a-build-artifact
     - name: Upload build artifacts
