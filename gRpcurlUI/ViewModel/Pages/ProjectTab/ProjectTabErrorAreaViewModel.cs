@@ -3,13 +3,13 @@ using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using gRpcurlUI.Core.API;
 using gRpcurlUI.Core.Process;
-using gRpcurlUI.Model.TabContent;
+using gRpcurlUI.Model.ProjectTab;
 using System;
 
-namespace gRpcurlUI.ViewModel.Pages.TabContent
+namespace gRpcurlUI.ViewModel.Pages.ProjectTab
 {
     [ObservableObject]
-    public partial class TabContentErrorAreaViewModel: ITextAreaViewModel
+    public partial class ProjectTabErrorAreaViewModel: ITextAreaViewModel
     {
         public TextControlDisplayBuffer standardErrorBuffer = new();
         public string StandardError => standardErrorBuffer.DisplayText;
@@ -17,7 +17,7 @@ namespace gRpcurlUI.ViewModel.Pages.TabContent
 
         private readonly IWindowService windowService;
 
-        public TabContentErrorAreaViewModel(IProcessExecuter processExecuter, IWindowService windowService)
+        public ProjectTabErrorAreaViewModel(IProcessExecuter processExecuter, IWindowService windowService)
         {
             this.windowService = windowService;
             processExecuter.StandardErrorReceive += ProcessExecuter_StandardErrorReceive;

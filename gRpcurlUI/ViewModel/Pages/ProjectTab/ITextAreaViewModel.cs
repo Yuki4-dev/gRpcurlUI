@@ -1,7 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.Messaging;
-using gRpcurlUI.Model.TabContent;
+using gRpcurlUI.Model.ProjectTab;
 
-namespace gRpcurlUI.ViewModel.Pages.TabContent
+namespace gRpcurlUI.ViewModel.Pages.ProjectTab
 {
     public interface ITextAreaViewModel: IRecipient<ClearTextBoxMessage>
     {

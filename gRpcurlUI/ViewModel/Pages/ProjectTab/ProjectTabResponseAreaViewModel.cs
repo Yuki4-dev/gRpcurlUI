@@ -3,15 +3,15 @@ using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using gRpcurlUI.Core.API;
 using gRpcurlUI.Core.Process;
-using gRpcurlUI.Model.TabContent;
+using gRpcurlUI.Model.ProjectTab;
 using System;
 using System.Threading.Tasks;
 using System.Windows;
 
-namespace gRpcurlUI.ViewModel.Pages.TabContent
+namespace gRpcurlUI.ViewModel.Pages.ProjectTab
 {
     [ObservableObject]
-    public partial class TabContentResponseAreaViewModel : ITextAreaViewModel, IRecipient<ProcessExecutionStatusMessage>
+    public partial class ProjectTabResponseAreaViewModel : ITextAreaViewModel, IRecipient<ProcessExecutionStatusMessage>
     {
         [ObservableProperty]
         private bool clearResponse = true;
@@ -28,7 +28,7 @@ namespace gRpcurlUI.ViewModel.Pages.TabContent
 
         private readonly IWindowService windowService;
 
-        public TabContentResponseAreaViewModel(IProcessExecuter processExecuter, IWindowService windowService)
+        public ProjectTabResponseAreaViewModel(IProcessExecuter processExecuter, IWindowService windowService)
         {
             this.windowService = windowService;
             processExecuter.StandardOutputReceive += ProcessExecuter_StandardOutputReceive;

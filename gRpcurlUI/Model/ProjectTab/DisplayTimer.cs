@@ -3,7 +3,7 @@ using System;
 using System.ComponentModel;
 using System.Diagnostics;
 
-namespace gRpcurlUI.Model.TabContent
+namespace gRpcurlUI.Model.ProjectTab
 {
     [INotifyPropertyChanged]
     public partial class DisplayTimer 

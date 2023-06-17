@@ -9,10 +9,10 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 
-namespace gRpcurlUI.ViewModel.Pages.TabContent
+namespace gRpcurlUI.ViewModel.Pages.ProjectTab
 {
     [ObservableObject]
-    public partial class TabContentPageViewModel
+    public partial class ProjectTabContentViewModel
     {
         [ObservableProperty]
         private IProjectContext? projectContext;
@@ -29,13 +29,13 @@ namespace gRpcurlUI.ViewModel.Pages.TabContent
         }
 
         [ObservableProperty]
-        private TabContentRequestAreaViewModel requestAreaViewModel;
+        private ProjectTabRequestAreaViewModel requestAreaViewModel;
 
         [ObservableProperty]
-        private TabContentResponseAreaViewModel responseAreaViewModel;
+        private ProjectTabResponseAreaViewModel responseAreaViewModel;
 
         [ObservableProperty]
-        private TabContentErrorAreaViewModel errorAreaViewModel;
+        private ProjectTabErrorAreaViewModel errorAreaViewModel;
 
         private readonly IWindowService windowService;
 
@@ -45,15 +45,15 @@ namespace gRpcurlUI.ViewModel.Pages.TabContent
 
         private readonly CancellationTokenSource? tokenSource = null;
 
-        public TabContentPageViewModel(IWindowService windowService, IProjectDataService projectDataService, IProcessExecuter processExecuter)
+        public ProjectTabContentViewModel(IWindowService windowService, IProjectDataService projectDataService, IProcessExecuter processExecuter)
         {
             this.windowService = windowService;
             this.projectDataService = projectDataService;
             this.processExecuter = processExecuter;
 
-            requestAreaViewModel = new TabContentRequestAreaViewModel(processExecuter, windowService);
-            errorAreaViewModel = new TabContentErrorAreaViewModel(processExecuter, windowService);
-            responseAreaViewModel = new TabContentResponseAreaViewModel(processExecuter, windowService);
+            requestAreaViewModel = new ProjectTabRequestAreaViewModel(processExecuter, windowService);
+            errorAreaViewModel = new ProjectTabErrorAreaViewModel(processExecuter, windowService);
+            responseAreaViewModel = new ProjectTabResponseAreaViewModel(processExecuter, windowService);
         }
 
         [RelayCommand]

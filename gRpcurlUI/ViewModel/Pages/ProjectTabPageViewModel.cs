@@ -2,7 +2,7 @@
 using CommunityToolkit.Mvvm.Input;
 using gRpcurlUI.Core.API;
 using gRpcurlUI.Core.Process;
-using gRpcurlUI.ViewModel.Pages.TabContent;
+using gRpcurlUI.ViewModel.Pages.ProjectTab;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
@@ -12,7 +12,7 @@ namespace gRpcurlUI.ViewModel.Pages
     public partial class ProjectTabPageViewModel
     {
         [ObservableProperty]
-        private ICollection<TabContentPageViewModel> tabContents = new ObservableCollection<TabContentPageViewModel>();
+        private ICollection<ProjectTabContentViewModel> tabContents = new ObservableCollection<ProjectTabContentViewModel>();
 
         private readonly IWindowService windowService;
 
@@ -23,7 +23,7 @@ namespace gRpcurlUI.ViewModel.Pages
             var contexts = projectContextProvider.GetProjectContexts();
             foreach (var context in contexts)
             {
-                var viewModel = new TabContentPageViewModel(windowService, projectDataService, processExecuterFactory.Create())
+                var viewModel = new ProjectTabContentViewModel(windowService, projectDataService, processExecuterFactory.Create())
                 {
                     ProjectContext = context
                 };

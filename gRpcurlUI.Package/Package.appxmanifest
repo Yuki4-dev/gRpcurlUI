@@ -4,6 +4,7 @@
   xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10"
   xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10"
   xmlns:rescap="http://schemas.microsoft.com/appx/manifest/foundation/windows10/restrictedcapabilities"
+  xmlns:desktop="http://schemas.microsoft.com/appx/manifest/desktop/windows10"
   IgnorableNamespaces="uap rescap">
 
   <Identity
@@ -13,7 +14,7 @@
 
   <Properties>
     <DisplayName>gRpcurlUI.Package</DisplayName>
-    <PublisherDisplayName>sanak</PublisherDisplayName>
+    <PublisherDisplayName>Yuki44</PublisherDisplayName>
     <Logo>Images\StoreLogo.png</Logo>
   </Properties>
 

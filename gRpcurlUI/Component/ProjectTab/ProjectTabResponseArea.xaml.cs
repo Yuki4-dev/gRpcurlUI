@@ -1,13 +1,13 @@
 ﻿using System.Windows.Controls;
 
-namespace gRpcurlUI.Component.TabContent
+namespace gRpcurlUI.Component.ProjectTab
 {
     /// <summary>
     /// TabContentResponseArea.xaml の相互作用ロジック
     /// </summary>
-    public partial class TabContentResponseArea : UserControl
+    public partial class ProjectTabResponseArea : UserControl
     {
-        public TabContentResponseArea()
+        public ProjectTabResponseArea()
         {
             InitializeComponent();
         }

@@ -1,4 +1,4 @@
-﻿namespace gRpcurlUI.Model.TabContent
+﻿namespace gRpcurlUI.Model.ProjectTab
 {
     public class ClearTextBoxMessage
     {

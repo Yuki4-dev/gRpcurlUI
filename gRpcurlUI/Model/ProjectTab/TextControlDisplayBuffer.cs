@@ -1,6 +1,6 @@
 ﻿using System.Text;
 
-namespace gRpcurlUI.Model.TabContent
+namespace gRpcurlUI.Model.ProjectTab
 {
     public class TextControlDisplayBuffer
     {

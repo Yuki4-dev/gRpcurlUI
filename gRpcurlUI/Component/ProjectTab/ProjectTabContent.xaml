@@ -1,15 +1,15 @@
 ﻿<UserControl
-    x:Class="gRpcurlUI.Component.TabContent.TabContentPage"
+    x:Class="gRpcurlUI.Component.ProjectTab.ProjectTabContent"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:controls="clr-namespace:gRpcurlUI.Controls"
     xmlns:coreModel="clr-namespace:gRpcurlUI.Core.Model"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:local="clr-namespace:gRpcurlUI.Component.TabContent"
+    xmlns:local="clr-namespace:gRpcurlUI.Component.ProjectTab"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:system="clr-namespace:System;assembly=netstandard"
-    xmlns:viewModel="clr-namespace:gRpcurlUI.ViewModel.Pages.TabContent"
-    d:DataContext="{d:DesignInstance viewModel:TabContentPageViewModel}"
+    xmlns:viewModel="clr-namespace:gRpcurlUI.ViewModel.Pages.ProjectTab"
+    d:DataContext="{d:DesignInstance viewModel:ProjectTabContentViewModel}"
     d:DesignHeight="450"
     d:DesignWidth="800"
     Background="{DynamicResource DefaultPageBackground}"
@@ -183,7 +183,7 @@
 
                 <Border Grid.Row="1" Background="{DynamicResource DefaultBorderBrush}" />
 
-                <local:TabContentRequestArea Grid.Row="2" DataContext="{Binding RequestAreaViewModel}" />
+                <local:ProjectTabRequestArea Grid.Row="2" DataContext="{Binding RequestAreaViewModel}" />
 
             </Grid>
 
@@ -201,11 +201,11 @@
                     <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
 
-                <local:TabContentResponseArea DataContext="{Binding ResponseAreaViewModel}" />
+                <local:ProjectTabResponseArea DataContext="{Binding ResponseAreaViewModel}" />
 
                 <GridSplitter Grid.Row="1" Style="{StaticResource HorizontalGridSplitterStyle}" />
 
-                <local:TabContentErrorArea Grid.Row="2" DataContext="{Binding ErrorAreaViewModel}" />
+                <local:ProjectTabErrorArea Grid.Row="2" DataContext="{Binding ErrorAreaViewModel}" />
 
             </Grid>
 

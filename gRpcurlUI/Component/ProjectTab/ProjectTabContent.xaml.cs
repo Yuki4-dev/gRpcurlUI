@@ -2,16 +2,16 @@
 using System.Windows;
 using System.Windows.Controls;
 
-namespace gRpcurlUI.Component.TabContent
+namespace gRpcurlUI.Component.ProjectTab
 {
     /// <summary>
     /// TabContentPage.xaml の相互作用ロジック
     /// </summary>
-    public partial class TabContentPage : UserControl
+    public partial class ProjectTabContent : UserControl
     {
         private readonly IWindowService windowService;
 
-        public TabContentPage()
+        public ProjectTabContent()
         {
             windowService = DI.Get<IWindowService>();
             windowService.WindowSizeChanged += WindowService_WindowSizeChenged;

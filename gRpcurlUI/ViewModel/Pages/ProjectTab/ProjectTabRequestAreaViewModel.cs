@@ -4,15 +4,15 @@ using CommunityToolkit.Mvvm.Messaging;
 using gRpcurlUI.Core.API;
 using gRpcurlUI.Core.Model;
 using gRpcurlUI.Core.Process;
-using gRpcurlUI.Model.TabContent;
+using gRpcurlUI.Model.ProjectTab;
 using System;
 using System.Threading;
 using System.Windows;
 
-namespace gRpcurlUI.ViewModel.Pages.TabContent
+namespace gRpcurlUI.ViewModel.Pages.ProjectTab
 {
     [ObservableObject]
-    public partial class TabContentRequestAreaViewModel : ITextAreaViewModel
+    public partial class ProjectTabRequestAreaViewModel : ITextAreaViewModel
     {
         [ObservableProperty]
         private IProject? selectedProject = null;
@@ -29,7 +29,7 @@ namespace gRpcurlUI.ViewModel.Pages.TabContent
 
         private CancellationTokenSource? tokenSource;
 
-        public TabContentRequestAreaViewModel(IProcessExecuter processExecuter, IWindowService windowService)
+        public ProjectTabRequestAreaViewModel(IProcessExecuter processExecuter, IWindowService windowService)
         {
             this.windowService = windowService;
             this.processExecuter = processExecuter;

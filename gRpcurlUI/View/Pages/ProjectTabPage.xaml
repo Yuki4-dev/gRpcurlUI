@@ -5,8 +5,8 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:gRpcurlUI.View.Pages"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:tabContent="clr-namespace:gRpcurlUI.ViewModel.Pages.TabContent"
-    xmlns:tabcontent="clr-namespace:gRpcurlUI.Component.TabContent"
+    xmlns:tabProject="clr-namespace:gRpcurlUI.Component.ProjectTab"
+    xmlns:tabViewModel="clr-namespace:gRpcurlUI.ViewModel.Pages.ProjectTab"
     xmlns:view="clr-namespace:gRpcurlUI.View"
     xmlns:viewmodel="clr-namespace:gRpcurlUI.ViewModel.Pages"
     Title="ProjectTabPage"
@@ -65,7 +65,7 @@
             </TabControl.ItemContainerStyle>
 
             <TabControl.ItemTemplate>
-                <DataTemplate DataType="{x:Type tabContent:TabContentPageViewModel}">
+                <DataTemplate DataType="{x:Type tabViewModel:ProjectTabContentViewModel}">
 
                     <Border
                         x:Name="TabBackBorder"
@@ -91,8 +91,8 @@
             </TabControl.ItemTemplate>
 
             <TabControl.ContentTemplate>
-                <DataTemplate DataType="{x:Type tabContent:TabContentPageViewModel}">
-                    <tabcontent:TabContentPage DataContext="{Binding}" />
+                <DataTemplate DataType="{x:Type tabViewModel:ProjectTabContentViewModel}">
+                    <tabProject:ProjectTabContent DataContext="{Binding}" />
                 </DataTemplate>
             </TabControl.ContentTemplate>
 
