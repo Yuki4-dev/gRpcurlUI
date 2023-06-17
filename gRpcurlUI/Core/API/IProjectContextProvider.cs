@@ -1,4 +1,4 @@
-﻿using gRpcurlUI.Model;
+﻿using gRpcurlUI.Core.Model;
 
 namespace gRpcurlUI.Core.API
 {

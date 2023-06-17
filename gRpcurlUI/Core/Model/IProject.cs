@@ -1,15 +1,11 @@
-﻿using gRpcurlUI.Core.Model;
-using gRpcurlUI.Core.Process;
-using System;
+﻿using gRpcurlUI.Core.Process;
 using System.ComponentModel;
 
-namespace gRpcurlUI.Model
+namespace gRpcurlUI.Core.Model
 {
-    public interface IProject : ICloneable, IJsonObject, INotifyPropertyChanged, INotifyPropertyChanging
+    public interface IProject : IJsonObject, INotifyPropertyChanged
     {
         bool IsSelected { get; set; }
-
-        string AppPath { get; set; }
 
         string ProjectName { get; set; }
 

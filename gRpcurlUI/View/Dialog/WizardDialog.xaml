@@ -6,7 +6,6 @@
     xmlns:local="clr-namespace:gRpcurlUI.View.Dialog"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     x:Name="RootWindow"
-    Title="WizardDialog"
     Width="600"
     Height="450"
     Background="{DynamicResource DefaultWindowBackground}"

@@ -2,9 +2,7 @@
 using CommunityToolkit.Mvvm.Input;
 using gRpcurlUI.Core.API;
 using gRpcurlUI.Core.Process;
-using gRpcurlUI.View.Pages;
 using gRpcurlUI.ViewModel.Pages.TabContent;
-using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 

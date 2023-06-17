@@ -5,6 +5,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:gRpcurlUI.Controls"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:viewModel="clr-namespace:gRpcurlUI.ViewModel.Pages.TabContent"
     x:Name="Root"
     d:DesignHeight="450"
     d:DesignWidth="800"
@@ -40,13 +41,7 @@
                                     VerticalAlignment="Center"
                                     FontSize="12"
                                     Style="{StaticResource DefaultTextBlockStyle}"
-                                    Text="{Binding Text, ElementName=ProjectNameTextBlock}">
-
-                                    <TextBlock.ToolTip>
-                                        <ToolTip Content="{Binding Path=SelectedProject.ProjectName}" Style="{StaticResource DefaultToolTipStyle}" />
-                                    </TextBlock.ToolTip>
-
-                                </TextBlock>
+                                    Text="{Binding Text, ElementName=ProjectNameTextBlock}" />
 
                                 <ToggleButton
                                     IsChecked="{Binding IsOpen, Mode=TwoWay, ElementName=ProjectNameEditPopup}"

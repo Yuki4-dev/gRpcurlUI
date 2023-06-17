@@ -3,12 +3,13 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:controls="clr-namespace:gRpcurlUI.Controls"
+    xmlns:coreModel="clr-namespace:gRpcurlUI.Core.Model"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:gRpcurlUI.Component.TabContent"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:system="clr-namespace:System;assembly=netstandard"
     xmlns:viewModel="clr-namespace:gRpcurlUI.ViewModel.Pages.TabContent"
-    d:DataContext="{d:DesignInstance viewmodel:TabContentPageViewModel}"
+    d:DataContext="{d:DesignInstance viewModel:TabContentPageViewModel}"
     d:DesignHeight="450"
     d:DesignWidth="800"
     Background="{DynamicResource DefaultPageBackground}"
@@ -35,6 +36,32 @@
         <ControlTemplate x:Key="ProjectListHeaderTemplate" TargetType="ContentControl">
 
             <StackPanel Style="{StaticResource OparetionAreaStackPanelStyle}">
+
+                <ToggleButton
+                    x:Name="MoreToggleButton"
+                    Grid.Column="1"
+                    IsChecked="{Binding IsOpen, Mode=TwoWay, ElementName=MorePopup}"
+                    Style="{StaticResource IconButtonStyle}"
+                    Tag="{StaticResource More}"
+                    Visibility="{Binding ProjectContext.IsEnableExpansionCommand, Converter={StaticResource Boolean2VisibilityConverter}}" />
+
+                <Popup
+                    x:Name="MorePopup"
+                    Width="150"
+                    Placement="Bottom"
+                    PlacementTarget="{Binding ElementName=MoreToggleButton}"
+                    StaysOpen="False"
+                    Visibility="{Binding ProjectContext.IsEnableExpansionCommand, Converter={StaticResource Boolean2VisibilityConverter}}">
+
+                    <Border
+                        Background="{DynamicResource DefaultWindowBackground}"
+                        BorderBrush="{DynamicResource DefaultBorderBrush}"
+                        BorderThickness="1">
+
+                        <ListBox ItemsSource="{Binding ProjectContext.Commands}" Style="{StaticResource ExpansionCommandListBoxStyle}" />
+                    </Border>
+
+                </Popup>
 
                 <Button
                     x:Name="ExportButton"
@@ -92,6 +119,7 @@
 
             <ControlTemplate.Triggers>
                 <DataTrigger Binding="{Binding IsRemoveMode}" Value="True">
+                    <Setter TargetName="MoreToggleButton" Property="Visibility" Value="Collapsed" />
                     <Setter TargetName="ExportButton" Property="Visibility" Value="Collapsed" />
                     <Setter TargetName="ImportButton" Property="Visibility" Value="Collapsed" />
                     <Setter TargetName="AddButton" Property="Visibility" Value="Collapsed" />
@@ -112,7 +140,8 @@
                 MinWidth="100"
                 MaxWidth="450" />
             <ColumnDefinition Width="8" />
-            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="75*" />
+            <ColumnDefinition Width="73*" />
         </Grid.ColumnDefinitions>
 
         <controls:HeaderContent Title="{Binding ProjectContext.ProjectType}">
@@ -130,7 +159,7 @@
 
         <GridSplitter Grid.Column="1" Style="{StaticResource VerticalGridSplitterStyle}" />
 
-        <Grid Grid.Column="2">
+        <Grid Grid.Column="2" Grid.ColumnSpan="2">
 
             <Grid.ColumnDefinitions>
                 <ColumnDefinition

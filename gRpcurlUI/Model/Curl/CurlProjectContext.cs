@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using gRpcurlUI.Core.Model;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -11,6 +12,8 @@ namespace gRpcurlUI.Model.Curl
     {
         public Type JsonType => typeof(CurlProjectContextJson);
 
+        public bool IsEnableExpansionCommand => false;
+
         [ObservableProperty]
         private string version;
 
@@ -19,6 +22,9 @@ namespace gRpcurlUI.Model.Curl
 
         private readonly ICollection<CurlProject> projects = new ObservableCollection<CurlProject>();
         public IEnumerable<IProject> Projects => projects;
+
+        public IEnumerable<ProjectExpansionCommand> Commands => new List<ProjectExpansionCommand>();
+
 
         public CurlProjectContext()
         {
@@ -64,7 +70,7 @@ namespace gRpcurlUI.Model.Curl
 
                 foreach (var p in curl.projects)
                 {
-                    projects.Add(p);
+                    AddProject(p);
                 }
             }
             else

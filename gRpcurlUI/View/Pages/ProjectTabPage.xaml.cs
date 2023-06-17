@@ -1,6 +1,4 @@
-﻿using gRpcurlUI.ViewModel;
-using gRpcurlUI.ViewModel.Pages;
-using System.Windows;
+﻿using gRpcurlUI.ViewModel.Pages;
 using System.Windows.Controls;
 
 namespace gRpcurlUI.View.Pages
@@ -14,11 +12,6 @@ namespace gRpcurlUI.View.Pages
         {
             DataContext = viewModel;
             InitializeComponent();
-        }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            
         }
     }
 }

@@ -1,12 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
-using gRpcurlUI.Core.API;
-using gRpcurlUI.Core.Converter.Proto.Analyze;
-using gRpcurlUI.Core.Converter.Proto.Format;
+using gRpcurlUI.Core.Model;
 using gRpcurlUI.Core.Process;
-using gRpcurlUI.View.Dialog;
-using gRpcurlUI.ViewModel.Dialog;
-using gRpcurlUI.ViewModel.Dialog.Proto;
+using gRpcurlUI.Model.Setting;
 using Newtonsoft.Json;
 using System;
 using System.IO;
@@ -17,9 +12,6 @@ namespace gRpcurlUI.Model.Grpcurl
     public partial class GrpcurlProject : ObservableObject, IProject
     {
         public Type JsonType => typeof(GrpcProjectJson);
-
-        [ObservableProperty]
-        private string appPath = "grpcurl.exe";
 
         [ObservableProperty]
         private string projectName = string.Empty;
@@ -42,14 +34,19 @@ namespace gRpcurlUI.Model.Grpcurl
         [ObservableProperty]
         private bool isReadProtoButtonEnable = true;
 
-        public GrpcurlProject() { }
+        private readonly GrpcurlSettingGroup grpcurlSettingGroup;
+
+        public GrpcurlProject() 
+        {
+            grpcurlSettingGroup = DI.Get<GrpcurlSettingGroup>();
+        }
 
         public bool PrepareProject(out string message)
         {
             var sb = new StringBuilder();
-            if (!File.Exists(AppPath))
+            if (!File.Exists(grpcurlSettingGroup.ExePath))
             {
-                _ = sb.AppendLine($"{AppPath} does Not Exists.");
+                _ = sb.AppendLine($"{grpcurlSettingGroup.ExePath} does Not Exists.");
             }
 
             if (string.IsNullOrWhiteSpace(EndPoint))
@@ -84,39 +81,13 @@ namespace gRpcurlUI.Model.Grpcurl
                 }
                 catch { }
             }
-            return new GrpcurlCommand(AppPath, Option, EndPoint, jsonContent, Service);
-        }
-
-        public object Clone()
-        {
-            return new GrpcurlProject()
-            {
-                AppPath = AppPath,
-                ProjectName = ProjectName,
-                EndPoint = EndPoint,
-                Option = Option,
-                Service = Service,
-                SendContent = SendContent
-            };
-        }
-
-        [RelayCommand]
-        public static void ReadProto()
-        {
-            var setting = new ProtoImportPageShareSetting();
-            WizardDialog.ShowWizard(new IWizardDialogViewModel[]
-            {
-                new ProtoImportPage1ViewModel(setting, DI.Get<IWindowService>()),
-                new ProtoImportPage2ViewModel(setting, DI.Get<ProtoAnalyzeEntry>()),
-                new ProtoImportPage3ViewModel(setting, DI.Get<ProtoFormatEntry>()),
-            });
+            return new GrpcurlCommand(grpcurlSettingGroup.ExePath, Option, EndPoint, jsonContent, Service);
         }
 
         public object ToJsonObject()
         {
             return new GrpcProjectJson()
             {
-                AppPath = AppPath,
                 ProjectName = ProjectName,
                 EndPoint = EndPoint,
                 IsSelected = IsSelected,
@@ -133,7 +104,6 @@ namespace gRpcurlUI.Model.Grpcurl
                 throw new Exception("Json is not GrpcProject.");
             }
 
-            AppPath = grpcProject.AppPath;
             ProjectName = grpcProject.ProjectName;
             EndPoint = grpcProject.EndPoint;
             IsSelected = grpcProject.IsSelected;
@@ -150,7 +120,6 @@ namespace gRpcurlUI.Model.Grpcurl
 
         internal class GrpcProjectJson
         {
-            public string AppPath { get; set; } = "grpcurl.exe";
             public string ProjectName { get; set; } = string.Empty;
             public string EndPoint { get; set; } = string.Empty;
             public bool IsSelected { get; set; } = false;

@@ -43,7 +43,7 @@
 
                                     <Border
                                         x:Name="TabUnderBorder"
-                                        Margin="4,0,4,0"
+                                        Margin="8,0,8,0"
                                         VerticalAlignment="Bottom"
                                         BorderBrush="{DynamicResource DefaultPageForeground}"
                                         BorderThickness="1.2"

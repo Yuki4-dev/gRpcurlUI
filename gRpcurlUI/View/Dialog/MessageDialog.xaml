@@ -21,7 +21,7 @@
             <RowDefinition Height="70" />
         </Grid.RowDefinitions>
 
-        <controls:CustomScrollViewer>
+        <controls:CustomScrollViewer TabBrush="{DynamicResource DefaultScrollBarTabBrush}">
 
             <TextBlock
                 Margin="18,8,18,0"

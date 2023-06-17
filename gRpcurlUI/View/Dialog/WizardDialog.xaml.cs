@@ -100,10 +100,11 @@ namespace gRpcurlUI.View.Dialog
             }
         }
 
-        public static void ShowWizard(IWizardDialogViewModel[] wizardDialogViewModels)
+        public static void ShowWizard(string title, IWizardDialogViewModel[] wizardDialogViewModels)
         {
             var wizard = new WizardDialog(wizardDialogViewModels)
             {
+                Title = title,
                 Width = 700,
                 Height = 700
             };

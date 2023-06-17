@@ -1,7 +1,6 @@
 ﻿using gRpcurlUI.Core.API;
 using gRpcurlUI.View.Pages;
 using gRpcurlUI.ViewModel;
-using gRpcurlUI.ViewModel.Pages;
 using System.Windows;
 
 namespace gRpcurlUI.View
@@ -33,7 +32,8 @@ namespace gRpcurlUI.View
         {
             if(navigatePageType == NavigatePageType.Back)
             {
-                return MainFrame.CanGoBack;
+                MainFrame.GoBack();
+                return true;
             }
             else if(navigatePageType == NavigatePageType.ProjectTab)
             {
@@ -49,7 +49,7 @@ namespace gRpcurlUI.View
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            Navigate(NavigatePageType.ProjectTab);
+            _ = Navigate(NavigatePageType.ProjectTab);
         }
     }
 }

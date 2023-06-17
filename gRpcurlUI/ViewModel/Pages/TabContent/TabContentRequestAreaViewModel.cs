@@ -2,8 +2,8 @@
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using gRpcurlUI.Core.API;
+using gRpcurlUI.Core.Model;
 using gRpcurlUI.Core.Process;
-using gRpcurlUI.Model;
 using gRpcurlUI.Model.TabContent;
 using System;
 using System.Threading;

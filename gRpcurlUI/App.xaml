@@ -21,6 +21,8 @@
                 <ResourceDictionary Source="Style/GeometryStyle.xaml" />
                 <ResourceDictionary Source="Style/ButtonStyle.xaml" />
                 <ResourceDictionary Source="Style/ProjectListBoxStyle.xaml" />
+                <ResourceDictionary Source="Style/SettingListBoxStyle.xaml" />
+                <ResourceDictionary Source="Style/ExpansionCommandListBoxStyle.xaml" />
                 <ResourceDictionary Source="Style/SolidColorBrushStyle.xaml" />
             </ResourceDictionary.MergedDictionaries>
 
@@ -32,7 +34,7 @@
             <system:Double x:Key="EditTextBoxFontSize">14</system:Double>
             <system:Double x:Key="SettingTextBlockFontSize">18</system:Double>
 
-            <FontFamily x:Key="DefaultFontFamily">Consolas</FontFamily>
+            <FontFamily x:Key="DefaultFontFamily">Yu Gothic UI</FontFamily>
 
             <Style x:Key="DefaultProgressBarStyle" TargetType="ProgressBar">
                 <Setter Property="Foreground" Value="#55000000" />
@@ -46,7 +48,7 @@
             </Style>
 
             <Style x:Key="DefaultTextBoxStyle" TargetType="TextBox">
-                <Setter Property="FontSize" Value="{StaticResource DefaultTextBoxFontSize}" />
+                <Setter Property="FontSize" Value="{DynamicResource DefaultTextBoxFontSize}" />
                 <Setter Property="Padding" Value="1" />
                 <Setter Property="BorderThickness" Value="1" />
                 <Setter Property="SelectionBrush" Value="{DynamicResource DefaultTextBoxSelectBrush}" />

@@ -4,14 +4,13 @@ namespace gRpcurlUI.Model.Grpcurl
 {
     public class GrpcurlCommand : IProcessCommand
     {
-        public string AppPath { get; }
+        public string AppName { get; }
 
         public string Arguments { get; }
 
         public GrpcurlCommand(string appPath, string option, string endPoint, string content, string service)
         {
-            AppPath = appPath;
-
+            AppName = appPath;
             Arguments = string.IsNullOrWhiteSpace(content)
                 ? $"{option} {endPoint} {service}"
                 : $"{option} -d \"{Replace(content)}\" {endPoint} {service}";

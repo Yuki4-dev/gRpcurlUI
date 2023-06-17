@@ -23,7 +23,7 @@ namespace gRpcurlUI.Core.Process
 
             public async Task ExecuteAsync(IProcessCommand command, CancellationToken token)
             {
-                var info = new ProcessStartInfo(command.AppPath, command.Arguments)
+                var info = new ProcessStartInfo(command.AppName, command.Arguments)
                 {
                     CreateNoWindow = true,
                     RedirectStandardOutput = true,
@@ -46,7 +46,7 @@ namespace gRpcurlUI.Core.Process
                 {
                     try
                     {
-                        StandardOutputReceive?.Invoke(command.AppPath + " " + command.Arguments);
+                        StandardOutputReceive?.Invoke(command.AppName + " " + command.Arguments);
                         _ = process.Start();
                         process.BeginOutputReadLine();
                         process.BeginErrorReadLine();

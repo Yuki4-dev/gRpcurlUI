@@ -1,8 +1,7 @@
-﻿using gRpcurlUI.Core.Model;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel;
 
-namespace gRpcurlUI.Model
+namespace gRpcurlUI.Core.Model
 {
     public interface IProjectContext : IJsonObject, INotifyPropertyChanged, INotifyPropertyChanging
     {
@@ -10,7 +9,11 @@ namespace gRpcurlUI.Model
 
         string Version { get; }
 
+        bool IsEnableExpansionCommand { get; }
+
         IEnumerable<IProject> Projects { get; }
+
+        IEnumerable<ProjectExpansionCommand> Commands { get; }
 
         void Marge(IProjectContext other);
 

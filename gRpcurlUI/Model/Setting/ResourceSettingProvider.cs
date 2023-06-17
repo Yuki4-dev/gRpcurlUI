@@ -1,22 +1,23 @@
-﻿using System;
+﻿using gRpcurlUI.Core.Setting;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Windows;
 
 namespace gRpcurlUI.Model.Setting
 {
-    public abstract class ResourceSetting
+    public abstract class ResourceSettingProvider : ISettingValueProvider
     {
         private readonly IDictionary resources;
 
         private IDictionary? buffer;
 
-        public ResourceSetting()
+        public ResourceSettingProvider()
         {
-            resources = new Dictionary<string, object>();
+            resources = App.Current.Resources;
         }
 
-        public ResourceSetting(IDictionary resources)
+        public ResourceSettingProvider(IDictionary resources)
         {
             this.resources = resources;
         }
@@ -50,16 +51,16 @@ namespace gRpcurlUI.Model.Setting
         {
             foreach (var key in Keys)
             {
-                SetResources(key, otherResources[key]);
+                SetSetting(key, otherResources[key]);
             }
         }
 
-        public object GetResources(string key)
+        public object? GetSetting(string key)
         {
             return resources[key];
         }
 
-        public void SetResources(string key, object? value)
+        public void SetSetting(string key, object? value)
         {
             if (resources is ResourceDictionary rdic)
             {

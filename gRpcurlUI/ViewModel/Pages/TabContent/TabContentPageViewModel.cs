@@ -1,8 +1,8 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using gRpcurlUI.Core.API;
+using gRpcurlUI.Core.Model;
 using gRpcurlUI.Core.Process;
-using gRpcurlUI.Model;
 using System;
 using System.Linq;
 using System.Threading;

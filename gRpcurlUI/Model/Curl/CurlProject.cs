@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using gRpcurlUI.Core.Model;
 using gRpcurlUI.Core.Process;
 using Newtonsoft.Json;
 using System;
@@ -9,9 +10,6 @@ namespace gRpcurlUI.Model.Curl
     public partial class CurlProject : ObservableObject, IProject
     {
         public Type JsonType => typeof(CurlProjectJson);
-
-        [ObservableProperty]
-        private string appPath = "curl";
 
         [ObservableProperty]
         private string projectName = string.Empty;
@@ -68,26 +66,13 @@ namespace gRpcurlUI.Model.Curl
                 }
                 catch { }
             }
-            return new CurlCommand(AppPath, Option, EndPoint, jsonContent);
-        }
-
-        public object Clone()
-        {
-            return new CurlProject()
-            {
-                AppPath = AppPath,
-                ProjectName = ProjectName,
-                EndPoint = EndPoint,
-                Option = Option,
-                IsJsonContent = isJsonContent,
-            };
+            return new CurlCommand(Option, EndPoint, jsonContent);
         }
 
         public object ToJsonObject()
         {
             return new CurlProjectJson()
             {
-                AppPath = AppPath,
                 ProjectName = ProjectName,
                 EndPoint = EndPoint,
                 Option = Option,
@@ -104,7 +89,6 @@ namespace gRpcurlUI.Model.Curl
                 throw new Exception("Json is not CurlProject.");
             }
 
-            AppPath = curlProject.AppPath;
             ProjectName = curlProject.ProjectName;
             EndPoint = curlProject.EndPoint;
             Option = curlProject.Option;
@@ -121,7 +105,6 @@ namespace gRpcurlUI.Model.Curl
 
         internal class CurlProjectJson
         {
-            public string AppPath { get; set; } = "curl";
             public string ProjectName { get; set; } = string.Empty;
             public string EndPoint { get; set; } = string.Empty;
             public bool IsSelected { get; set; } = false;

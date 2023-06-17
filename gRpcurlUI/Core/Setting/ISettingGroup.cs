@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel;
 
-namespace gRpcurlUI.Core.Model
+namespace gRpcurlUI.Core.Setting
 {
     public interface ISettingGroup : INotifyPropertyChanged
     {

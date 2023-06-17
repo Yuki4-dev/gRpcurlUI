@@ -1,7 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Messaging;
 using gRpcurlUI.Core.Converter.Proto.Format;
-using gRpcurlUI.Model;
+using gRpcurlUI.Core.Model;
 using gRpcurlUI.Model.Grpcurl;
 using gRpcurlUI.View.Dialog.Proto;
 using Newtonsoft.Json;

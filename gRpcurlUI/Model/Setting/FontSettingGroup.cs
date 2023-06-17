@@ -1,16 +1,15 @@
-﻿using gRpcurlUI.Core.Model;
+﻿using gRpcurlUI.Core.Setting;
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using System.Windows.Media;
 
 namespace gRpcurlUI.Model.Setting
 {
-    public class FontSetting : ResourceSetting, ISettingGroup
+    public class FontSettingGroup : ResourceSettingProvider, ISettingGroup
     {
-        public string Name => nameof(FontSetting);
+        public string Name => "Font Setting";
 
         private const string KEY_EditFontSize = "EditTextBoxFontSize";
         private const string KEY_FontFamily = "DefaultFontFamily";
@@ -24,20 +23,27 @@ namespace gRpcurlUI.Model.Setting
         private readonly ObservableCollection<ISettingRow> settingRows = new();
         public ICollection<ISettingRow> SettingRows => settingRows;
 
-        public FontSetting() : base()
+        public FontSettingGroup() : base()
         {
             SetSettingRows();
         }
 
-        public FontSetting(IDictionary resources) : base(resources)
+        public FontSettingGroup(IDictionary resources) : base(resources)
         {
             SetSettingRows();
         }
 
         private void SetSettingRows()
         {
-            settingRows.Add(new ResourceSettingRow(this, KEY_EditFontSize, KEY_EditFontSize));
-            settingRows.Add(new ResourceSettingRow(this, KEY_FontFamily, KEY_FontFamily, new FontFamilyConverter()));
+            var fontSize = new SettingRow(this, KEY_EditFontSize, KEY_EditFontSize, null, new FontSizeConverter());
+            settingRows.Add(fontSize);
+
+            //var fontfam = new SettingRow(this, KEY_FontFamily, KEY_FontFamily, null);
+            //fontfam.Value = GetSetting(KEY_FontFamily);
+            //fontfam.InputType = SettingRowInputType.DropDown;
+            //var  ifc = new InstalledFontCollection();
+            //fontfam.Items = new List<object>(ifc.Families.Select(f => f.Name));
+            //settingRows.Add(fontfam);
         }
 
         public event PropertyChangedEventHandler? PropertyChanged;
@@ -47,16 +53,15 @@ namespace gRpcurlUI.Model.Setting
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
         }
 
-        private class FontFamilyConverter : ISettingValueConverter
+        private class FontSizeConverter : ISettingValueConverter
         {
             public bool Convert(object value, out object newValue)
             {
-                if (value is string font && !string.IsNullOrWhiteSpace(font))
+                if (value is string size && !string.IsNullOrWhiteSpace(size))
                 {
-                    var ff = new FontFamily(font);
-                    if (ff.FamilyNames.Values.Contains(font))
+                    if (double.TryParse(size, out var dSize))
                     {
-                        newValue = ff;
+                        newValue = dSize;
                         return true;
                     }
 

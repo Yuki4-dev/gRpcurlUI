@@ -1,0 +1,177 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:System="clr-namespace:System;assembly=System.Runtime"
+    xmlns:controls="clr-namespace:gRpcurlUI.Controls"
+    xmlns:local="clr-namespace:gRpcurlUI.Style"
+    xmlns:model="clr-namespace:gRpcurlUI.Core.Model"
+    xmlns:setting="clr-namespace:gRpcurlUI.Core.Setting">
+
+    <System:Double x:Key="RowHeight">64</System:Double>
+    <System:Double x:Key="SettingTitleFontSize">12</System:Double>
+    <System:Double x:Key="SettingDescriptionFontSize">10</System:Double>
+    <System:Double x:Key="InputTextAreaWidth">240</System:Double>
+    <Thickness x:Key="InputAreaMargin">12</Thickness>
+
+    <Style x:Key="TitleTextBlock" TargetType="TextBlock">
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="FontWeight" Value="DemiBold" />
+        <Setter Property="FontSize" Value="{StaticResource SettingTitleFontSize}" />
+        <Setter Property="Foreground" Value="{DynamicResource DefaultPageForeground}" />
+        <Setter Property="Margin" Value="12,0,12,0" />
+    </Style>
+
+    <Style x:Key="DescriptionTextBlock" TargetType="TextBlock">
+        <Setter Property="VerticalAlignment" Value="Top" />
+        <Setter Property="FontWeight" Value="Light" />
+        <Setter Property="FontSize" Value="{StaticResource SettingDescriptionFontSize}" />
+        <Setter Property="Foreground" Value="{DynamicResource DefaultPageForeground}" />
+        <Setter Property="Margin" Value="12,0,12,0" />
+    </Style>
+
+    <DataTemplate x:Key="TextInputDatatemplate" DataType="{x:Type setting:ISettingRow}">
+        <Grid Height="{StaticResource RowHeight}">
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+
+            <Grid>
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="24" />
+                </Grid.RowDefinitions>
+
+                <TextBlock Style="{StaticResource TitleTextBlock}" Text="{Binding Title}" />
+
+                <TextBlock
+                    Grid.Row="1"
+                    Style="{StaticResource DescriptionTextBlock}"
+                    Text="{Binding Description}" />
+
+            </Grid>
+
+            <TextBox
+                Grid.Column="1"
+                Width="{StaticResource InputTextAreaWidth}"
+                Margin="{StaticResource InputAreaMargin}"
+                VerticalAlignment="Center"
+                Text="{Binding Value, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" />
+        </Grid>
+    </DataTemplate>
+
+    <DataTemplate x:Key="ToggleSwitchDatatemplate" DataType="{x:Type setting:ISettingRow}">
+        <Grid Height="{StaticResource RowHeight}">
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+
+            <Grid>
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="24" />
+                </Grid.RowDefinitions>
+
+                <TextBlock Style="{StaticResource TitleTextBlock}" Text="{Binding Title}" />
+
+                <TextBlock
+                    Grid.Row="1"
+                    Style="{StaticResource DescriptionTextBlock}"
+                    Text="{Binding Description}" />
+
+            </Grid>
+
+        </Grid>
+    </DataTemplate>
+
+    <DataTemplate x:Key="DropDownDatatemplate" DataType="{x:Type setting:IDropDownSettingRow}">
+        <Grid Height="{StaticResource RowHeight}">
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+
+            <Grid>
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="24" />
+                </Grid.RowDefinitions>
+
+                <TextBlock Style="{StaticResource TitleTextBlock}" Text="{Binding Title}" />
+
+                <TextBlock
+                    Grid.Row="1"
+                    Style="{StaticResource DescriptionTextBlock}"
+                    Text="{Binding Description}" />
+
+            </Grid>
+
+            <controls:CustomComboBox
+                Grid.Column="1"
+                Width="{DynamicResource InputTextAreaWidth}"
+                Margin="{DynamicResource InputAreaMargin}"
+                VerticalAlignment="Center"
+                FontSize="12"
+                Foreground="{DynamicResource DefaultPageForeground}"
+                ItemsSource="{Binding Items}"
+                MouseOverBrush="Transparent"
+                MouseOverItemBrush="{DynamicResource DefaultMouseOverBackground}"
+                PopupBackground="{DynamicResource DefaultEditAreaTextBoxBrush}"
+                PopupCornerRadius="4"
+                PopupScrollBarBrush="{DynamicResource DefaultScrollBarTabBrush}"
+                SelectedIndex="2"
+                SelectedValue="{Binding Value, Mode=TwoWay}" />
+
+        </Grid>
+    </DataTemplate>
+
+    <local:SettingListBoxDataTemplateSelector
+        x:Key="SettingListBoxDataTemplateSelector"
+        DropDownInputDataTemplate="{StaticResource DropDownDatatemplate}"
+        SwitchInputDataTemplate="{StaticResource ToggleSwitchDatatemplate}"
+        TextInputDataTemplate="{StaticResource TextInputDatatemplate}" />
+
+    <Style x:Key="ListBoxItemContainerStyle" TargetType="{x:Type ListBoxItem}">
+        <Setter Property="ScrollViewer.CanContentScroll" Value="False" />
+        <Setter Property="Margin" Value="4" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ListBoxItem}">
+
+                    <Grid>
+                        <Border
+                            x:Name="PanelBorder"
+                            Background="{DynamicResource DefaultSettingExpanderAreaBackGround}"
+                            CornerRadius="4">
+                            <ContentPresenter Margin="4" />
+                        </Border>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="SettingListBoxStyle" TargetType="{x:Type ListBox}">
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="BorderBrush" Value="{DynamicResource DefaultBorderBrush}" />
+        <Setter Property="ItemContainerStyle" Value="{StaticResource ListBoxItemContainerStyle}" />
+        <Setter Property="ScrollViewer.CanContentScroll" Value="False" />
+        <Setter Property="ItemTemplateSelector" Value="{StaticResource SettingListBoxDataTemplateSelector}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ListBox}">
+                    <ItemsPresenter />
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+</ResourceDictionary>

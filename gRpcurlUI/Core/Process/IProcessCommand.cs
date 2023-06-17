@@ -2,7 +2,7 @@
 {
     public interface IProcessCommand
     {
-        string AppPath { get; }
+        string AppName { get; }
 
         string Arguments { get; }
     }

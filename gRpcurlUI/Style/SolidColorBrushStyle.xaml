@@ -11,6 +11,7 @@
 
     <SolidColorBrush x:Key="DefaultMouseOverBackground">DimGray</SolidColorBrush>
     <SolidColorBrush x:Key="DefaultSelectedBackground">#404040</SolidColorBrush>
+    <SolidColorBrush x:Key="DefaultSettingExpanderAreaBackGround">#404040</SolidColorBrush>
 
     <SolidColorBrush x:Key="DefaultCationColor">Red</SolidColorBrush>
 

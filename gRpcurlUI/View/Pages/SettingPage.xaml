@@ -14,34 +14,12 @@
     FontFamily="{DynamicResource DefaultFontFamily}"
     mc:Ignorable="d">
 
-    <Page.Resources>
-
-        <Style
-            x:Key="ResetButtonStyle"
-            BasedOn="{StaticResource IconButtonStyle}"
-            TargetType="Button">
-            <Setter Property="Visibility" Value="Collapsed" />
-            <Setter Property="Tag" Value="{StaticResource Reset}" />
-            <Setter Property="ToolTip">
-                <Setter.Value>
-                    <ToolTip Content="Reset Value" Style="{StaticResource DefaultToolTipStyle}" />
-                </Setter.Value>
-            </Setter>
-            <Style.Triggers>
-                <DataTrigger Binding="{Binding IsResetEnable}" Value="True">
-                    <Setter Property="Visibility" Value="Visible" />
-                </DataTrigger>
-            </Style.Triggers>
-        </Style>
-
-    </Page.Resources>
-
     <Grid>
 
         <Grid.RowDefinitions>
-            <RowDefinition Height="50" />
+            <RowDefinition Height="48" />
             <RowDefinition Height="*" />
-            <RowDefinition Height="90" />
+            <RowDefinition Height="74" />
         </Grid.RowDefinitions>
 
         <Grid.Resources>
@@ -58,9 +36,21 @@
                 <Setter Property="HorizontalAlignment" Value="Left" />
             </Style>
 
+            <Style TargetType="ListBox">
+                <Setter Property="Background" Value="Transparent" />
+                <Setter Property="SelectionMode" Value="Extended" />
+                <Setter Property="BorderThickness" Value="0" />
+            </Style>
+
         </Grid.Resources>
 
         <StackPanel Orientation="Horizontal">
+
+            <Button
+                Margin="4"
+                Command="{Binding BackCommand}"
+                Style="{StaticResource IconButtonStyle}"
+                Tag="{StaticResource Back}" />
 
             <TextBlock
                 Margin="2"
@@ -68,7 +58,16 @@
                 Style="{StaticResource DefaultTextBlockStyle}"
                 Text="Setting" />
 
-            <Button Command="{Binding ResetCommand}" Style="{StaticResource ResetButtonStyle}" />
+            <Button
+                Command="{Binding ResetCommand}"
+                Style="{StaticResource IconButtonStyle}"
+                Tag="{StaticResource Reset}"
+                Visibility="{Binding IsResetEnable, Mode=OneWay, Converter={StaticResource Boolean2VisibilityConverter}}">
+
+                <Button.ToolTip>
+                    <ToolTip Content="Reset Value" Style="{StaticResource DefaultToolTipStyle}" />
+                </Button.ToolTip>
+            </Button>
 
         </StackPanel>
 
@@ -77,9 +76,32 @@
             VerticalAlignment="Bottom"
             Background="{DynamicResource DefaultBorderBrush}" />
 
-        <controls:CustomScrollViewer Grid.Row="1" TabBrush="{DynamicResource DefaultScrollBarTabBrush}">
+        <controls:CustomScrollViewer
+            x:Name="H"
+            Grid.Row="1"
+            TabBrush="{DynamicResource DefaultScrollBarTabBrush}">
 
-            <ListView ItemsSource="{Binding FontSetting.SettingRows}" />
+            <StackPanel ScrollViewer.CanContentScroll="False">
+
+                <TextBlock Text="{Binding GrpcurlSetting.Name}" />
+                <ListBox
+                    ItemsSource="{Binding GrpcurlSetting.SettingRows}"
+                    ScrollViewer.CanContentScroll="False"
+                    Style="{StaticResource SettingListBoxStyle}" />
+
+                <TextBlock Text="{Binding FontSetting.Name}" />
+                <ListBox
+                    ItemsSource="{Binding FontSetting.SettingRows}"
+                    ScrollViewer.CanContentScroll="False"
+                    Style="{StaticResource SettingListBoxStyle}" />
+
+                <TextBlock Text="{Binding BrushSetting.Name}" />
+                <ListBox
+                    ItemsSource="{Binding BrushSetting.SettingRows}"
+                    ScrollViewer.CanContentScroll="False"
+                    Style="{StaticResource SettingListBoxStyle}" />
+
+            </StackPanel>
 
         </controls:CustomScrollViewer>
 
@@ -90,13 +112,13 @@
                 VerticalAlignment="Top"
                 Background="{DynamicResource DefaultBorderBrush}" />
 
-            <StackPanel Margin="12" HorizontalAlignment="Right">
+            <StackPanel Margin="12,4,12,0" HorizontalAlignment="Right">
 
                 <StackPanel.Resources>
 
                     <Style BasedOn="{StaticResource DefaultTextButtonStyle}" TargetType="Button">
                         <Setter Property="Margin" Value="2" />
-                        <Setter Property="FontSize" Value="18" />
+                        <Setter Property="FontSize" Value="16" />
                         <Setter Property="FontWeight" Value="ExtraLight" />
                     </Style>
 

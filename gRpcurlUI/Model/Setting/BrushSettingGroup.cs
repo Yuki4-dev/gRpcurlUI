@@ -1,4 +1,4 @@
-﻿using gRpcurlUI.Core.Model;
+﻿using gRpcurlUI.Core.Setting;
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -9,9 +9,9 @@ using System.Windows.Media;
 
 namespace gRpcurlUI.Model.Setting
 {
-    public class BrushSetting : ResourceSetting, ISettingGroup
+    public class BrushSettingGroup : ResourceSettingProvider, ISettingGroup
     {
-        public string Name => nameof(FontSetting);
+        public string Name => "Brush Setting";
 
         private readonly ObservableCollection<ISettingRow> settingRows = new();
         public ICollection<ISettingRow> SettingRows => settingRows;
@@ -26,6 +26,8 @@ namespace gRpcurlUI.Model.Setting
         private const string KEY_MouseOverBackground = "DefaultMouseOverBackground";
         private const string KEY_SelectedBackground = "DefaultSelectedBackground";
         private const string KEY_ScrollBarTabBrush = "DefaultScrollBarTabBrush";
+        private const string KEY_SettingExpanderAreaBackGround = "DefaultSettingExpanderAreaBackGround";
+        private const string KEY_DefaultCationColor = "DefaultCationColor";
 
         protected override IEnumerable<string> Keys => new string[]
         {
@@ -38,15 +40,17 @@ namespace gRpcurlUI.Model.Setting
             KEY_TextBoxSelectBrush,
             KEY_MouseOverBackground,
             KEY_SelectedBackground,
-            KEY_ScrollBarTabBrush
+            KEY_ScrollBarTabBrush,
+            KEY_SettingExpanderAreaBackGround,
+            KEY_DefaultCationColor,
         };
 
-        public BrushSetting() : base() 
+        public BrushSettingGroup() : base() 
         {
             SetSettingRows();
         }
 
-        public BrushSetting(IDictionary resources) : base(resources) 
+        public BrushSettingGroup(IDictionary resources) : base(resources) 
         {
             SetSettingRows();
         }
@@ -55,7 +59,7 @@ namespace gRpcurlUI.Model.Setting
         {
             Keys.ToList().ForEach(k =>
             {
-                settingRows.Add(new ResourceSettingRow(this, k, k, BrushConverter.Default));
+                settingRows.Add(new SettingRow(this, k, k, null, BrushConverter.Default));
             });
         }
 
