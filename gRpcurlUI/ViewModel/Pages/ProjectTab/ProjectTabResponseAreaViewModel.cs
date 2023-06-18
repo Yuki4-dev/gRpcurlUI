@@ -61,7 +61,7 @@ namespace gRpcurlUI.ViewModel.Pages.ProjectTab
             }
             catch (Exception ex)
             {
-                _ = windowService.ShowMessageDialogAsync("Error", ex.Message);
+                _ = windowService.ShowMessageDialogAsync(Language.Default.Error, ex.Message);
             }
             finally
             {

@@ -41,7 +41,7 @@ namespace gRpcurlUI.Model.Curl
         {
             var project = new CurlProject()
             {
-                ProjectName = "new CurlProject"
+                ProjectName = Language.Default.CurlProject.NewProject
             };
             AddProject(project);
         }
@@ -57,15 +57,15 @@ namespace gRpcurlUI.Model.Curl
             {
                 if (Version != other.Version)
                 {
-                    throw new Exception($"Version Error. Export Version:{other.Version} This Version:{Version}");
+                    throw new Exception(string.Format(Language.Default.CurlProject.VersionError, other.Version, Version));
                 }
                 else if (ProjectType != other.ProjectType)
                 {
-                    throw new Exception($"ProjectType Error. Export ProjectType:{other.ProjectType} This ProjectType:{ProjectType}");
+                    throw new Exception(string.Format(Language.Default.CurlProject.ProjectTypeError, other.ProjectType, ProjectType));
                 }
                 else if (other.Projects == null || !other.Projects.Any())
                 {
-                    throw new Exception($"Export Error. Project is Nothing");
+                    throw new Exception(Language.Default.CurlProject.ProjectNothing);
                 }
 
                 foreach (var p in curl.projects)
@@ -75,7 +75,7 @@ namespace gRpcurlUI.Model.Curl
             }
             else
             {
-                throw new Exception("Export Project is not CurlProjectContext");
+                throw new Exception(Language.Default.CurlProject.ProjectTypeError);
             }
         }
 
@@ -93,7 +93,7 @@ namespace gRpcurlUI.Model.Curl
         {
             if (jsonObject is not CurlProjectContextJson curlContext)
             {
-                throw new Exception("Json is not CurlProjectContext.");
+                throw new Exception(Language.Default.CurlProject.NonJsonType);
             }
 
             ProjectType = curlContext.ProjectType;

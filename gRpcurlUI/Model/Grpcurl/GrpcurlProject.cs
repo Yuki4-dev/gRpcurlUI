@@ -46,12 +46,12 @@ namespace gRpcurlUI.Model.Grpcurl
             var sb = new StringBuilder();
             if (!File.Exists(grpcurlSettingGroup.ExePath))
             {
-                _ = sb.AppendLine($"{grpcurlSettingGroup.ExePath} does Not Exists.");
+                _ = sb.AppendLine(string.Format(Language.Default.GrpcProject.NotExist, grpcurlSettingGroup.ExePath));
             }
 
             if (string.IsNullOrWhiteSpace(EndPoint))
             {
-                _ = sb.AppendLine("EndPoint is Blank.");
+                _ = sb.AppendLine(Language.Default.GrpcProject.EndPointBlank);
             }
 
             if (!string.IsNullOrWhiteSpace(SendContent))
@@ -101,7 +101,7 @@ namespace gRpcurlUI.Model.Grpcurl
         {
             if (jsonObject is not GrpcProjectJson grpcProject)
             {
-                throw new Exception("Json is not GrpcProject.");
+                throw new Exception(Language.Default.GrpcProject.NonJsonType);
             }
 
             ProjectName = grpcProject.ProjectName;

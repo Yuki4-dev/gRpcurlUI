@@ -55,7 +55,7 @@ namespace gRpcurlUI.ViewModel.Pages.ProjectTab
 
             if (!SelectedProject.PrepareProject(out var message))
             {
-                _ = windowService.ShowMessageDialogAsync("Error", message);
+                _ = windowService.ShowMessageDialogAsync(Language.Default.Error, message);
             }
         }
 
@@ -64,13 +64,13 @@ namespace gRpcurlUI.ViewModel.Pages.ProjectTab
         {
             if (SelectedProject is null)
             {
-                _ = await windowService.ShowMessageDialogAsync("Error", "Project is Nothing.");
+                _ = await windowService.ShowMessageDialogAsync(Language.Default.Error, Language.Default.ProjectTabPage.ProjectNothing);
                 return;
             }
 
             if (!SelectedProject.PrepareProject(out var message))
             {
-                var result = await windowService.ShowMessageDialogAsync("Send", "Continue?\r\n" + message, MessageBoxButton.YesNo);
+                var result = await windowService.ShowMessageDialogAsync(Language.Default.ProjectTabPage.Send, Language.Default.ProjectTabPage.ContinueQ + Environment.NewLine + message, MessageBoxButton.YesNo);
                 if (result != MessageBoxResult.Yes)
                 {
                     return;
@@ -89,7 +89,7 @@ namespace gRpcurlUI.ViewModel.Pages.ProjectTab
             catch (Exception ex)
             {
                 ExecutionTimer.Stop();
-                _ = await windowService.ShowMessageDialogAsync("Error", ex.Message);
+                _ = await windowService.ShowMessageDialogAsync(Language.Default.Error, ex.Message);
                 _ = WeakReferenceMessenger.Default.Send(new ProcessExecutionStatusMessage(ProcessExecutionStatus.Error));
             }
             finally
@@ -104,7 +104,7 @@ namespace gRpcurlUI.ViewModel.Pages.ProjectTab
         [RelayCommand]
         private async void SendCancel()
         {
-            var result = await windowService.ShowMessageDialogAsync("Send", "Cancel Sending?", MessageBoxButton.YesNo);
+            var result = await windowService.ShowMessageDialogAsync(Language.Default.ProjectTabPage.Send, Language.Default.ProjectTabPage.CancelSendingQ, MessageBoxButton.YesNo);
             if (result == MessageBoxResult.Yes)
             {
                 tokenSource?.Cancel();

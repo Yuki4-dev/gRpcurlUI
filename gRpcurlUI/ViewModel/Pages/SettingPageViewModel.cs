@@ -4,12 +4,16 @@ using gRpcurlUI.Core.API;
 using gRpcurlUI.Model.Setting;
 using System.Diagnostics;
 using System.Threading.Tasks;
+using static gRpcurlUI.Language;
 
 namespace gRpcurlUI.ViewModel.Pages
 {
     [ObservableObject]
     public partial class SettingPageViewModel
     {
+        [ObservableProperty]
+        private SettingPageLanguage text = Language.Default.SettingPage;
+
         [ObservableProperty]
         private FontSettingGroup fontSetting;
 
@@ -46,7 +50,7 @@ namespace gRpcurlUI.ViewModel.Pages
         [RelayCommand]
         private async Task About()
         {
-            _ = await windowService.ShowMessageDialogAsync("About...", "gRpcurlUI Ver 1.0.0" + "\r\n" + "Preview");
+            _ = await windowService.ShowMessageDialogAsync(Language.Default.SettingPage.About, Language.Default.SettingPage.Version);
         }
 
         [RelayCommand]

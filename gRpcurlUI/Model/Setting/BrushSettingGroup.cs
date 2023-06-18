@@ -11,7 +11,7 @@ namespace gRpcurlUI.Model.Setting
 {
     public class BrushSettingGroup : ResourceSettingProvider, ISettingGroup
     {
-        public string Name => "Brush Setting";
+        public string Name => Language.Default.SettingPage.BrushSettingTitle;
 
         private readonly ObservableCollection<ISettingRow> settingRows = new();
         public ICollection<ISettingRow> SettingRows => settingRows;
@@ -27,7 +27,7 @@ namespace gRpcurlUI.Model.Setting
         private const string KEY_SelectedBackground = "DefaultSelectedBackground";
         private const string KEY_ScrollBarTabBrush = "DefaultScrollBarTabBrush";
         private const string KEY_SettingExpanderAreaBackGround = "DefaultSettingExpanderAreaBackGround";
-        private const string KEY_DefaultCationColor = "DefaultCationColor";
+        private const string KEY_CationColor = "DefaultCationColor";
 
         protected override IEnumerable<string> Keys => new string[]
         {
@@ -42,24 +42,40 @@ namespace gRpcurlUI.Model.Setting
             KEY_SelectedBackground,
             KEY_ScrollBarTabBrush,
             KEY_SettingExpanderAreaBackGround,
-            KEY_DefaultCationColor,
+            KEY_CationColor,
         };
 
-        public BrushSettingGroup() : base() 
+        private readonly IDictionary<string, string> kyeNameMap = new Dictionary<string, string>()
+        {
+            {KEY_WindowBackground, Language.Default.SettingPage.WindowBackground },
+            {KEY_PageBackground, Language.Default.SettingPage.PageBackground },
+            {KEY_PageForeground, Language.Default.SettingPage.PageForeground },
+            {KEY_BorderBrush, Language.Default.SettingPage.BorderBrush },
+            {KEY_IconBrush, Language.Default.SettingPage.IconBrush },
+            {KEY_EditAreaTextBoxBrush, Language.Default.SettingPage.EditAreaTextBoxBrush },
+            {KEY_TextBoxSelectBrush, Language.Default.SettingPage.TextBoxSelectBrush },
+            {KEY_MouseOverBackground, Language.Default.SettingPage.MouseOverBackground },
+            {KEY_SelectedBackground, Language.Default.SettingPage.SelectedBackground },
+            {KEY_ScrollBarTabBrush, Language.Default.SettingPage.ScrollBarTabBrush },
+            {KEY_SettingExpanderAreaBackGround, Language.Default.SettingPage.SettingExpanderAreaBackGround },
+            {KEY_CationColor, Language.Default.SettingPage.CationColor },
+        };
+
+        public BrushSettingGroup() : base()
         {
             SetSettingRows();
         }
 
-        public BrushSettingGroup(IDictionary resources) : base(resources) 
+        public BrushSettingGroup(IDictionary resources) : base(resources)
         {
             SetSettingRows();
         }
 
         private void SetSettingRows()
         {
-            Keys.ToList().ForEach(k =>
+            kyeNameMap.ToList().ForEach(kv =>
             {
-                settingRows.Add(new SettingRow(this, k, k, null, BrushConverter.Default));
+                settingRows.Add(new SettingRow(this, kv.Value, kv.Key, null, BrushConverter.Default));
             });
         }
 

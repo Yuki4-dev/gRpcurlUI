@@ -36,7 +36,7 @@ namespace gRpcurlUI.Model.Curl
             var sb = new StringBuilder();
             if (string.IsNullOrWhiteSpace(EndPoint))
             {
-                _ = sb.AppendLine("EndPoint is Blank.");
+                _ = sb.AppendLine(Language.Default.CurlProject.EndPointBlank);
             }
 
             if (!string.IsNullOrWhiteSpace(SendContent) && IsJsonContent)
@@ -86,7 +86,7 @@ namespace gRpcurlUI.Model.Curl
         {
             if (jsonObject is not CurlProjectJson curlProject)
             {
-                throw new Exception("Json is not CurlProject.");
+                throw new Exception(Language.Default.CurlProject.NonJsonType);
             }
 
             ProjectName = curlProject.ProjectName;

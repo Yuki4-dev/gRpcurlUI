@@ -7,7 +7,7 @@ namespace gRpcurlUI.Model.Setting
 {
     public partial class GrpcurlSettingGroup : ObservableObject, IExpansionSettingGroup
     {
-        public string Name => "Grpc Setting";
+        public string Name => Language.Default.SettingPage.GrpcurlSettingTitle;
 
         private const string KEY_ExePath = "ExePath";
         public string ExePath => settingProvider.GetSettingValue(KEY_ExePath) ?? "grpcurl.exe";
@@ -24,7 +24,7 @@ namespace gRpcurlUI.Model.Setting
         {
             this.settingProvider = settingProvider;
 
-            var exePath = new SettingRow(new ApplicationSettingValueProvider(settingProvider), "Grpcurl Path", KEY_ExePath);
+            var exePath = new SettingRow(new ApplicationSettingValueProvider(settingProvider), Language.Default.SettingPage.GrpcExePath, KEY_ExePath);
             settingRows.Add(exePath);
         }
     }

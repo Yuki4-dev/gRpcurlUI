@@ -43,8 +43,6 @@ namespace gRpcurlUI.ViewModel.Pages.ProjectTab
 
         private readonly IProjectDataService projectDataService;
 
-        private readonly CancellationTokenSource? tokenSource = null;
-
         public ProjectTabContentViewModel(IWindowService windowService, IProjectDataService projectDataService, IProcessExecuter processExecuter)
         {
             this.windowService = windowService;
@@ -64,7 +62,7 @@ namespace gRpcurlUI.ViewModel.Pages.ProjectTab
                 FileDialogType.Save,
                 (d) =>
                 {
-                    d.Title = "Project Save";
+                    d.Title = Language.Default.ProjectTabPage.SaveProject;
                     d.Filter = projectDataService.SaveFilter;
                 },
                 (d) =>
@@ -80,7 +78,7 @@ namespace gRpcurlUI.ViewModel.Pages.ProjectTab
                 }
                 catch (Exception ex)
                 {
-                    _ = await windowService.ShowMessageDialogAsync("Error", ex.Message);
+                    _ = await windowService.ShowMessageDialogAsync(Language.Default.Error, ex.Message);
                 }
             }
         }
@@ -93,7 +91,7 @@ namespace gRpcurlUI.ViewModel.Pages.ProjectTab
                 FileDialogType.Open,
                 (d) =>
                 {
-                    d.Title = "Project Open";
+                    d.Title = Language.Default.ProjectTabPage.OpenProject;
                     d.Filter = projectDataService.OpenFilter;
                 },
                 (d) =>
@@ -113,7 +111,7 @@ namespace gRpcurlUI.ViewModel.Pages.ProjectTab
                 }
                 catch (Exception ex)
                 {
-                    _ = await windowService.ShowMessageDialogAsync("Error", ex.Message);
+                    _ = await windowService.ShowMessageDialogAsync(Language.Default.Error, ex.Message);
                 }
             }
         }
@@ -135,7 +133,7 @@ namespace gRpcurlUI.ViewModel.Pages.ProjectTab
             var selectedProject = ProjectContext.Projects.Where(p => p.IsSelected).ToList();
             if (selectedProject.Count > 0)
             {
-                var result = await windowService.ShowMessageDialogAsync("Remove", $"{selectedProject.Count} Project Remove.", MessageBoxButton.YesNo);
+                var result = await windowService.ShowMessageDialogAsync(Language.Default.ProjectTabPage.Remove, string.Format(Language.Default.ProjectTabPage.RemoveCount, selectedProject.Count), MessageBoxButton.YesNo);
                 if (result == MessageBoxResult.Yes)
                 {
                     selectedProject.ForEach(p => ProjectContext.RemoveProject(p));

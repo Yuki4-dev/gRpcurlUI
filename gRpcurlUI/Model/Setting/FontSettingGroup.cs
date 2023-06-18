@@ -9,7 +9,7 @@ namespace gRpcurlUI.Model.Setting
 {
     public class FontSettingGroup : ResourceSettingProvider, ISettingGroup
     {
-        public string Name => "Font Setting";
+        public string Name => Language.Default.SettingPage.FontSettingTitle;
 
         private const string KEY_EditFontSize = "EditTextBoxFontSize";
         private const string KEY_FontFamily = "DefaultFontFamily";
@@ -35,7 +35,7 @@ namespace gRpcurlUI.Model.Setting
 
         private void SetSettingRows()
         {
-            var fontSize = new SettingRow(this, KEY_EditFontSize, KEY_EditFontSize, null, new FontSizeConverter());
+            var fontSize = new SettingRow(this, Language.Default.SettingPage.FontSize, KEY_EditFontSize, null, new FontSizeConverter());
             settingRows.Add(fontSize);
 
             //var fontfam = new SettingRow(this, KEY_FontFamily, KEY_FontFamily, null);

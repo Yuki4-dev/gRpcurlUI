@@ -41,7 +41,7 @@ namespace gRpcurlUI.Model.Grpcurl
 
             Commands = new List<ProjectExpansionCommand>()
             {
-                new ProjectExpansionCommand("Read Proto(Beta)", ReadProtoCommand)
+                new ProjectExpansionCommand(Language.Default.GrpcProject.ReadProto, ReadProtoCommand)
             };
         }
 
@@ -49,7 +49,7 @@ namespace gRpcurlUI.Model.Grpcurl
         public void ReadProto()
         {
             var setting = new ProtoImportPageShareSetting();
-            WizardDialog.ShowWizard("Read Proto(Beta)", new IWizardDialogViewModel[]
+            WizardDialog.ShowWizard(Language.Default.GrpcProject.ReadProto, new IWizardDialogViewModel[]
             {
                 new ProtoImportPage1ViewModel(setting, DI.Get<IWindowService>()),
                 new ProtoImportPage2ViewModel(setting, DI.Get<ProtoAnalyzeEntry>()),
@@ -66,7 +66,7 @@ namespace gRpcurlUI.Model.Grpcurl
         {
             var project = new GrpcurlProject()
             {
-                ProjectName = "new GrpcProject"
+                ProjectName = Language.Default.GrpcProject.NewProject
             };
             AddProject(project);
         }
@@ -82,15 +82,15 @@ namespace gRpcurlUI.Model.Grpcurl
             {
                 if (Version != other.Version)
                 {
-                    throw new Exception($"Version Error. Export Version:{other.Version} This Version:{Version}");
+                    throw new Exception(string.Format(Language.Default.GrpcProject.VersionError, other.Version, Version));
                 }
                 else if (ProjectType != other.ProjectType)
                 {
-                    throw new Exception($"ProjectType Error. Export ProjectType:{other.ProjectType} This ProjectType:{ProjectType}");
+                    throw new Exception(string.Format(Language.Default.GrpcProject.ProjectTypeError, other.ProjectType, ProjectType));
                 }
                 else if (other.Projects == null || !other.Projects.Any())
                 {
-                    throw new Exception($"Export Error. Project is Nothing.");
+                    throw new Exception(Language.Default.GrpcProject.ProjectNothing);
                 }
 
                 foreach (var p in grpcurl.projects)
@@ -100,7 +100,7 @@ namespace gRpcurlUI.Model.Grpcurl
             }
             else
             {
-                throw new Exception("Export Project is not GrpcurlProject");
+                throw new Exception(Language.Default.GrpcProject.ProjectTypeError);
             }
         }
 
@@ -126,7 +126,7 @@ namespace gRpcurlUI.Model.Grpcurl
         {
             if (jsonObject is not GrpcProjectContextJson grpcContext)
             {
-                throw new Exception("Json is not GrpcProjectContext.");
+                throw new Exception(Language.Default.GrpcProject.NonJsonType);
             }
 
             ProjectType = grpcContext.ProjectType;
