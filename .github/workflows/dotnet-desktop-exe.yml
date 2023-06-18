@@ -60,10 +60,10 @@ jobs:
         Configuration: ${{ matrix.configuration }}
 
     - name: Build exe
-      run: msbuild $env:Project_Path /t:publish /p:PublishDir=\bin\publish /p:Platform=$env:TargetPlatform /p:Configuration=$env:Configuration
+      run: msbuild $env:Project_Path /t:publish /p:Platform=$env:TargetPlatform /p:Configuration=$env:Configuration
     
     - name: Upload artifact
       uses: actions/upload-artifact@v3
       with:
         name: Build exe - ${{ matrix.targetplatform }}
-        path: ${{ env.Project_Directory }}\bin\publish
+        path: ${{ env.Project_Directory }}\bin
