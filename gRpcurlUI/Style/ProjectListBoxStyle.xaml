@@ -3,7 +3,8 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:System="clr-namespace:System;assembly=System.Runtime"
     xmlns:controls="clr-namespace:gRpcurlUI.Controls"
-    xmlns:local="clr-namespace:gRpcurlUI.Style">
+    xmlns:local="clr-namespace:gRpcurlUI.Style"
+    xmlns:model="clr-namespace:gRpcurlUI.Core.Model">
 
     <System:Double x:Key="RowHeight">44</System:Double>
 
@@ -77,7 +78,7 @@
         <Setter Property="ItemContainerStyle" Value="{StaticResource ListBoxItemContainerStyle}" />
         <Setter Property="ItemTemplate">
             <Setter.Value>
-                <DataTemplate DataType="model:IProject">
+                <DataTemplate DataType="{x:Type model:IProject}">
                     <Grid Height="{StaticResource RowHeight}" VerticalAlignment="Bottom">
                         <TextBlock
                             VerticalAlignment="Center"

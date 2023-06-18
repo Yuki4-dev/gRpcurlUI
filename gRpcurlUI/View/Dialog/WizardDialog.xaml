@@ -7,7 +7,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     x:Name="RootWindow"
     Width="600"
-    Height="450"
+    Height="600"
     Background="{DynamicResource DefaultWindowBackground}"
     Foreground="{DynamicResource DefaultPageForeground}"
     ResizeMode="NoResize"
