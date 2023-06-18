@@ -36,12 +36,21 @@
                 TabBrush="{DynamicResource DefaultScrollBarTabBrush}"
                 VerticalScrollBarVisibility="Visible">
 
-                <ListBox
-                    BorderThickness="0"
-                    ItemsSource="{Binding Projects}"
-                    SelectedValue="{Binding SelectedProject, Mode=TwoWay}"
-                    SelectionMode="Single"
-                    Style="{StaticResource ProjectListBoxStyle}" />
+                <StackPanel>
+
+                    <TextBlock
+                        Foreground="{StaticResource DefaultCationColor}"
+                        Style="{StaticResource DefaultTextBlockStyle}"
+                        Text="{Binding ErrorMessage}" />
+
+                    <ListBox
+                        BorderThickness="0"
+                        ItemsSource="{Binding Projects}"
+                        SelectedValue="{Binding SelectedProject, Mode=TwoWay}"
+                        SelectionMode="Single"
+                        Style="{StaticResource ProjectListBoxStyle}" />
+
+                </StackPanel>
 
             </controls:CustomScrollViewer>
 

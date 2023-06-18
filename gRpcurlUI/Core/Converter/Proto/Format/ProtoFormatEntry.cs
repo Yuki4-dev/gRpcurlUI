@@ -56,13 +56,15 @@ namespace gRpcurlUI.Core.Converter.Proto.Format
                     value = UnKnownProtoValueFormatter.Default.GetValueFormat(member);
                 }
 
+                object addValue = value;
                 if (member.IsRepeated)
                 {
-                    formatValue.Add(member.PropertyName, new object[] { value });
+                    addValue = new object[] { value };
                 }
-                else
+
+                if (!formatValue.ContainsKey(member.PropertyName))
                 {
-                    formatValue.Add(member.PropertyName, value);
+                    formatValue.Add(member.PropertyName, addValue);
                 }
             }
 
