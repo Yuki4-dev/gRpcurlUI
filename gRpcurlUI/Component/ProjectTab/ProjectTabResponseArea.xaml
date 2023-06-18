@@ -25,7 +25,7 @@
                     Margin="4"
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center"
-                    IsIndeterminate="false"
+                    IsIndeterminate="{Binding IsSending, Mode=OneWay}"
                     Style="{StaticResource DefaultProgressBarStyle}"
                     Visibility="{Binding IsSending, Mode=OneWay, Converter={StaticResource Boolean2VisibilityConverter}}" />
 

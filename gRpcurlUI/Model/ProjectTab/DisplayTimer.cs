@@ -8,6 +8,8 @@ namespace gRpcurlUI.Model.ProjectTab
     [INotifyPropertyChanged]
     public partial class DisplayTimer 
     {
+        private const string FORMAT = @"mm\.ss\.fff";
+
         [ObservableProperty]
         private bool isShow = true;
 
@@ -18,11 +20,12 @@ namespace gRpcurlUI.Model.ProjectTab
 
         public DisplayTimer()
         {
+            TimeInit();
         }
 
         public void Start()
         {
-            DisplayTime = TimeSpan.Zero.ToString();
+            TimeInit();
             stopwatch.Restart();
             stopwatch.Start();
         }
@@ -31,7 +34,12 @@ namespace gRpcurlUI.Model.ProjectTab
         {
             stopwatch.Stop();
             var time = TimeSpan.FromMilliseconds(stopwatch.ElapsedMilliseconds);
-            DisplayTime = time.ToString();   
+            DisplayTime = time.ToString(FORMAT);   
+        }
+
+        private void TimeInit()
+        {
+            DisplayTime = TimeSpan.Zero.ToString(FORMAT);
         }
     }
 }

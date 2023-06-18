@@ -19,6 +19,7 @@
             <StackPanel Style="{StaticResource OparetionAreaStackPanelStyle}">
 
                 <TextBlock
+                    Margin="0,0,12,0"
                     VerticalAlignment="Center"
                     Style="{StaticResource DefaultTextBlockStyle}"
                     Text="{Binding ExecutionTimer.DisplayTime, Mode=OneWay}"
