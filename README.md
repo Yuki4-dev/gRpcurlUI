@@ -1,4 +1,5 @@
-[![.NET Core Desktop](https://github.com/Yuki4-dev/gRpcurlUI/actions/workflows/dotnet-desktop.yml/badge.svg)](https://github.com/Yuki4-dev/gRpcurlUI/actions/workflows/dotnet-desktop.yml)
+[![.NET Core Desktop Build Exe](https://github.com/Yuki4-dev/gRpcurlUI/actions/workflows/dotnet-desktop-exe.yml/badge.svg)](https://github.com/Yuki4-dev/gRpcurlUI/actions/workflows/dotnet-desktop-exe.yml)
+[![.NET Core Desktop Package](https://github.com/Yuki4-dev/gRpcurlUI/actions/workflows/dotnet-desktop-package.yml/badge.svg)](https://github.com/Yuki4-dev/gRpcurlUI/actions/workflows/dotnet-desktop-package.yml)
 
 # gRpcurlUI
 
