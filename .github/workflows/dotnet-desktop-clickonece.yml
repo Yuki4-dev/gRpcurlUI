@@ -1,4 +1,4 @@
-name: .NET Core Desktop ClickOnece
+name: .NET Core Desktop Build Exe
 
 on:
   workflow_dispatch:
@@ -25,9 +25,6 @@ jobs:
       Solution_Name: gRpcurlUI.sln
       Project_Path: gRpcurlUI\gRpcurlUI.csproj
       Project_Directory: gRpcurlUI
-      Publish_Profile_Directory: gRpcurlUI\Properties\PublishProfiles\ClickOnceProfile.pubxml
-      Wap_Project_Path: gRpcurlUI.Package\gRpcurlUI.Package.wapproj
-      Wap_Project_Directory: gRpcurlUI.Package
       Test_Directory: gRpcurlUI.Test    
 
     steps:
@@ -70,7 +67,7 @@ jobs:
         [IO.File]::WriteAllBytes("$certificatePath", $pfx_cert_byte)
 
     - name: Build exe
-      run: msbuild $env:Project_Path /t:publish /p:ManifestKeyFile=$env:Wap_Project_Directory\GitHubActionsWorkflow.pfx /p:PublishProfile=$env:Publish_Profile_Directory /p:Platform=$env:TargetPlatform /p:Configuration=$env:Configuration
+      run: msbuild $env:Project_Path /t:publish /p:PublishDir=\bin\publish /p:Platform=$env:TargetPlatform /p:Configuration=$env:Configuration
       
     # Remove the pfx
     - name: Remove the pfx
@@ -80,4 +77,4 @@ jobs:
       uses: actions/upload-artifact@v3
       with:
         name: Build exe - ${{ matrix.targetplatform }}
-        path: ${{ env.Project_Directory }}\bin
+        path: ${{ env.Project_Directory }}\bin\publish
