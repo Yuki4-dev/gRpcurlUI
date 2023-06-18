@@ -70,7 +70,7 @@ namespace gRpcurlUI.ViewModel.Pages.ProjectTab
 
             if (!SelectedProject.PrepareProject(out var message))
             {
-                var result = await windowService.ShowMessageDialogAsync("Send", "continue?\r\n" + message, MessageBoxButton.YesNo);
+                var result = await windowService.ShowMessageDialogAsync("Send", "Continue?\r\n" + message, MessageBoxButton.YesNo);
                 if (result != MessageBoxResult.Yes)
                 {
                     return;
