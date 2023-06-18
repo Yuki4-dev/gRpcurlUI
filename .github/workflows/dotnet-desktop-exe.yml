@@ -60,7 +60,7 @@ jobs:
         Configuration: ${{ matrix.configuration }}
 
     - name: Build exe
-      run: msbuild $env:Project_Path /t:publish /p:Platform=$env:TargetPlatform /p:Configuration=$env:Configuration
+      run: msbuild $env:Project_Path /t:publish /p:RuntimeIdentifier=win-x64 /p:Platform=$env:TargetPlatform /p:Configuration=$env:Configuration
     
     - name: Upload artifact
       uses: actions/upload-artifact@v3
