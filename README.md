@@ -3,6 +3,6 @@
 
 # gRpcurlUI
 
-![image](https://user-images.githubusercontent.com/54029057/147756495-ace6b047-19ef-49d8-ac0f-4725d08760cd.png)
+![image](https://github.com/Yuki4-dev/gRpcurlUI/assets/54029057/b07008a9-03d1-42e1-898a-e3ba15ce34ff)
 
 Thank you!
