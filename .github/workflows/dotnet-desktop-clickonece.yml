@@ -80,4 +80,4 @@ jobs:
       uses: actions/upload-artifact@v3
       with:
         name: Build exe - ${{ matrix.targetplatform }}
-        path: ${{ env.Project_Directory }}\bin\publish\
+        path: ${{ env.Project_Directory }}\bin
