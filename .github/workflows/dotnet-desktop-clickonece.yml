@@ -70,7 +70,7 @@ jobs:
         [IO.File]::WriteAllBytes("$certificatePath", $pfx_cert_byte)
 
     - name: Build exe
-      run: msbuild $env:Project_Path /t:publish /p:ManifestKeyFile=$env:Wap_Project_Directory\GitHubActionsWorkflow.pfx /p:PublishProfile=$env:Publish_Profile_Directory /p:OutDir=out /p:Platform=$env:TargetPlatform /p:Configuration=$env:Configuration
+      run: msbuild $env:Project_Path /t:publish /p:ManifestKeyFile=$env:Wap_Project_Directory\GitHubActionsWorkflow.pfx /p:PublishProfile=$env:Publish_Profile_Directory /p:Platform=$env:TargetPlatform /p:Configuration=$env:Configuration
       
     # Remove the pfx
     - name: Remove the pfx
@@ -80,4 +80,4 @@ jobs:
       uses: actions/upload-artifact@v3
       with:
         name: Build exe - ${{ matrix.targetplatform }}
-        path: ${{ env.Project_Directory }}\out
+        path: ${{ env.Project_Directory }}\bin\publish\
