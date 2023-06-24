@@ -1,41 +1,31 @@
-﻿using gRpcurlUI.Core.Setting;
-using System.Collections;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using gRpcurlUI.Core.Setting;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
 
 namespace gRpcurlUI.Model.Setting
 {
-    public class FontSettingGroup : ResourceSettingProvider, ISettingGroup
+    public class FontSettingGroup : ObservableObject, ISettingGroup
     {
         public string Name => Language.Default.SettingPage.FontSettingTitle;
 
         private const string KEY_EditFontSize = "EditTextBoxFontSize";
         private const string KEY_FontFamily = "DefaultFontFamily";
 
-        protected override IEnumerable<string> Keys => new string[]
-        {
-            KEY_EditFontSize,
-            KEY_FontFamily
-        };
-
         private readonly ObservableCollection<ISettingRow> settingRows = new();
         public ICollection<ISettingRow> SettingRows => settingRows;
 
-        public FontSettingGroup() : base()
-        {
-            SetSettingRows();
-        }
+        private readonly ResourceSettingProvider resourceSettingProvider;
 
-        public FontSettingGroup(IDictionary resources) : base(resources)
+        public FontSettingGroup(ResourceSettingProvider resourceSettingProvider)
         {
+            this.resourceSettingProvider = resourceSettingProvider;
             SetSettingRows();
         }
 
         private void SetSettingRows()
         {
-            var fontSize = new SettingRow(this, Language.Default.SettingPage.FontSize, KEY_EditFontSize, null, new FontSizeConverter());
+            var fontSize = new SettingRow(resourceSettingProvider, Language.Default.SettingPage.FontSize, KEY_EditFontSize, null, FontSizeConverter.Default);
             settingRows.Add(fontSize);
 
             //var fontfam = new SettingRow(this, KEY_FontFamily, KEY_FontFamily, null);
@@ -46,15 +36,10 @@ namespace gRpcurlUI.Model.Setting
             //settingRows.Add(fontfam);
         }
 
-        public event PropertyChangedEventHandler? PropertyChanged;
-
-        protected void OnPropertyChanged([CallerMemberName] string name = "")
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
-        }
-
         private class FontSizeConverter : ISettingValueConverter
         {
+            public static readonly FontSizeConverter Default = new();
+
             public bool Convert(object value, out object newValue)
             {
                 if (value is string size && !string.IsNullOrWhiteSpace(size))

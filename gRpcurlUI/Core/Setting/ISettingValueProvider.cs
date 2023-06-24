@@ -1,29 +1,22 @@
-﻿namespace gRpcurlUI.Core.Setting
+﻿using System;
+
+namespace gRpcurlUI.Core.Setting
 {
     public interface ISettingValueProvider
     {
+        event Action<SettingChangedEventArgs>? SettingChanged;
+
         public object? GetSetting(string key);
 
         public void SetSetting(string key, object value);
     }
 
-    public class ApplicationSettingValueProvider : ISettingValueProvider
+    public class SettingChangedEventArgs
     {
-        private readonly IApplicationSetting applicationSettingProvider;
-
-        public ApplicationSettingValueProvider(IApplicationSetting applicationSetting)
+        public string Key { get; }
+        public SettingChangedEventArgs(string key)
         {
-            applicationSettingProvider = applicationSetting;
-        }
-
-        public object? GetSetting(string key)
-        {
-            return applicationSettingProvider.GetSettingValue(key);
-        }
-
-        public void SetSetting(string key, object value)
-        {
-            applicationSettingProvider.SetSettingValue(key, value.ToString()!);
+            Key = key;
         }
     }
 }

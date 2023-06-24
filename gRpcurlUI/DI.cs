@@ -3,7 +3,6 @@ using gRpcurlUI.Core.API;
 using gRpcurlUI.Core.Converter.Proto.Analyze;
 using gRpcurlUI.Core.Converter.Proto.Format;
 using gRpcurlUI.Core.Process;
-using gRpcurlUI.Core.Setting;
 using gRpcurlUI.Model.Curl;
 using gRpcurlUI.Model.Grpcurl;
 using gRpcurlUI.Model.Setting;
@@ -37,7 +36,7 @@ namespace gRpcurlUI
             _ = sc.AddSingleton<IWindowService, WindowService>();
             _ = sc.AddSingleton<IProjectDataService, ProjectDataService>();
             _ = sc.AddSingleton<IProjectContextProvider, ProjectContextProvider>();
-            _ = sc.AddSingleton<IApplicationSetting, Service.ApplicationSetting>();
+            _ = sc.AddSingleton<ApplicationSettingProvider>();
 
             // Pages
             _ = sc.AddSingleton<ProjectTabPage>();
@@ -49,6 +48,7 @@ namespace gRpcurlUI
             _ = sc.AddSingleton<ProjectTabPageViewModel>();
 
             // Settings
+            _ = sc.AddSingleton<ResourceSettingProvider>();
             _ = sc.AddSingleton<FontSettingGroup>();
             _ = sc.AddSingleton<BrushSettingGroup>();
             _ = sc.AddSingleton<GrpcurlSettingGroup>();

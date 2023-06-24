@@ -5,13 +5,11 @@ using System.Collections.Generic;
 
 namespace gRpcurlUI.Service
 {
-    public class ApplicationSetting : IApplicationSetting
+    public class ApplicationSettingProvider : ISettingValueProvider
     {
-        public event Action<ApplicationSettingChangedEventArgs>? ApplicationSettingChanged;
-
         private readonly IDictionary<string, string> settingMap;
 
-        public ApplicationSetting()
+        public ApplicationSettingProvider()
         {
             var appSettingJson = GrpcurlSetting.Default.AppSetting;
             if (string.IsNullOrWhiteSpace(appSettingJson))
@@ -26,25 +24,32 @@ namespace gRpcurlUI.Service
             }
         }
 
-        public string? GetSettingValue(string key)
+        public object? GetSetting(string key)
         {
             return settingMap.ContainsKey(key) ? settingMap[key] : null;
         }
 
-        public void SetSettingValue(string key, string value)
+        public void SetSetting(string key, object value)
         {
+            if (value is not string)
+            {
+                throw new Exception($"value is not string. {key}:{value.GetType()}");
+            }
+
             if (!settingMap.ContainsKey(key) || !Equals(settingMap[key], value))
             {
                 SetSettingValueInternal(key, value);
             }
         }
 
-        private void SetSettingValueInternal(string key, string value)
+        private void SetSettingValueInternal(string key, object value)
         {
-            settingMap[key] = value;
+            settingMap[key] = (string)value;
             GrpcurlSetting.Default.AppSetting = JsonConvert.SerializeObject(settingMap);
             GrpcurlSetting.Default.Save();
-            ApplicationSettingChanged?.Invoke(new ApplicationSettingChangedEventArgs(key));
+            SettingChanged?.Invoke(new SettingChangedEventArgs(key));
         }
+
+        public event Action<SettingChangedEventArgs>? SettingChanged;
     }
 }

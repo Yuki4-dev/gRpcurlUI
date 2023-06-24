@@ -25,6 +25,11 @@ namespace gRpcurlUI.Core.Setting
         None, Text, Switch, DropDown
     }
 
+    public interface IDropDownSettingRow : ISettingRow
+    {
+        public ICollection<object> Items { get; }
+    }
+
     public partial class SettingRow : ObservableObject, IDropDownSettingRow
     {
         [ObservableProperty]
@@ -69,10 +74,9 @@ namespace gRpcurlUI.Core.Setting
             }
         }
 
+        private readonly string key;
 
         private readonly ISettingValueProvider settingValueProvider;
-
-        private readonly string key;
 
         private readonly ISettingValueConverter? settingValueConverter;
 
@@ -82,9 +86,9 @@ namespace gRpcurlUI.Core.Setting
 
         public SettingRow(ISettingValueProvider settingValueProvider, string title, string key, string? description, ISettingValueConverter? settingValueConverter, string? defaultValue = null)
         {
-            this.settingValueProvider = settingValueProvider;
             this.title = title;
             this.key = key;
+            this.settingValueProvider = settingValueProvider;
             this.settingValueConverter = settingValueConverter;
 
             if (description != null)

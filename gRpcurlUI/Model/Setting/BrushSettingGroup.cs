@@ -1,15 +1,13 @@
-﻿using gRpcurlUI.Core.Setting;
-using System.Collections;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using gRpcurlUI.Core.Setting;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using System.Windows.Media;
 
 namespace gRpcurlUI.Model.Setting
 {
-    public class BrushSettingGroup : ResourceSettingProvider, ISettingGroup
+    public class BrushSettingGroup : ObservableObject, ISettingGroup
     {
         public string Name => Language.Default.SettingPage.BrushSettingTitle;
 
@@ -29,22 +27,6 @@ namespace gRpcurlUI.Model.Setting
         private const string KEY_SettingExpanderAreaBackGround = "DefaultSettingExpanderAreaBackGround";
         private const string KEY_CationColor = "DefaultCationColor";
 
-        protected override IEnumerable<string> Keys => new string[]
-        {
-            KEY_WindowBackground,
-            KEY_PageBackground,
-            KEY_PageForeground,
-            KEY_BorderBrush,
-            KEY_IconBrush,
-            KEY_EditAreaTextBoxBrush,
-            KEY_TextBoxSelectBrush,
-            KEY_MouseOverBackground,
-            KEY_SelectedBackground,
-            KEY_ScrollBarTabBrush,
-            KEY_SettingExpanderAreaBackGround,
-            KEY_CationColor,
-        };
-
         private readonly IDictionary<string, string> kyeNameMap = new Dictionary<string, string>()
         {
             {KEY_WindowBackground, Language.Default.SettingPage.WindowBackground },
@@ -61,13 +43,11 @@ namespace gRpcurlUI.Model.Setting
             {KEY_CationColor, Language.Default.SettingPage.CationColor },
         };
 
-        public BrushSettingGroup() : base()
-        {
-            SetSettingRows();
-        }
+        private readonly ResourceSettingProvider resourceSettingProvider;
 
-        public BrushSettingGroup(IDictionary resources) : base(resources)
+        public BrushSettingGroup(ResourceSettingProvider resourceSettingProvider)
         {
+            this.resourceSettingProvider = resourceSettingProvider;
             SetSettingRows();
         }
 
@@ -75,15 +55,8 @@ namespace gRpcurlUI.Model.Setting
         {
             kyeNameMap.ToList().ForEach(kv =>
             {
-                settingRows.Add(new SettingRow(this, kv.Value, kv.Key, null, BrushConverter.Default));
+                settingRows.Add(new SettingRow(resourceSettingProvider, kv.Value, kv.Key, null, BrushConverter.Default));
             });
-        }
-
-        public event PropertyChangedEventHandler? PropertyChanged;
-
-        protected void OnPropertyChanged([CallerMemberName] string name = "")
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
         }
 
         private class BrushConverter : ISettingValueConverter

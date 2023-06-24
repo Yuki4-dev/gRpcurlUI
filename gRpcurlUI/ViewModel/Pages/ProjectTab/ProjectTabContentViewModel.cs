@@ -5,7 +5,6 @@ using gRpcurlUI.Core.Model;
 using gRpcurlUI.Core.Process;
 using System;
 using System.Linq;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 

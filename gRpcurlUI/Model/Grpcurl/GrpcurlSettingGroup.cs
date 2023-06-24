@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using gRpcurlUI.Core.Setting;
+using gRpcurlUI.Service;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
@@ -10,7 +11,21 @@ namespace gRpcurlUI.Model.Setting
         public string Name => Language.Default.SettingPage.GrpcurlSettingTitle;
 
         private const string KEY_ExePath = "ExePath";
-        public string ExePath => settingProvider.GetSettingValue(KEY_ExePath) ?? "grpcurl.exe";
+        public string ExePath
+        {
+            get
+            {
+                var value = (string?)settingProvider.GetSetting(KEY_ExePath);
+                if (string.IsNullOrEmpty(value))
+                {
+                    return "grpcurl.exe";
+                }
+                else
+                {
+                    return value;
+                }
+            }
+        }
 
         [ObservableProperty]
         private bool isEnable = false;
@@ -18,13 +33,13 @@ namespace gRpcurlUI.Model.Setting
         private readonly ObservableCollection<ISettingRow> settingRows = new();
         public ICollection<ISettingRow> SettingRows => settingRows;
 
-        private readonly IApplicationSetting settingProvider;
+        private readonly ApplicationSettingProvider settingProvider;
 
-        public GrpcurlSettingGroup(IApplicationSetting settingProvider)
+        public GrpcurlSettingGroup(ApplicationSettingProvider settingProvider)
         {
             this.settingProvider = settingProvider;
 
-            var exePath = new SettingRow(new ApplicationSettingValueProvider(settingProvider), Language.Default.SettingPage.GrpcExePath, KEY_ExePath);
+            var exePath = new SettingRow(settingProvider, Language.Default.SettingPage.GrpcExePath, KEY_ExePath);
             settingRows.Add(exePath);
         }
     }
