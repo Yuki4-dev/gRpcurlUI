@@ -6,12 +6,15 @@ using Newtonsoft.Json;
 using System;
 using System.IO;
 using System.Text;
+using static gRpcurlUI.Language;
 
 namespace gRpcurlUI.Model.Grpcurl
 {
     public partial class GrpcurlProject : ObservableObject, IProject
     {
         public Type JsonType => typeof(GrpcProjectJson);
+
+        public GrpcProjectLanguage Texts => Language.Default.GrpcProject;
 
         [ObservableProperty]
         private string projectName = string.Empty;

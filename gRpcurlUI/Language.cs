@@ -93,6 +93,12 @@ namespace gRpcurlUI
 
         public class GrpcProjectLanguage
         {
+            public string EndPoint => "エンドポイント";
+
+            public string Option => "オプション";
+
+            public string Service => "サービス";
+
             public string NotExist => "{0}は存在しません。";
 
             public string EndPointBlank => "エンドポイントが空白です。";
@@ -112,6 +118,10 @@ namespace gRpcurlUI
 
         public class CurlProjectLanguage
         {
+            public string EndPoint => "エンドポイント";
+
+            public string Option => "オプション";
+
             public string NotExist => "{0}は存在しません。";
 
             public string EndPointBlank => "エンドポイントが空白です。";

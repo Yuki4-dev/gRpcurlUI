@@ -25,16 +25,16 @@
                     <ColumnDefinition Width="30" />
                 </Grid.ColumnDefinitions>
 
-                <TextBlock Text="EndPoint" />
+                <TextBlock Text="{Binding Texts.EndPoint}" />
 
             </Grid>
 
             <TextBox Text="{Binding EndPoint, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" />
 
-            <TextBlock Text="Option" />
+            <TextBlock Text="{Binding Texts.Option}" />
             <TextBox Text="{Binding Option, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" />
 
-            <TextBlock Text="Service" />
+            <TextBlock Text="{Binding Texts.Service}" />
             <TextBox Text="{Binding Service, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" />
 
         </StackPanel>

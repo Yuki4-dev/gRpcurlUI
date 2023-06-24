@@ -4,12 +4,15 @@ using gRpcurlUI.Core.Process;
 using Newtonsoft.Json;
 using System;
 using System.Text;
+using static gRpcurlUI.Language;
 
 namespace gRpcurlUI.Model.Curl
 {
     public partial class CurlProject : ObservableObject, IProject
     {
         public Type JsonType => typeof(CurlProjectJson);
+
+        public CurlProjectLanguage Texts => Language.Default.CurlProject;
 
         [ObservableProperty]
         private string projectName = string.Empty;

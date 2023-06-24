@@ -20,10 +20,10 @@
 
             </StackPanel.Resources>
 
-            <TextBlock Text="EndPoint" />
+            <TextBlock Text="{Binding Texts.EndPoint}" />
             <TextBox Text="{Binding EndPoint, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" />
 
-            <TextBlock Text="Option" />
+            <TextBlock Text="{Binding Texts.Option}" />
             <TextBox Text="{Binding Option, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" />
 
             <Border
