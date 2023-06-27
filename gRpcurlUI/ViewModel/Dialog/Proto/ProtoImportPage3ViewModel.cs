@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using static gRpcurlUI.Language;
 
 namespace gRpcurlUI.ViewModel.Dialog.Proto
 {
@@ -16,6 +17,8 @@ namespace gRpcurlUI.ViewModel.Dialog.Proto
     public partial class ProtoImportPage3ViewModel : IWizardDialogViewModel
     {
         public Type PageType => typeof(ProtoImportPage3);
+
+        public ProtoDialogLanguage Texts => Language.Default.ProtoDialog;
 
         private readonly ICollection<GrpcurlProject> projects = new ObservableCollection<GrpcurlProject>();
         public IEnumerable<IProject> Projects => projects;

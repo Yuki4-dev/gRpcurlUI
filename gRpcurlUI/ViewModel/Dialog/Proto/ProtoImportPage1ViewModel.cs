@@ -5,6 +5,7 @@ using gRpcurlUI.View.Dialog.Proto;
 using System;
 using System.IO;
 using System.Threading.Tasks;
+using static gRpcurlUI.Language;
 
 namespace gRpcurlUI.ViewModel.Dialog.Proto
 {
@@ -12,6 +13,8 @@ namespace gRpcurlUI.ViewModel.Dialog.Proto
     public partial class ProtoImportPage1ViewModel : IWizardDialogViewModel
     {
         public Type PageType => typeof(ProtoImportPage1);
+
+        public ProtoDialogLanguage Texts => Language.Default.ProtoDialog;
 
         public string FilePath
         {
@@ -45,13 +48,13 @@ namespace gRpcurlUI.ViewModel.Dialog.Proto
         {
             if (string.IsNullOrEmpty(FilePath))
             {
-                ErrorMessage = "FilePath is Empty.";
+                ErrorMessage = Texts.FilePathEmpty;
                 return false;
             }
 
             if (!File.Exists(FilePath))
             {
-                ErrorMessage = "File Not Exists.";
+                ErrorMessage = Texts.FilePathNothing;
                 return false;
             }
 

@@ -7,7 +7,7 @@
     xmlns:local="clr-namespace:gRpcurlUI.View.Dialog.Proto"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:viewModel="clr-namespace:gRpcurlUI.ViewModel.Dialog.Proto"
-    Title="Proto Project"
+    Title="{Binding Texts.ProtoProject}"
     d:DataContext="{d:DesignInstance viewModel:ProtoImportPage3ViewModel}"
     d:DesignHeight="600"
     d:DesignWidth="600"

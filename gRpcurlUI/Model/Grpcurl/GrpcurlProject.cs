@@ -84,7 +84,9 @@ namespace gRpcurlUI.Model.Grpcurl
                 }
                 catch { }
             }
-            return new GrpcurlCommand(grpcurlSettingGroup.ExePath, Option, EndPoint, jsonContent, Service);
+
+            var path = $"\"{grpcurlSettingGroup.ExePath}\"";
+            return new GrpcurlCommand(path, Option, EndPoint, jsonContent, Service);
         }
 
         public object ToJsonObject()

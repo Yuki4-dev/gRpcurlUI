@@ -2,7 +2,7 @@
 {
     public class Language
     {
-        public static readonly Language Default = new ();
+        public static readonly Language Default = new();
 
         public string Error => "エラー";
 
@@ -15,6 +15,8 @@
         public GrpcProjectLanguage GrpcProject { get; } = new GrpcProjectLanguage();
 
         public CurlProjectLanguage CurlProject { get; } = new CurlProjectLanguage();
+
+        public ProtoDialogLanguage ProtoDialog { get; } = new ProtoDialogLanguage();
 
         public class SettingPageLanguage
         {
@@ -129,6 +131,25 @@
             public string ProjectTypeError => "プロジェットのタイプが違います。（読み込みプロジェクトのタイプ：{0}　対応のタイプ：{1}）";
 
             public string ProjectNothing => "プロジェクトがありません。";
+        }
+
+        public class ProtoDialogLanguage
+        {
+            public string OpenProto => "Protoファイルを開く";
+
+            public string ReadProto => "Protoファイル読み込み";
+
+            public string ProtoProject => "読み込みプロジェクト一覧";
+
+            public string FilePath => "ファイルパス";
+
+            public string FilePathEmpty => "ファイルパスが空です。";
+
+            public string FilePathNothing => "ファイルが存在しません。";
+
+            public string ProtoInfo => "Protoファイル読み込み情報";
+
+            public string ErrorInfo => "Protoファイル読み込みエラー情報";
         }
     }
 }

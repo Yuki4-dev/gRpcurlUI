@@ -5,6 +5,7 @@ using System;
 using System.IO;
 using System.Linq;
 using System.Text;
+using static gRpcurlUI.Language;
 
 namespace gRpcurlUI.ViewModel.Dialog.Proto
 {
@@ -12,6 +13,8 @@ namespace gRpcurlUI.ViewModel.Dialog.Proto
     public partial class ProtoImportPage2ViewModel : IWizardDialogViewModel
     {
         public Type PageType => typeof(ProtoImportPage2);
+
+        public ProtoDialogLanguage Texts => Language.Default.ProtoDialog;
 
         [ObservableProperty]
         private bool isAnalyze = false;

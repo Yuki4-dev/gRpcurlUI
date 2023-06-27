@@ -12,15 +12,20 @@ namespace gRpcurlUI.Service
         public ApplicationSettingProvider()
         {
             var appSettingJson = GrpcurlSetting.Default.AppSetting;
-            if (string.IsNullOrWhiteSpace(appSettingJson))
+            if (!string.IsNullOrWhiteSpace(appSettingJson))
+            {
+                try
+                {
+                    settingMap = JsonConvert.DeserializeObject<Dictionary<string, string>>(appSettingJson)!;
+                }
+                catch { }           
+            }
+            
+            if(settingMap == null)
             {
                 settingMap = new Dictionary<string, string>();
                 GrpcurlSetting.Default.AppSetting = JsonConvert.SerializeObject(settingMap);
                 GrpcurlSetting.Default.Save();
-            }
-            else
-            {
-                settingMap = JsonConvert.DeserializeObject<Dictionary<string, string>>(appSettingJson)!;
             }
         }
 
